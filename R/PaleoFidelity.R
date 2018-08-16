@@ -14,14 +14,16 @@
 #' @docType package
 #'
 #' @examples
+#' # Version and citation
 #' packageVersion('PaleoFidelity')
 #' citation('PaleoFidelity')
 #'
 #' # Check if data are compliant and generate basic data summary
+#' \dontrun{require(vegan)
 #' data(dune)
-#' FidelitySummary(data(as.matrix(dune), as.matrix(apply(dune, 1, sample)), report=T))
+#' FidelitySummary(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]), report=T)
 #'
 #' # Compute measures of compositional fidelity
-#' out1 <- FidelitySummary(data(as.matrix(dune), as.matrix(apply(dune, 1, sample)))
-#' plot(out1)
+#' out1 <- FidelityEst(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]))
+#' plot(out1)}
 NULL

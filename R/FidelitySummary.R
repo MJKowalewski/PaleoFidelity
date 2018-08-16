@@ -12,12 +12,14 @@
 #' @param gp An optional factor, with two or more levels, defining sample groups
 #'    (the length of gp must equal number of rows in live and dead)
 #'
+#' @param report Logical (default=F), set report=T to print additional warnings and data summary
+#'
 #' @return Returns errors and critical warnings.
-#'     No objects returned unless report=T to return warnings and data summary).
+#'     No objects returned unless report=T (return additional warnings and data summary)
 #'
 #' @examples
 #'
-#' FidelitySummary(live=OBX$Live, dead=OBX$Dead, gp=)
+#' \dontrun{FidelitySummary(live=OBX$Live, dead=OBX$Dead, gp=)}
 
 
 FidelitySummary <- function(live, dead, gp = NULL, report=F)

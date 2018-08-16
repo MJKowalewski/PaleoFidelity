@@ -14,10 +14,12 @@ FidelitySummary(live, dead, gp = NULL, report = F)
 
 \item{gp}{An optional factor, with two or more levels, defining sample groups
 (the length of gp must equal number of rows in live and dead)}
+
+\item{report}{Logical (default=F), set report=T to print additional warnings and data summary}
 }
 \value{
 Returns errors and critical warnings.
-    No objects returned unless report=T to return warnings and data summary).
+    No objects returned unless report=T (return additional warnings and data summary)
 }
 \description{
 FidelitySummary function checks if the input objects are compliant.
@@ -26,5 +28,5 @@ obtain a full list of warnings and a basic summary of user-provided objects (rep
 }
 \examples{
 
-FidelitySummary(live=OBX$Live, dead=OBX$Dead, gp=)
+\dontrun{FidelitySummary(live=OBX$Live, dead=OBX$Dead, gp=)}
 }
