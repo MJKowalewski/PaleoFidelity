@@ -11,8 +11,8 @@
 #' Specialized plot functions are included to visualize fidelity patterns.
 #'
 #' @author Michal Kowalewski \email{kowalewski@@ufl.edu}
-#' @name PaleoFidelity-package
-#' @aliases PaleoFidelity-package PaleoFidelity
+#' @name PaleoFidelity
+#' @aliases PaleoFidelity
 #' @docType package
 #'
 #' @examples
@@ -21,12 +21,13 @@
 #' citation('PaleoFidelity')
 #'
 #' # Check if data are compliant and generate basic data summary
-#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=habitat, report=T)
+#' data(FidData)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
 #'
 #' # Returns estimates of compositional fidelity
-#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=habitat)
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
 #'
-#' @export
+#'
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 NULL

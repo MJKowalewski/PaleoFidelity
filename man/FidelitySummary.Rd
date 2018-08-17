@@ -4,7 +4,7 @@
 \alias{FidelitySummary}
 \title{FidelitySummary (to assess data compliance issues)}
 \usage{
-FidelitySummary(live, dead, gp = NULL, report = F)
+FidelitySummary(live, dead, gp = NULL, report = FALSE)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)}
@@ -28,7 +28,7 @@ This function is used invisibly in other PaleoFidelity functions. However, users
 obtain a full list of warnings and a basic summary of user-provided objects (report=T)
 }
 \examples{
-
 data(FidData)
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=T)
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+
 }

@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' data(FidData)
-#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=T)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
 #'
 #' @export
 #' @importFrom stats sd
@@ -28,7 +28,7 @@
 
 
 
-FidelitySummary <- function(live, dead, gp = NULL, report=F)
+FidelitySummary <- function(live, dead, gp = NULL, report=FALSE)
   {
   if(sum(is.matrix(live),is.matrix(dead))!=2) stop('"live" and/or "dead" object is not a matrix')
 

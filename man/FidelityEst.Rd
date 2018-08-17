@@ -5,7 +5,7 @@
 \title{FidelityEst computes live-dead fidelity measures}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "chao")
+  sim.measure = "chao", report = FALSE)
 }
 \arguments{
 \item{live}{A species/taxon abundance matrix with counts of live-collected specimens
@@ -21,6 +21,8 @@ FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
 live-dead correlations (default='spearman').}
 
 \item{sim.measure}{A measure of similarity to measure live-dead agreement (default='Chao')}
+
+\item{report}{Print compliance report from function FidelitySummary}
 }
 \value{
 A list containing the following components:
@@ -35,10 +37,7 @@ means for groups are returned.
 }
 \examples{
 
-library(vegan)
-data(dune)
-\dontrun{
-out1 <- FidelityEst(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]))
-plot(out1, xlim=c(-1,1), ylim=c(0,1), las=1, xlab=out1$xlab, ylab=out1$ylab)
-abline(h=0.5, v=0)}
+data(FidData)
+FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
+
 }

@@ -21,20 +21,22 @@
 #'
 #' @param sim.measure A measure of similarity to measure live-dead agreement (default='Chao')
 #'
+#' @param report Print compliance report from function FidelitySummary
+#'
 #' @return A list containing the following components:
 #'   \item{x}{The values of the Spearman coefficients \emph{rho} for each live-dead comparison}
 #'
-#' @example
+#' @examples
 #'
 #' data(FidData)
-#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=habitat, report=T)
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
 #'
 #' @export
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 
-FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='chao') {
-  FidelitySummary(live, dead, gp)
+FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='chao', report=FALSE) {
+  FidelitySummary(live, dead, gp, report=report)
   x1 <- as.data.frame(t(live))
   x2 <- as.data.frame(t(dead))
   cor.e <- mapply(function(x,y) stats::cor(x,y, method=cor.measure), x1, x2)
