@@ -21,11 +21,12 @@
 #' citation('PaleoFidelity')
 #'
 #' # Check if data are compliant and generate basic data summary
-#' \dontrun{require(vegan)
-#' data(dune)
-#' FidelitySummary(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]), report=T)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=habitat, report=T)
 #'
-#' # Compute measures of compositional fidelity
-#' out1 <- FidelityEst(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]))
-#' plot(out1)}
+#' # Returns estimates of compositional fidelity
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=habitat)
+#'
+#' @export
+#' @importFrom stats sd
+#' @importFrom vegan vegdist
 NULL

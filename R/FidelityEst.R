@@ -24,14 +24,14 @@
 #' @return A list containing the following components:
 #'   \item{x}{The values of the Spearman coefficients \emph{rho} for each live-dead comparison}
 #'
-#' @examples
+#' @example
 #'
-#' library(vegan)
-#' data(dune)
-#' \dontrun{
-#' out1 <- FidelityEst(as.matrix(dune), as.matrix(dune[sample(1:nrow(dune)),]))
-#' plot(out1, xlim=c(-1,1), ylim=c(0,1), las=1, xlab=out1$xlab, ylab=out1$ylab)
-#' abline(h=0.5, v=0)}
+#' data(FidData)
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=habitat, report=T)
+#'
+#' @export
+#' @importFrom stats sd
+#' @importFrom vegan vegdist
 
 FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='chao') {
   FidelitySummary(live, dead, gp)

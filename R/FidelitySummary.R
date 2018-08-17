@@ -19,9 +19,12 @@
 #'     No objects returned unless report=T (return additional warnings and data summary)
 #'
 #' @examples
-#'
 #' data(FidData)
 #' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=T)
+#'
+#' @export
+#' @importFrom stats sd
+#' @importFrom vegan vegdist
 
 
 
