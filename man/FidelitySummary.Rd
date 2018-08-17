@@ -12,8 +12,9 @@ FidelitySummary(live, dead, gp = NULL, report = F)
 \item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
 (dimensions must match)}
 
-\item{gp}{An optional factor, with two or more levels, defining sample groups
-(the length of gp must equal number of rows in live and dead)}
+\item{gp}{An optional factor, with two or more levels, defining sample groups.
+The length of gp must equal number of rows in live and dead and at least two levels must
+include 2 or more observations to allow for by-group analyses.}
 
 \item{report}{Logical (default=F), set report=T to print additional warnings and data summary}
 }
@@ -28,5 +29,6 @@ obtain a full list of warnings and a basic summary of user-provided objects (rep
 }
 \examples{
 
-\dontrun{FidelitySummary(live=OBX$Live, dead=OBX$Dead, gp=)}
+data(FidData)
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=T)
 }

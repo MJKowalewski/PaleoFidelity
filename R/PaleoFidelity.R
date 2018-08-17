@@ -1,12 +1,14 @@
-#' PaleoFidelity: Statistical assessment of paleontological fidelity (live-dead community agreement)
+#' PaleoFidelity: Measuring paleontological fidelity (live-dead community agreement)
 #'
-#' PaleoFidelity package provides common measures of paleontological fidelity (live-dead community
-#' agreement), including compositional agreement, alpha diversity, and beta diversity.
+#' PaleoFidelity package provides common measures of paleontological fidelity
+#' used to assess live-dead community agreement. These measures encompass
+#' multiple aspects of fidelity, including faunal composition, alpha diversity,
+#' and beta diversity.
 #'
-#' PaleoFidelity offers permutation tests for one-sample and multi-sample tests, and
-#' bootstrapped confidence intervals for fidelity statistics.
+#' PaleoFidelity package also offers permutation tests for one-sample, two-sample, and
+#' multi-sample hypotheses as well as bootstrapped confidence intervals for fidelity statistics.
 #'
-#' Several plot functions are included to visualize outcomes of fidelity analyses.
+#' Specialized plot functions are included to visualize fidelity patterns.
 #'
 #' @author Michal Kowalewski \email{kowalewski@@ufl.edu}
 #' @name PaleoFidelity-package

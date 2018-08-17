@@ -2,30 +2,36 @@
 % Please edit documentation in R/FidelityEst.R
 \name{FidelityEst}
 \alias{FidelityEst}
-\title{FidelityEst (computes live-dead fidelity measures)}
+\title{FidelityEst computes live-dead fidelity measures}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  dist.measure = "chao")
+  sim.measure = "chao")
 }
 \arguments{
-\item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)}
+\item{live}{A species/taxon abundance matrix with counts of live-collected specimens
+(rows=samples, columns=species/taxa)}
 
 \item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-(dimensions must match)}
+(dimensions of 'live' and 'dead' must match)}
 
 \item{gp}{An optional factor, with two or more levels, defining sample groups
 (the length of gp must equal number of rows in live and dead)}
 
-\item{cor.measure}{Correlation coefficient to measure pairwise live-dead correlations (default='Spearman')}
+\item{cor.measure}{defines correlation coefficient (stats function 'vignettecor') used to measure pairwise
+live-dead correlations (default='spearman').}
 
-\item{dist.measure}{Measure of similarity to measure live-dead agreement (default='Chao')}
+\item{sim.measure}{A measure of similarity to measure live-dead agreement (default='Chao')}
 }
 \value{
 A list containing the following components:
   \item{x}{The values of the Spearman coefficients \emph{rho} for each live-dead comparison}
 }
 \description{
-FidelityEst computes common live-dead fidelity measures for two datasets (live and dead)
+FidelityEst computes common live-dead fidelity measures by comparing two matching
+matrices (live and dead) with species/taxon abundance data.
+In the case of datastes representing more than one sample,
+the function returns also means. If 'gp' factor is provided to define sample groups
+means for groups are returned.
 }
 \examples{
 
