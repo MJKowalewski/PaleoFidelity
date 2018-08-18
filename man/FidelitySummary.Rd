@@ -4,7 +4,7 @@
 \alias{FidelitySummary}
 \title{FidelitySummary (to assess data compliance issues)}
 \usage{
-FidelitySummary(live, dead, gp = NULL, report = FALSE)
+FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)}
@@ -16,11 +16,13 @@ FidelitySummary(live, dead, gp = NULL, report = FALSE)
 The length of gp must equal number of rows in live and dead and at least two levels must
 include 2 or more observations to allow for by-group analyses.}
 
-\item{report}{Logical (default=F), set report=T to print additional warnings and data summary}
+\item{report}{Logical (default=FALSE), set report=TRUE to print additional warnings and data summary}
+
+\item{n.filters}{Numerical value used to remove small samples with n < n.filters (default value is 0)}
 }
 \value{
 Returns errors and critical warnings.
-    No objects returned unless report=T (return additional warnings and data summary)
+    No objects returned unless report=TRUE (return additional warnings and data summary)
 }
 \description{
 FidelitySummary function checks if the input objects are compliant.
@@ -29,6 +31,7 @@ obtain a full list of warnings and a basic summary of user-provided objects (rep
 }
 \examples{
 data(FidData)
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+FidelitySummary(live=FidData$live, dead=FidData$dead, report=TRUE)
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=30)
 
 }

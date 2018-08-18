@@ -2,7 +2,7 @@
 % Please edit documentation in R/FidelityEst.R
 \name{FidelityEst}
 \alias{FidelityEst}
-\title{FidelityEst computes live-dead fidelity measures}
+\title{FidelityEst computes compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
   sim.measure = "chao", report = FALSE)
@@ -26,14 +26,21 @@ live-dead correlations (default='spearman').}
 }
 \value{
 A list containing the following components:
-  \item{x}{The values of the Spearman coefficients \emph{rho} for each live-dead comparison}
+  \item{x}{The values of correlation coefficient for each live-dead comparison}
+  \item{y}{The values of similarity coefficients for each live-dead comparison}
+  \item{x.lab}{The name of the correlation coefficient used}
+  \item{y.lab}{The name of the similarity coefficient used}
+  \item{mean.x}{The mean correlation coefficient (same as 'x' if live-dead data include only one sample )}
+  \item{mean.y}{The mean similarity coefficient (same as 'x' if live-dead data include only one sample )}
+  \item{group.means.x}{Mean correlation coefficients by group (returned if 'gp' factor provided)}
+  \item{group.means.y}{Mean similarity coefficients by group (returned if 'gp' factor provided)}
 }
 \description{
 FidelityEst computes common live-dead fidelity measures by comparing two matching
 matrices (live and dead) with species/taxon abundance data.
 In the case of datastes representing more than one sample,
 the function returns also means. If 'gp' factor is provided to define sample groups
-means for groups are returned.
+means for groups are returned as well.
 }
 \examples{
 

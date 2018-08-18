@@ -13,72 +13,129 @@
 #'    The length of gp must equal number of rows in live and dead and at least two levels must
 #'    include 2 or more observations to allow for by-group analyses.
 #'
-#' @param report Logical (default=F), set report=T to print additional warnings and data summary
+#' @param report Logical (default=FALSE), set report=TRUE to print additional warnings and data summary
+#'
+#' @param n.filters Numerical value used to remove small samples with n < n.filters (default value is 0)
 #'
 #' @return Returns errors and critical warnings.
-#'     No objects returned unless report=T (return additional warnings and data summary)
+#'     No objects returned unless report=TRUE (return additional warnings and data summary)
 #'
 #' @examples
 #' data(FidData)
-#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, report=TRUE)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=30)
 #'
 #' @export
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 
+FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0)
 
-
-FidelitySummary <- function(live, dead, gp = NULL, report=FALSE)
   {
-  if(sum(is.matrix(live),is.matrix(dead))!=2) stop('"live" and/or "dead" object is not a matrix')
 
-  if(sum(c(is.na(live),is.na(dead)))>0) stop('missing values not allowed')
-
+  # PART 1: Initial complience checks
+  if (sum(is.matrix(live), is.matrix(dead)) != 2)
+    stop('"live" and/or "dead" object is not a matrix')
+  if (sum(c(is.na(live), is.na(dead))) > 0)
+    stop('missing values not allowed')
   if (!is.numeric(live) | !is.numeric(dead))
-    stop('all rows/columns in "live" and "dead" datasets must be numeric')
-
+    stop('"live" and "dead" datasets must be numeric')
   if (!identical(dim(live), dim(dead)))
     stop('live and dead datasets must have the same dimensions')
+  if (ncol(live) < 3)
+    stop('at least 3 columns (species/variables) required to compute fidelity measures')
+  if (min(colSums(live) + colSums(dead)) == 0)
+    stop('combined live + dead data contain empty columns')
+  if (min(rowSums(live)) == 0)
+    stop('live dataset contains empty rows')
+  if (min(rowSums(dead)) == 0)
+    stop('dead dataset contains empty rows')
+  if (!identical(colnames(live), colnames(dead)))
+    warning('column labels do not match between "live" and "dead" datasets')
+  if (!identical(rownames(live), rownames(dead)))
+    warning('row labels do not match between "live" and "dead" datasets')
 
-  if(ncol(live)<3)
-    stop('a minimum of three taxa required to compute fidelity measures')
-
+  # Part II: Check factors
   if (length(gp) > 0)
   {
     if (length(gp) != nrow(live))
       stop('the length "gp" factor must equal the number of rows in live and dead')
     if (!is.factor(gp))
       stop('"gp" object must be a factor')
-    if (sum(table(gp)==0)>0) {
+    if (sum(table(gp) == 0) > 0) {
       warning('empty levels detected and will be dropped')
       gp <- droplevels(gp)
-      }
-    if (sum(table(gp)>1)<2)
+    }
+    if (sum(table(gp) > 1) < 2)
+      warning('gp factor should include n > 1 observations for at least two levels')
+  }
+  if (length(gp) == 0)
+    message('NOTE: gp factor has not been provided (by-group analyses and tests not possible)')
+
+  # PART III: Apply n.filters (or not)
+  if (n.filters == 0)
+    filtering = 'n.filters=0: no samples were removed'
+  if (n.filters > 0)
+  {
+    removed <- length(unique(c(which(rowSums(live) < n.filters),
+                               which(rowSums(dead) < n.filters))))
+    if (removed > 0)
+    {
+      badsamples <-
+        unique(c(which(rowSums(live) < n.filters), which(rowSums(dead) < n.filters)))
+      live <- live[-badsamples, ]
+      dead <- dead[-badsamples, ]
+      if (length(gp) > 0)
+        gp[-badsamples]
+      rm.samples <- length(badsamples)
+    }
+    else
+      rm.samples <- 0
+
+    if (min(colSums(live) + colSums(dead)) == 0)
+    {
+      badtaxa <- which(colSums(live) + colSums(live) == 0)
+      live <- live[, -badtaxa]
+      dead <- dead[, -badtaxa]
+      rm.taxa <- length(badtaxa)
+    }
+    else
+      rm.taxa <- 0
+
+    filtering = paste('n.filters=', n.filters, ', ',
+      rm.samples, ' samples removed, ',
+      rm.taxa, ' taxa (columns) removed',
+      sep = '')
+  }
+
+  # PART IV: Additional checks
+  # check 1: check if samples with n < 30 are present in the data
+  if (min(c(rowSums(live), rowSums(dead))) < 30)
+    warning('small samples present (n<30): consider applying "n.filters >= 30"')
+  # check 2: check again if gp factor still compliant
+  if (length(gp) > 0)
+  {
+    if (sum(table(gp) > 1) < 2)
       warning('gp factor should include n > 1 observations for at least two levels')
   }
 
-  if (length(gp) == 0)
-      warning('gp factor has not been provided')
-
-  if (!identical(colnames(live), colnames(dead)))
-      warning('column labels do not match between "live" and "dead" datasets')
-
-  if (!identical(rownames(live), rownames(dead)))
-    warning('row labels do not match between "live" and "dead" datasets')
-
+  # PART V: Generate report (if requested)
   if(report) # default setting "report=F" (none of the lines below executed)
   {
     ifelse(length(gp) == 0, num.groups <- 0, num.groups <- length(levels(gp)))
     ifelse(length(gp) == 0, num.use.groups <- 0, num.use.groups <- sum(table(gp)>1))
-  report <- rbind('number of live samples' = nrow(live),
+    report <- rbind('number of live samples' = nrow(live),
                'number of live taxa' = ncol(live),
                'number of dead samples' = nrow(dead),
                'number of dead taxa' = ncol(dead),
                'number of live specimens' = sum(live),
                'number of dead specimens' = sum(dead),
+               'smallest sample (live)' = min(rowSums(live)),
+               'smallest sample (dead)' = min(rowSums(dead)),
                'number of groups (levels)' = num.groups,
-               'number of useful groups (# levels with n > 1)' = num.groups)
-  colnames(report) <- 'outcomes'
+               'number of useful groups (# levels with n > 1)' = num.groups,
+               'n.filters' = filtering)
+    colnames(report) <- 'outcomes'
   return(report)
  }
 }
