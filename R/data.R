@@ -12,4 +12,3 @@
 #'   ...
 #' }
 #' @source \url{https://www.nature.com/articles/sdata201854}
-"FidData"

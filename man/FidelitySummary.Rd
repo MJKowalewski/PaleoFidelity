@@ -21,13 +21,24 @@ include 2 or more observations to allow for by-group analyses.}
 \item{n.filters}{Numerical value used to remove small samples with n < n.filters (default value is 0)}
 }
 \value{
-Returns errors and critical warnings.
-    No objects returned unless report=TRUE (return additional warnings and data summary)
+When report=TRUE, the function returns a matrix with data summary and may also return warnings.
+    When report=FALSE, no objects are returned (only warnings may be produced)
 }
 \description{
-FidelitySummary function checks if the input objects are compliant.
-This function is used invisibly in other PaleoFidelity functions. However, users can use it directly to
-obtain a full list of warnings and a basic summary of user-provided objects (report=T)
+FidelitySummary function checks if the input objects are appropriately formatted and contain
+adequate data needed to carry out a mathematically meaningful fidelity analysis.
+}
+\details{
+This function is implemented in other PaleoFidelity functions. However, users are encouraged to use
+it prior to any other functioons in order to:
+1). Check for errors and warnings;
+2). Generate a basic summary of user-provided objects (make sure to set parameter report=TRUE)
+3). Explore how data filtering (parameter "n.filters") affect the dimensionality of the data.
+
+NOTE: FidelitySummary function will not alter data objects passed through it, but only provide an initial
+compliance evaluation. Also the function allows the user to detect small samples and assess if removing
+those samples is advisable in terms of data dimensionality. If removal of small samples is desirable
+for subsequent analyses, please specify the numerical value of "n.filters" in other PaleoFidelity functions.
 }
 \examples{
 data(FidData)

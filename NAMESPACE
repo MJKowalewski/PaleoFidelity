@@ -2,5 +2,6 @@
 
 export(FidelityEst)
 export(FidelitySummary)
+importFrom(stats,cor)
 importFrom(stats,sd)
 importFrom(vegan,vegdist)

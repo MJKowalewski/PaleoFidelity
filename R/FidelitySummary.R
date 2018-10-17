@@ -1,8 +1,18 @@
 #' FidelitySummary (to assess data compliance issues)
 #'
-#' FidelitySummary function checks if the input objects are compliant.
-#' This function is used invisibly in other PaleoFidelity functions. However, users can use it directly to
-#' obtain a full list of warnings and a basic summary of user-provided objects (report=T)
+#' FidelitySummary function checks if the input objects are appropriately formatted and contain
+#' adequate data needed to carry out a mathematically meaningful fidelity analysis.
+#'
+#' @details This function is implemented in other PaleoFidelity functions. However, users are encouraged to use
+#' it prior to any other functioons in order to:
+#' 1). Check for errors and warnings;
+#' 2). Generate a basic summary of user-provided objects (make sure to set parameter report=TRUE)
+#' 3). Explore how data filtering (parameter "n.filters") affect the dimensionality of the data.
+#'
+#' NOTE: FidelitySummary function will not alter data objects passed through it, but only provide an initial
+#' compliance evaluation. Also the function allows the user to detect small samples and assess if removing
+#' those samples is advisable in terms of data dimensionality. If removal of small samples is desirable
+#' for subsequent analyses, please specify the numerical value of "n.filters" in other PaleoFidelity functions.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)
 #'
@@ -17,8 +27,8 @@
 #'
 #' @param n.filters Numerical value used to remove small samples with n < n.filters (default value is 0)
 #'
-#' @return Returns errors and critical warnings.
-#'     No objects returned unless report=TRUE (return additional warnings and data summary)
+#' @return When report=TRUE, the function returns a matrix with data summary and may also return warnings.
+#'     When report=FALSE, no objects are returned (only warnings may be produced)
 #'
 #' @examples
 #' data(FidData)
@@ -31,8 +41,7 @@
 
 FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0)
 
-  {
-
+ {
   # PART 1: Initial complience checks
   if (sum(is.matrix(live), is.matrix(dead)) != 2)
     stop('"live" and/or "dead" object is not a matrix')
@@ -45,7 +54,7 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0)
   if (ncol(live) < 3)
     stop('at least 3 columns (species/variables) required to compute fidelity measures')
   if (min(colSums(live) + colSums(dead)) == 0)
-    stop('combined live + dead data contain empty columns')
+    warning('combined live + dead data contain empty columns')
   if (min(rowSums(live)) == 0)
     stop('live dataset contains empty rows')
   if (min(rowSums(dead)) == 0)
@@ -57,55 +66,54 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0)
 
   # Part II: Check factors
   if (length(gp) > 0)
-  {
+    {
     if (length(gp) != nrow(live))
       stop('the length "gp" factor must equal the number of rows in live and dead')
     if (!is.factor(gp))
       stop('"gp" object must be a factor')
-    if (sum(table(gp) == 0) > 0) {
+    if (sum(table(gp) == 0) > 0)
+      {
       warning('empty levels detected and will be dropped')
       gp <- droplevels(gp)
-    }
+      }
     if (sum(table(gp) > 1) < 2)
       warning('gp factor should include n > 1 observations for at least two levels')
-  }
+    }
   if (length(gp) == 0)
     message('NOTE: gp factor has not been provided (by-group analyses and tests not possible)')
 
   # PART III: Apply n.filters (or not)
   if (n.filters == 0)
-    filtering = 'n.filters=0: no samples were removed'
+    message('NOTE: n.filters=0: no samples (rows) were removed')
   if (n.filters > 0)
   {
     removed <- length(unique(c(which(rowSums(live) < n.filters),
                                which(rowSums(dead) < n.filters))))
     if (removed > 0)
-    {
-      badsamples <-
-        unique(c(which(rowSums(live) < n.filters), which(rowSums(dead) < n.filters)))
+      {
+      badsamples <-  unique(c(which(rowSums(live) < n.filters), which(rowSums(dead) < n.filters)))
       live <- live[-badsamples, ]
       dead <- dead[-badsamples, ]
-      if (length(gp) > 0)
-        gp[-badsamples]
       rm.samples <- length(badsamples)
-    }
+      if (length(gp) > 0)   gp <- gp[-badsamples]
+      }
     else
       rm.samples <- 0
 
     if (min(colSums(live) + colSums(dead)) == 0)
-    {
-      badtaxa <- which(colSums(live) + colSums(live) == 0)
+      {
+      badtaxa <- which(colSums(live) + colSums(dead) == 0)
       live <- live[, -badtaxa]
       dead <- dead[, -badtaxa]
       rm.taxa <- length(badtaxa)
-    }
+      }
     else
       rm.taxa <- 0
 
-    filtering = paste('n.filters=', n.filters, ', ',
-      rm.samples, ' samples removed, ',
+    message(paste('NOTE: n.filters=', n.filters, ', ',
+      rm.samples, ' samples (rows) removed, ',
       rm.taxa, ' taxa (columns) removed',
-      sep = '')
+      sep = ''))
   }
 
   # PART IV: Additional checks
@@ -132,10 +140,14 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0)
                'number of dead specimens' = sum(dead),
                'smallest sample (live)' = min(rowSums(live)),
                'smallest sample (dead)' = min(rowSums(dead)),
-               'number of groups (levels)' = num.groups,
-               'number of useful groups (# levels with n > 1)' = num.groups,
-               'n.filters' = filtering)
+               'number of levels in "gp" factor' = num.groups,
+                'number of observations in "gp" factor' = length(gp),
+               'number of useful levels (levels with n>1)' = num.groups)
     colnames(report) <- 'outcomes'
-  return(report)
- }
+  print(report)
+  }
+
+  if (length(gp) == 0) return(list(live=live, dead=dead))
+  if (length(gp) > 0) return(list(live=live, dead=dead, gp=gp))
+
 }
