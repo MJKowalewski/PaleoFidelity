@@ -1,7 +1,12 @@
-#' FidData: An example of a live-dead dataset
-#'
+#' \name{FidData}
+#' \docType{data}
+#' \alias{FidData}
+#' \title{FidData: An example of a live-dead dataset}
+#' \description{
 #' A live-dead dataset including live and dead specimen counts from 44 sampling station off the coast of
 #' North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates.
+#' }
+#' \usage{PaleoFidelity}
 #'
 #' @format A list with four objects:
 #' \describe{
@@ -12,3 +17,4 @@
 #'   ...
 #' }
 #' @source \url{https://www.nature.com/articles/sdata201854}
+#' \keyword{datasets}
