@@ -1,3 +1,5 @@
+#' Fidelity Data example
+#'
 #' \name{FidData}
 #' \docType{data}
 #' \alias{FidData}
