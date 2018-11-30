@@ -2,6 +2,7 @@
 
 export(FidelityEst)
 export(FidelitySummary)
+export(KidwellPlot)
 importFrom(stats,cor)
 importFrom(stats,sd)
 importFrom(vegan,vegdist)

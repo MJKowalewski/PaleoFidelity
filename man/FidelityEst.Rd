@@ -5,7 +5,8 @@
 \title{FidelityEst computes compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "chao", report = FALSE)
+  sim.measure = "chao", report = FALSE, n.filters = 0,
+  t.filters = 1, iter = 0, dbzero = TRUE)
 }
 \arguments{
 \item{live}{A species/taxon abundance matrix with counts of live-collected specimens
@@ -23,17 +24,30 @@ live-dead correlations (default='spearman').}
 \item{sim.measure}{A measure of similarity to measure live-dead agreement (default='Chao')}
 
 \item{report}{Print compliance report from function FidelitySummary}
+
+\item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
+
+\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
+
+\item{iter}{An integer defining number of resampling iteration (default iter=0)}
+
+\item{dbzero}{Logical (default dbzero = TRUE) (removes double 0's when computing correlation measure)}
 }
 \value{
 A list containing the following components:
-  \item{x}{The values of correlation coefficient for each live-dead comparison}
-  \item{y}{The values of similarity coefficients for each live-dead comparison}
-  \item{x.lab}{The name of the correlation coefficient used}
-  \item{y.lab}{The name of the similarity coefficient used}
-  \item{mean.x}{The mean correlation coefficient (same as 'x' if live-dead data include only one sample )}
-  \item{mean.y}{The mean similarity coefficient (same as 'x' if live-dead data include only one sample )}
-  \item{group.means.x}{Mean correlation coefficients by group (returned if 'gp' factor provided)}
-  \item{group.means.y}{Mean similarity coefficients by group (returned if 'gp' factor provided)}
+  \item{x}{Live-dead correlation coefficients for each site}
+  \item{y}{Live-dead similarity coefficients for each live-dead comparison}
+  \item{y}{Live-dead fidelity index for each live-dead comparison}
+  \item{measures}{The names of fidelity measures used}
+  \item{observed.means}{Grand means of fidelity measures (means of  $x, $y, & $z) and
+       by-group mean when gp factor provided}
+  \item{PF.stats}{Statistical summary under "Perfect Fidelity" model}
+  \item{PF.dist}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
+  \item{PF.dist.gp}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
+  \item{PF.gp.prob}{Pairwise significance tests for all level combinations}
+  \item{live}{The post-processed version of 'live' data matrix used in all analyses}
+  \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
+  \item{gp}{The post-processed version of 'gp' factor, when provided}
 }
 \description{
 FidelityEst computes common live-dead fidelity measures by comparing two matching
@@ -42,9 +56,25 @@ In the case of datastes representing more than one sample,
 the function returns also means. If 'gp' factor is provided to define sample groups
 means for groups are returned as well.
 }
+\details{
+FidelityEst assess compositional fidelity using three measures
+(returned as 3 separate objects):
+
+(1) x - one of the three common measures of correlation/association:
+ spearman (default), kendall, or pearson;
+
+(2) y - an abundance based measure of similarity such as: jaccard-chao (default)
+or bray ('vegdist' in 'vegan');
+
+(3) z - Fidelity Index measured as a scaled Euclidean distance from perfect fidelity score of
+ indices x and y, where z = 0 denotes perfect fidelity (correlation and similarity measures
+ both equal 1); z = 1 denotes no fidelity (correlation and similarity measures both equal 0);
+ and z < 1 denotes cases where inverse correlation is observed.
+}
 \examples{
 
 data(FidData)
-FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
+out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
+KidwellPlot(out1, gpcol=c('forestgreen', 'coral3'))
 
 }

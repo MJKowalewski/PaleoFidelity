@@ -1,12 +1,12 @@
 Package: PaleoFidelity
 Type: Package
 Title: Live-dead fidelity estimates 
-Version: 0.1.2
+Version: 0.2.0
 Depends:
     R (>= 3.5.0)
 Imports:
     vegan (>= 2.5-2)
-Date: 2018-08-16
+Date: 2018-11-30
 Author: Michal Kowalewski
 Maintainer: Michal Kowalewski <kowalewski@ufl.edu>
 Description: PaleoFidelity assembles a series of custom functions designed to assess live-dead agreement

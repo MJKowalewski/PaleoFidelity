@@ -4,13 +4,15 @@
 \alias{FidelitySummary}
 \title{FidelitySummary (to assess data compliance issues)}
 \usage{
-FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0)
+FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0,
+  t.filters = 1)
 }
 \arguments{
-\item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)}
+\item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)
+(dimensions must match that of 'live' object)}
 
 \item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-(dimensions must match)}
+(dimensions must match that of 'live' object)}
 
 \item{gp}{An optional factor, with two or more levels, defining sample groups.
 The length of gp must equal number of rows in live and dead and at least two levels must
@@ -18,27 +20,33 @@ include 2 or more observations to allow for by-group analyses.}
 
 \item{report}{Logical (default=FALSE), set report=TRUE to print additional warnings and data summary}
 
-\item{n.filters}{Numerical value used to remove small samples with n < n.filters (default value is 0)}
+\item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
+
+\item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences}
 }
 \value{
-When report=TRUE, the function returns a matrix with data summary and may also return warnings.
-    When report=FALSE, no objects are returned (only warnings may be produced)
+A list including the following components:
+  \item{live}{The filtered live dataset where rows=sites and columns=taxa}
+  \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
+  \item{gp}{The grouping factor associated with sites (if provided)}
 }
 \description{
 FidelitySummary function checks if the input objects are appropriately formatted and contain
-adequate data needed to carry out a mathematically meaningful fidelity analysis.
+adequate data needed to carry out fidelity analysis. The function also allows the user to
+filter data by removing small samples and rare taxa
 }
 \details{
-This function is implemented in other PaleoFidelity functions. However, users are encouraged to use
-it prior to any other functioons in order to:
+This function is implemented in other PaleoFidelity functions. However, users
+are encouraged to use it prior to any other functions in order to:
 1). Check for errors and warnings;
-2). Generate a basic summary of user-provided objects (make sure to set parameter report=TRUE)
-3). Explore how data filtering (parameter "n.filters") affect the dimensionality of the data.
+2). Generate a basic summary of user-provided objects (set logical argument report=TRUE)
+3). Explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 
-NOTE: FidelitySummary function will not alter data objects passed through it, but only provide an initial
-compliance evaluation. Also the function allows the user to detect small samples and assess if removing
-those samples is advisable in terms of data dimensionality. If removal of small samples is desirable
-for subsequent analyses, please specify the numerical value of "n.filters" in other PaleoFidelity functions.
+NOTE: FidelitySummary function will provide an initial compliance evaluation.
+Also the function allows the user to detect small samples and assess
+if removing those samples is advisable in terms of data dimensionality.
+If removal of small samples is desirable for subsequent analyses,
+please specify the numerical value of "n.filters" and "t.filters" in other PaleoFidelity functions.
 }
 \examples{
 data(FidData)
