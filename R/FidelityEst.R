@@ -47,26 +47,26 @@
 #' @return A list containing the following components:
 #'   \item{x}{Live-dead correlation coefficients for each site}
 #'   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-#'   \item{y}{Live-dead fidelity index for each live-dead comparison}
+#'   \item{z}{Live-dead fidelity index for each live-dead comparison}
 #'   \item{measures}{The names of fidelity measures used}
 #'   \item{observed.means}{Grand means of fidelity measures (means of  $x, $y, & $z) and
-#'        by-group mean when gp factor provided}
+#'        by-group mean when 'gp' factor provided}
 #'   \item{PF.stats}{Statistical summary under "Perfect Fidelity" model}
 #'   \item{PF.dist}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-#'   \item{PF.dist.gp}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-#'   \item{PF.gp.prob}{Pairwise significance tests for all level combinations}
-#'   \item{live}{The post-processed version of 'live' data matrix used in all analyses}
-#'   \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
-#'   \item{gp}{The post-processed version of 'gp' factor, when provided}
+#'   \item{PF.dist.gp}{By-group resampling distribution of fidelity measures under
+#'        "Perfect Fidelity" model when 'gp' factor provided}
+#'   \item{gp.prob}{Pairwise significance tests for level combinations}
+#'   \item{live}{The post-processed version of 'live' data matrix used in analyses}
+#'   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
+#'   \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}
 #'
 #' @examples
 #'
 #' data(FidData)
 #' out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
-#' KidwellPlot(out1, gpcol=c('forestgreen', 'coral3'))
+#' SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 #'
 #' @export
-#' @importFrom stats cor
 #' @importFrom vegan vegdist
 
 FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='chao',
@@ -133,16 +133,17 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
   ifelse(exists('my.output'), PF.stats <- pfstatout, PF.stats <- NA)
   ifelse(exists('my.output'), PF.dist <- my.output, PF.dist <- NA)
 
-# 4. STATISTICAL COMPARISON OF GROUPS (PAIRWISE LEVEL COMPARISONS WITH BONFERRONI CORRECTION)
+# 4. STATISTICAL COMPARISON OF GROUPS (PAIRWISE COMPARISONS)
   if (length(gp)>0 & iter > 0) {
+    outlist2 <- vector("list", length(levels(gp)))
     kk <- 0
     for (k in levels(gp)) {
     kk <- kk + 1
     my.output.gp <- matrix(0, iter, 3)
+    colnames(my.output.gp) <- c(cor.measure, sim.measure, 'Fid.index')
     livegp <- live[which(gp == k),]
     deadgp <- dead[which(gp == k),]
     for (j in 1:iter)  my.output.gp[j,] <- FidPerfModel(livegp, deadgp)
-    colnames(my.output.gp) <- c(cor.measure, sim.measure, 'Fid.index')
     perfidest.gp <- colMeans(my.output.gp)
     ppfFI.gp.1 <- sum(my.output.gp[,3] >= mean.gp[kk, 3])
     ppfFI.gp.2 <- sum(my.output.gp[,3] <= mean.gp[kk, 3])
@@ -151,7 +152,7 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
                                PFest = perfidest.gp, observed = mean.gp[kk,],
                                PF.debt = perfidest.gp - mean.gp[kk,], p = c(NA, NA, pcorr.gp))
     ifelse(kk == 1, outlist1 <- pfstatout.gp, outlist1 <- rbind(outlist1, pfstatout.gp))
-    ifelse(kk == 1, outlist2 <- my.output.gp, outlist2 <- list(outlist2, my.output.gp))
+    outlist2[[kk]] <- my.output.gp
     }
     p.gp.out <- NULL
     for (m in 1:length(levels(gp))) {
@@ -160,8 +161,11 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
       bgp1 <- outlist2[[m]][,3] - mean.gp[m,3]
       bgp2 <- outlist2[[n]][,3] - mean.gp[n,3]
       p.gp <- (1 + (2 * min(sum(bgp1 >= bgp2), sum(bgp1 <= bgp2))))/(iter+1)
-      p.gp.corr <- p.gp * (length(levels(gp))/2) * (length(levels(gp)) - 1)
-      p.gp.out <- rbind(p.gp.out, data.frame(p=p.gp.corr, gp1=levels(gp)[m], gp2=levels(gp)[n]))
+      num.comp <- (length(levels(gp))/2) * (length(levels(gp)) - 1)
+      ifelse(p.gp < 0.05, sgnf.1 <- '***', sgnf.1 <- '-')
+      ifelse(p.gp*num.comp < 0.05, sgnf.2 <- '***', sgnf.2 <- '-')
+      p.gp.out <- rbind(p.gp.out, data.frame(gp1=levels(gp)[m], gp2=levels(gp)[n],
+                        p.value=p.gp, sign=sgnf.1, Bonferroni=sgnf.2))
       }
      }
     }
@@ -176,7 +180,7 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
   out1 <- list(x=fid.sam[,1], y=fid.sam[,2], z=fid.sam[,3],
                 measures=c(cor.measure, sim.measure, "fid.index"),
                 observed.means = rep1, PF.stats = rep2, PF.dist = PF.dist,
-                PF.dist.gp = PF.dist.gp, PF.gp.prob = PF.gp.p,
+                PF.dist.gp = PF.dist.gp, gp.prob = PF.gp.p,
                 live = live, dead = dead, gp = gp)
   return(out1)
 }

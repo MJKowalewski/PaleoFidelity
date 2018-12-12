@@ -28,6 +28,5 @@
 #' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
 #'
 #'
-#' @importFrom stats sd
-#' @importFrom vegan vegdist
+#' @importFrom vegan vegdist rrarefy
 NULL

@@ -1,10 +1,10 @@
-#' KidwellPlot (outputs a fidelity plot)
+#' SJPlot (outputs a fidelity plot)
 #'
-#' KidwellPlot function generates a bivariate plot of a correlation measure (x axis) versus
+#' SJPlot function generates a bivariate plot of a correlation measure (x axis) versus
 #' a similarity measure (y axis) for all live-dead pairwise comparisons.
 #'
-#' @details KidwellPlot function is designed to use the output of FidelityEst function to produce
-#' a classic fidelity plot first introduced by Kidwell (2007). Specifically, if default arguments
+#' @details SJPlot function is designed to use the output of FidelityEst function to produce
+#' a classic fidelity plot (see Kidwell 2007). Specifically, if default arguments
 #' for fidelity measures ('Spearman' and 'Chao') are used in FidelityEst function,
 #' a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
 #' If a grouping factor is provided, symbols are color-coded by levels and group means are plotted.
@@ -46,15 +46,15 @@
 #'
 #' @examples
 #'
-#' KidwellPlot(FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1))
+#' SJPlot(FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1))
 #'
 #' @export
 
-KidwellPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1,
-                         pch=21, col='black', gpcol=NULL, pch2='+', PF=FALSE)
+SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1,
+                        pch=21, col='black', gpcol=NULL, pch2='+', PF=FALSE)
 {
   graphics::plot(x$x, x$y, type='n', xlim=xlim, ylim=ylim,
-                xlab=x$measures[1], ylab=x$measures[2], las=1)
+                 xlab=x$measures[1], ylab=x$measures[2], las=1)
 
   graphics::abline(h = 0.5, v = 0, lwd = 1.5, col = 'darkgray')
 
@@ -68,17 +68,17 @@ KidwellPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, 
     if (max(cexR) - min(cexR) == 0) cex=cex
     else cex <- 2.5*(0.3 + (cexR - min(cexR)) / (max(cexR) - min(cexR)))
     graphics::legend('topleft', pch=pch, col=col, pt.cex=c(max(cex), min(cex)),
-         as.character(c(max(cexR),min(cexR))), title = 'N min')
-    }
+                     as.character(c(max(cexR),min(cexR))), title = 'N min')
+  }
   if (length(x$gp) > 0) {
-   ifelse(length(gpcol) == 0, gpcol <- 1:length(levels(x$gp)), gpcol <- gpcol)
-   graphics::points(x$x, x$y, pch=pch, bg=grDevices::adjustcolor(gpcol, trans)[x$gp],
-                    col=gpcol[x$gp], cex=cex)
-   graphics::points(x$observed.means[-1,1:2], pch=pch2, col=gpcol, cex=2)
-   graphics::legend('bottomleft', pch=pch, col=gpcol,
-                    pt.bg=grDevices::adjustcolor(gpcol, trans), pt.cex=1,
-                    levels(x$gp), title = 'groups')
-   }
+    ifelse(length(gpcol) == 0, gpcol <- 1:length(levels(x$gp)), gpcol <- gpcol)
+    graphics::points(x$x, x$y, pch=pch, bg=grDevices::adjustcolor(gpcol, trans)[x$gp],
+                     col=gpcol[x$gp], cex=cex)
+    graphics::points(x$observed.means[-1,1:2], pch=pch2, col=gpcol, cex=2)
+    graphics::legend('bottomleft', pch=pch, col=gpcol,
+                     pt.bg=grDevices::adjustcolor(gpcol, trans), pt.cex=1,
+                     levels(x$gp), title = 'groups')
+  }
   else {
     graphics::points(x[[1]], x[[2]], pch=pch, bg=grDevices::adjustcolor(col, trans), col=col, cex=cex)
     graphics::points(rbind(x$observed.means[1:2]), pch=pch2, col=col, cex=2)

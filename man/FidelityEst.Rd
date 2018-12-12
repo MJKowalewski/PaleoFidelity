@@ -37,17 +37,18 @@ live-dead correlations (default='spearman').}
 A list containing the following components:
   \item{x}{Live-dead correlation coefficients for each site}
   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-  \item{y}{Live-dead fidelity index for each live-dead comparison}
+  \item{z}{Live-dead fidelity index for each live-dead comparison}
   \item{measures}{The names of fidelity measures used}
   \item{observed.means}{Grand means of fidelity measures (means of  $x, $y, & $z) and
-       by-group mean when gp factor provided}
+       by-group mean when 'gp' factor provided}
   \item{PF.stats}{Statistical summary under "Perfect Fidelity" model}
   \item{PF.dist}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-  \item{PF.dist.gp}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-  \item{PF.gp.prob}{Pairwise significance tests for all level combinations}
-  \item{live}{The post-processed version of 'live' data matrix used in all analyses}
-  \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
-  \item{gp}{The post-processed version of 'gp' factor, when provided}
+  \item{PF.dist.gp}{By-group resampling distribution of fidelity measures under
+       "Perfect Fidelity" model when 'gp' factor provided}
+  \item{gp.prob}{Pairwise significance tests for level combinations}
+  \item{live}{The post-processed version of 'live' data matrix used in analyses}
+  \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
+  \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}
 }
 \description{
 FidelityEst computes common live-dead fidelity measures by comparing two matching
@@ -75,6 +76,6 @@ or bray ('vegdist' in 'vegan');
 
 data(FidData)
 out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
-KidwellPlot(out1, gpcol=c('forestgreen', 'coral3'))
+SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 
 }
