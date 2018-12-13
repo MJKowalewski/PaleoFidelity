@@ -2,23 +2,14 @@
 % Please edit documentation in R/AlphaPlot.R
 \name{AlphaPlot}
 \alias{AlphaPlot}
-\title{AlphaPlot (outputs a cross plot of live-dead offsets in alpha diversity and evenness)}
+\title{AlphaPlot (a cross plot of live-dead offsets in alpha diversity and evenness)}
 \usage{
-AlphaPlot(x, CI = 0.5, CImean = 0.99, colpt = "gray",
-  colci = "gray", bgpt = "white", pchpt = 21, colmean = "black",
-  colpt.gp = NULL, colci.gp = NULL, addlegend = TRUE)
+AlphaPlot(x, colpt = "gray", colci = "gray", bgpt = "white",
+  cf.bars = TRUE, cex = 0.8, pchpt = 21, colmean = "black",
+  col.gp = NULL, addlegend = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityDiv function}
-
-\item{CI}{A numerical value (default = 0.5) defining confidence bars for individual sites.
-Note: 0.5 - plots bars represnting interuqartile range, 0.95 - plots 95% confidence bars, etc.
-Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.}
-
-\item{CImean}{A numerical value (default = 0.99) defining confidence bars for means of all sites
-or groups of sites (if 'gp' factor was provided). Note: 0.5 - plots bars represnting interuqartile
-range, 0.95 - plots 95% confidence bars, etc. Confidence bars are estimated as percentiles of
-subsampled estimates of Delta S and Delta PIE.}
 
 \item{colpt}{A character string or number defining color of symbols for individual sites
 (default = 'gray')}
@@ -29,21 +20,21 @@ sites (default = 'gray')}
 \item{bgpt}{A character string or number defining color of symbols for individual
 sites (default = 'white')}
 
-\item{pchpt}{A number defining symbol type (default = 21)
-Note: filled symbol numbers (21-25) should be used}
+\item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted}
+
+\item{cex}{a numerical value (default=0.8) defining expansion factor for symbols}
+
+\item{pchpt}{A number defining symbol type (default = 21) (filled symbols (21-25) should be used)}
 
 \item{colmean}{A character string or number defining color of bars representing
 mean estimates for all sites (default = 'white')}
 
-\item{colpt.gp}{A character string or number defining colors by group (default = 1:#levels)
-for symbols for sites (applicable when 'gp' factor is provided). Custom colors
-can be provided, but must match number of levels in a grouping factor}
+\item{col.gp}{A character string or number defining colors for group (default = 1:#levels)
+for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
+must match number of levels in a grouping factor}
 
-\item{colci.gp}{A character string or number defining colors by group (default = 1:#levels)
-for confidence bars for sites (applicable when 'gp' factor is provided). Custom colors
-can be provided, but must match number of levels in a grouping factor}
-
-\item{addlegend}{Logical (default=TRUE): add legend (activated only when 'gp' factor provided)}
+\item{addlegend}{Logical (default=TRUE): add legend
+Note: The legend is plotted only when 'gp' factor provided}
 }
 \value{
 A single bivariate plot produce by plot function
@@ -65,6 +56,9 @@ group means are plotted in addition to grand mean for all sites.
 }
 \examples{
 
-AlphaPlot(FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=30, t.filters=1))
+my.fid1 <- FidelityDiv(FidData$live, FidData$dead, n.filters=30)
+AlphaPlot(my.fid1)
+my.fid2 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=1000, CI=0.95)
+AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
 
 }

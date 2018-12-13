@@ -2,10 +2,11 @@
 % Please edit documentation in R/FidelityDiv.R
 \name{FidelityDiv}
 \alias{FidelityDiv}
-\title{FidelityDiv estimates live-dead differences in alpha and beta diversity}
+\title{FidelityDiv estimates live-dead differences in alpha diversity and evenness}
 \usage{
 FidelityDiv(live, dead, gp = NULL, report = FALSE, n.filters = 0,
-  t.filters = 1, iter = 100)
+  t.filters = 1, iter = 100, CI = 0.5, CImean = 0.99,
+  outdata = FALSE)
 }
 \arguments{
 \item{live}{A species/taxon abundance matrix with counts of live-collected specimens
@@ -23,20 +24,35 @@ FidelityDiv(live, dead, gp = NULL, report = FALSE, n.filters = 0,
 
 \item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
 
-\item{iter}{An integer defining number of resampling iteration (default iter=0)}
+\item{iter}{An integer defining number of resampling iteration (default iter=100)}
+
+\item{CI}{A numerical value (default = 0.5) defining confidence bars for individual sites.
+Note: 0.5 - plots bars represnting inter-quartile ranges, 0.95 - plots 95% confidence bars, etc.
+Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.}
+
+\item{CImean}{A numerical value (default = 0.99) defining confidence bars for means of all sites
+or groups of sites (if 'gp' factor was provided). Note: 0.5 - plots bars represnting inter-quartile
+range, 0.95 - plots 95% confidence bars, etc. Confidence bars are estimated as percentiles of
+subsampled estimates of Delta S and Delta PIE.}
+
+\item{outdata}{Logical (default = FALSE) to determine if data files should be included in the output}
 }
 \value{
 A list containing the following components:
+  \item{live}{The post-processed version of 'live' data matrix used in all analyses}
+  \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
+  \item{gp}{The post-processed version of 'gp' factor, when provided}
   \item{x}{DELTA S values for each live-dead comparisons (site-level differences in sample standardized
            species richness)}
   \item{y}{DELTA PIE values for each live-dead comparisons (site-level differences in evenness
            estimated as Hurlbert's PIE)}
-  \item{z}{DELTA BETA Live-dead fidelity index for each live-dead comparison}
-  \item{observed.means}{Grand means of diversity measures (means of  $x, $y, & $z) and
-       by-group means when gp factor provided}
-  \item{live}{The post-processed version of 'live' data matrix used in all analyses}
-  \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
-  \item{gp}{The post-processed version of 'gp' factor, when provided}
+  \item{xmean}{Grand mean of Delta S}
+  \item{ymean}{Grand mean of Delta PIE}
+  \item{xmean}{Grand mean of Delta S}
+  \item{xgp}{Group means of Delta S (when 'gp' factor provided)}
+  \item{ygp}{Group means of Delta PIE (when 'gp' factor provided)}
+  \item{p.values}{p.values for Null H: Delta.S.p=0 and Delta.PIE.p=0}
+  \item{p.gps}{per-group p.values for Null H: Delta.S.p=0 and Delta.PIE.p=0}
 }
 \description{
 FidelityDiv provides estimates of differences in diversity between live and dead samples
@@ -46,27 +62,25 @@ If 'gp' factor is provided to aggregate sets of sites/samples, means for groups 
 }
 \details{
 FidelityDiv assess live-dead offsets in evenness/diversity using measures
-of alpha diversity, alpha evenness, and beta diversity (returned as 3 separate objects):
+of alpha diversity and alpha evenness (returned as 2 separate objects):
 
 (1) x - Live-dead offsets in alpha diversity for individual sites. The difference is measured as
 ln(S)DEAD - ln(S)LIVE (i.e., difference between natural logarithms of sample-standardized
 species richness of dead and live samples). A negative value indicates that alpha diversity
 of live samples exceeds alpha diversity of dead sample (and vice versa).
+Confidence intervals and p.values for Null H: Delta S = 0 are also reported.
 
 (2) y - Live-dead offsets in evenness for individual sites. The difference is measured as
 PIE(DEAD) - PIE(LIVE) (i.e., difference between estimates of Hurlbert's PIE for live and
 dead samples). A negative value indicates that evenness of live samples exceeds evenness
 of dead sample (and vice versa).
-
-(3) z - Live-dead offsets in beta diversity for individual sites. The offset is estimated as
- Beta(DEAD) - Beta(LIVE). Three  measures of beta diversity can be selected:
- "beta variance", "Shannon's beta", "Whittaker's beta". A negative value indicates that
- beta diversity of live sample exceed beta diversity of dead sample (and vice versa).
+Confidence intervals and p.values for Null H: Delta S = 0 are also reported.
 }
 \examples{
 
-data(FidData)
-out1 <- FidelityDiv(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
-
+FidelityDiv(FidData$live, FidData$dead, n.filters=30)
+my.fid <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=1000, CI=0.95)
+my.fid$x # site-level estimates of Delta S with 95\% CIs and p values
+my.fid$p.gps # p values for means of groups
 
 }
