@@ -6,7 +6,7 @@
 #' @details AlphaPlot function uses the output of FidelityDiv function to produce
 #' a cross plot visualizing differences in estimates of alpha diversty and evenness between
 #' pairs of sympatric live and dead samples. In its default form, an approch proposed by
-#' Olszewski and Kidwell (200X) is used. The offset in alpha diversity is measured as the difference
+#' Olszewski and Kidwell (2007) is used. The offset in alpha diversity is measured as the difference
 #' between natural logarithms of sample standardized richness log(R-dead) - log(R-live). The offset
 #' in evenness is measured as the difference between Hurlbert's PIE (PIE-dead - PIE-live).
 #' Confidence bars depitcting user-specified confidence intervals are also plotted.
