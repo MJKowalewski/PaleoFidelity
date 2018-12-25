@@ -14,7 +14,7 @@
 #' @param col A character string or number defining color of symbols for individual sites
 #' (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.
 #'
-#' @param col.bar A character string or number defining color of confidence bars for individual
+#' @param col.bar A character string or a number defining color of confidence bars for individual
 #'  sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.
 #'
 #' @param bgpt A character string or number defining background color of symbols for individual

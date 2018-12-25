@@ -23,6 +23,6 @@
 #'   ...
 #' }
 #' @references Tyler, C.L., and Kowalewski, M., 2018, Regional surveys of macrobenthic shelf
-#'  invertebrate communities in Onslow Bay, North Carolina, USA. Scientific data 5, 180054.
+#'  invertebrate communities in Onslow Bay, North Carolina, USA. Scientific Data 5, 180054.
 #' @source \url{https://www.nature.com/articles/sdata201854}
 #' \keyword{datasets}

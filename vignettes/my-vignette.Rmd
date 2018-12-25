@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 The package "PaleoFidelity" carries out common types of fidelity analyses (live-dead comparisons). The package is specifically designed for compositional data that represent specimen counts of taxa with separate tallies for live and dead components of each sample. The package can be used for a single site (one live-dead comparison), but it is probably more useful when sets of sites need to be analyzed. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups. An additional grouping factor that splits species/taxa into subsets can also be provided to assess how fidelity varies across major taxonomic, ecological or taphonomic groups within the analyzed data.
 
-Currently, PaleoFidelity allows users to carry the following analyses (discussed in detail below):
+Currently, PaleoFidelity allows users to carry the following analyses (discussed in more detail below):
 
 1. __FidelityEst__ function performs compositional fidelity analysis based on a correlation measure, a similarity measure, and an integrated fidelity metric.
 

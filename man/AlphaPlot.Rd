@@ -14,7 +14,7 @@ AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
 \item{col}{A character string or number defining color of symbols for individual sites
 (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
 
-\item{col.bar}{A character string or number defining color of confidence bars for individual
+\item{col.bar}{A character string or a number defining color of confidence bars for individual
 sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
 
 \item{bgpt}{A character string or number defining background color of symbols for individual

@@ -6,7 +6,7 @@
 #' the function returns also means. If 'gp' factor is provided to define sample groups
 #' means for groups are returned as well.
 #'
-#'@details FidelityEst assess compositional fidelity using three measures
+#'@details FidelityEst assesses compositional fidelity using three measures
 #' (returned as 3 separate objects):
 #'
 #' (1) x - one of the three common measures of correlation/association:

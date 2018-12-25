@@ -165,4 +165,3 @@ if (!outdata) out1 <- list(gp=gp, x=DS, y=DP, xmean=meanDS, ymean=meanDP, xgp=ou
                            p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)
   return(out1)
 }
-

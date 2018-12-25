@@ -17,7 +17,7 @@
 #' please specify the numerical value of "n.filters" and "t.filters" in other PaleoFidelity functions.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)
-#'    (dimensions must match that of 'live' object)
+#'    (dimensions must match that of 'dead' object)
 #'
 #' @param dead A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
 #'    (dimensions must match that of 'live' object)

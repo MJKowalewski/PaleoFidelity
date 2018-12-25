@@ -1,4 +1,4 @@
-#' SJPlot (outputs a fidelity plot)
+#' SJPlot outputs a fidelity plot
 #'
 #' SJPlot function generates a bivariate plot of a correlation measure (x axis) versus
 #' a similarity measure (y axis) for all live-dead pairwise comparisons.

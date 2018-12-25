@@ -15,7 +15,7 @@ and beta diversity.
 PaleoFidelity package also offers permutation tests for one-sample, two-sample, and
 multi-sample hypotheses as well as bootstrapped confidence intervals for fidelity statistics.
 
-Specialized plot functions are included to visualize fidelity patterns.
+Plot functions to visualize fidelity patterns are also provided.
 }
 \examples{
 # Version and citation

@@ -2,7 +2,7 @@
 % Please edit documentation in R/SJPlot.R
 \name{SJPlot}
 \alias{SJPlot}
-\title{SJPlot (outputs a fidelity plot)}
+\title{SJPlot outputs a fidelity plot}
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
   trans = 0.3, cex = 1, pch = 21, col = "black", gpcol = NULL,

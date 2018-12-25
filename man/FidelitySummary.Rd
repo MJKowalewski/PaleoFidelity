@@ -9,7 +9,7 @@ FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0,
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)
-(dimensions must match that of 'live' object)}
+(dimensions must match that of 'dead' object)}
 
 \item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
 (dimensions must match that of 'live' object)}
