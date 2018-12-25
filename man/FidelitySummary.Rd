@@ -2,21 +2,20 @@
 % Please edit documentation in R/FidelitySummary.R
 \name{FidelitySummary}
 \alias{FidelitySummary}
-\title{FidelitySummary (to assess data compliance issues)}
+\title{Data filtering and compliance assessment}
 \usage{
 FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0,
   t.filters = 1)
 }
 \arguments{
-\item{live}{A matrix with counts of live-collected specimens (rows=samples, columns=species/taxa)
-(dimensions must match that of 'dead' object)}
+\item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
+Dimensions of 'live' and 'dead' matrices must match exactely.}
 
-\item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-(dimensions must match that of 'live' object)}
+\item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
+Dimensions of 'live' and 'dead' matrices must match exactely.}
 
-\item{gp}{An optional factor, with two or more levels, defining sample groups.
-The length of gp must equal number of rows in live and dead and at least two levels must
-include 2 or more observations to allow for by-group analyses.}
+\item{gp}{An optional univariate factor defining groups of sites. The length of gp must
+equal number of rows of 'live' and 'dead' matrices.}
 
 \item{report}{Logical (default=FALSE), set report=TRUE to print additional warnings and data summary}
 
@@ -37,16 +36,16 @@ filter data by removing small samples and rare taxa
 }
 \details{
 This function is implemented in other PaleoFidelity functions. However, users
-are encouraged to use it prior to any other functions in order to:
+are encouraged to use it prior to using any other functions in order to:
 1). Check for errors and warnings;
 2). Generate a basic summary of user-provided objects (set logical argument report=TRUE)
 3). Explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 
-NOTE: FidelitySummary function will provide an initial compliance evaluation.
-Also the function allows the user to detect small samples and assess
-if removing those samples is advisable in terms of data dimensionality.
-If removal of small samples is desirable for subsequent analyses,
-please specify the numerical value of "n.filters" and "t.filters" in other PaleoFidelity functions.
+NOTE: FidelitySummary function will provide an initial compliance evaluation. Also the function
+ allows the user to detect small samples and assess if removing those samples is advisable
+ in terms of data dimensionality. If removal of small samples is desirable for subsequent
+ analyses, please specify the desired numerical value of "n.filters" and "t.filters"
+ in other PaleoFidelity functions.
 }
 \examples{
 data(FidData)

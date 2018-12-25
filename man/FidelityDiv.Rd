@@ -2,21 +2,21 @@
 % Please edit documentation in R/FidelityDiv.R
 \name{FidelityDiv}
 \alias{FidelityDiv}
-\title{FidelityDiv estimates pairwise live-dead differences in alpha diversity and evenness}
+\title{Live-Dead differences in alpha diversity and evenness}
 \usage{
 FidelityDiv(live, dead, gp = NULL, report = FALSE, n.filters = 0,
   t.filters = 1, iter = 100, CI = 0.5, CImean = 0.99,
   outdata = FALSE)
 }
 \arguments{
-\item{live}{A species/taxon abundance matrix with counts of live-collected specimens
-(rows=samples, columns=species/taxa)}
+\item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
+Dimensions of 'live' and 'dead' matrices must match exactely.}
 
-\item{dead}{A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-(dimensions of 'live' and 'dead' must match)}
+\item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
+Dimensions of 'live' and 'dead' matrices must match exactely.}
 
-\item{gp}{An optional factor, with two or more levels, defining sample groups
-(the length of gp must equal number of rows in live and dead)}
+\item{gp}{An optional univariate factor defining groups of sites. The length of gp must
+equal number of rows of 'live' and 'dead' matrices.}
 
 \item{report}{Logical (default=FALSE) to print compliance report from function FidelitySummary}
 
@@ -56,13 +56,11 @@ A list containing the following components:
 }
 \description{
 FidelityDiv provides estimates of differences in diversity between pairs of live and dead samples
-using matrices with species/taxon abundance data. In the case of datastes representing more than
-one site, the function returns also means of differences.
-If 'gp' factor is provided to aggregate sets of sites/samples, means for groups are returned as well.
+using community abundance data. In the case of datastes representing more than one site, the
+function returns also means of differences. If 'gp' factor is provided to aggregate sets of
+sites/samples, means for groups are returned as well.
 }
 \details{
-The offset in evenness is measured as the difference between Hurlbert's PIE (PIE-dead - PIE-live).
-
 FidelityDiv assess live-dead offsets in evenness/diversity between pairs of sympatric
 live and dead samples using a bivariate approch as described in  Olszewski and Kidwell (2007).
 The estimates of (1) alpha diversity and (2) evenness are returned as 2 separate objects.
@@ -82,7 +80,7 @@ difference between sample-standardized estimates of Hurlbert's PIE for live and 
 DELTA PIE = PIE(DEAD) - PIE(LIVE)
 
 A negative value indicates that evenness of live samples exceeds evenness of the sympatric
-dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta S = 0
+dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta PIE = 0
 are also reported.
 }
 \examples{

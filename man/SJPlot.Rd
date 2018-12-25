@@ -2,43 +2,43 @@
 % Please edit documentation in R/SJPlot.R
 \name{SJPlot}
 \alias{SJPlot}
-\title{SJPlot outputs a fidelity plot}
+\title{A bivariate fidelity plot}
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
   trans = 0.3, cex = 1, pch = 21, col = "black", gpcol = NULL,
   pch2 = "+", PF = FALSE)
 }
 \arguments{
-\item{x}{An object (a list) returned by FidelityEst function}
+\item{x}{An object (a list) returned by FidelityEst function.}
 
 \item{bubble}{Logical (default=TRUE): to produce a bubble plot with symbols scaled by N min
-(the number of obeservations in the smaller of the two (live vs. dead) compared samples)}
+(the number of obeservations in the smaller of the two (live vs. dead) compared samples).}
 
-\item{xlim}{A vector with two numerical values representing x axis limits (default = c(-1, 1))}
+\item{xlim}{A vector with two numerical values representing x axis limits (default = c(-1, 1)).}
 
-\item{ylim}{A vector with two numerical values representing y axis limits (default = c(0, 1))}
+\item{ylim}{A vector with two numerical values representing y axis limits (default = c(0, 1)).}
 
-\item{trans}{A numeric value (default = 0.3) defining transparency of background fill for symbols}
+\item{trans}{A numeric value (default = 0.3) defining transparency of background fill for symbols.}
 
-\item{cex}{A numeric value (default = 1) defining symbol size (applicable if Bubble = FALSE)}
+\item{cex}{A numeric value (default = 1) defining symbol size (applicable if Bubble = FALSE).}
 
-\item{pch}{An integer or a single character (default = 21) specifying symbol type}
+\item{pch}{An integer or a single character (default = 21) specifying symbol type.}
 
-\item{col}{Color name (default = 'black') defining symbol color
-(only applicable if grouping factor not provided)}
+\item{col}{Color name (default = 'black') defining symbol color, applicable when 'gp' factor
+was provided in FidelityEst function.}
 
-\item{gpcol}{Color names (default = 1:#levels) defining colors for sample groups
-(only applicable if grouping factor is provided). Custom colors can be provided,
-but must match number of levels in a grouping factor}
+\item{gpcol}{Color names (default = 1:#levels) defining colors for sample groups, applicable
+when 'gp' factor was provided in FidelityEst function. If custom colors are provided, the number
+of colors must match number of levels in a 'gp' factor.}
 
 \item{pch2}{An integer or a single character (default = 21) specifying symbol type
-for grand or group means}
+for grand or group means.}
 
 \item{PF}{Logical (deafault=FALSE): to add scatterplot of resampled fidelity estimates
-for the null model postulating perfect fidelity}
+for the null model postulating perfect fidelity.}
 }
 \value{
-A single bivariate plot produce by plot function
+A single bivariate plot produce by plot function.
 }
 \description{
 SJPlot function generates a bivariate plot of a correlation measure (x axis) versus
@@ -57,6 +57,7 @@ It allows for quick exploratory plots and should be readily editable to derive m
 }
 \examples{
 
-SJPlot(FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1))
+out1 <- FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1)
+SJPlot(out1)
 
 }

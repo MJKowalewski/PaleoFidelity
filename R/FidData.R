@@ -1,4 +1,4 @@
-#' Fidelity Data example
+#' An example of live-dead community dataset
 #'
 #' \name{FidData}
 #' \docType{data}

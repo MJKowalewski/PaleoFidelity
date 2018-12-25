@@ -1,40 +1,37 @@
-#' FidelityEst computes compositional measures of live-dead fidelity
+#' Compositional measures of live-dead fidelity
 #'
-#' FidelityEst computes common live-dead fidelity measures by comparing two matching
-#' matrices (live and dead) with species/taxon abundance data.
-#' In the case of datastes representing more than one sample,
-#' the function returns also means. If 'gp' factor is provided to define sample groups
-#' means for groups are returned as well.
+#' FidelityEst computes live-dead fidelity measures by comparing two matching matrices (live
+#' and dead) with community abundance data. The function returns  fidelity estimates for indiviudal
+#' sites and for groups of sites if 'gp' factor is provided.
 #'
-#'@details FidelityEst assesses compositional fidelity using three measures
+#' @details FidelityEst assesses compositional fidelity using three measures
 #' (returned as 3 separate objects):
-#'
 #' (1) x - one of the three common measures of correlation/association:
 #'  spearman (default), kendall, or pearson;
-#'
 #' (2) y - an abundance based measure of similarity such as: jaccard-chao (default)
-#' or bray ('vegdist' in 'vegan');
-#'
+#'  or bray ('vegdist' in 'vegan');
 #' (3) z - Fidelity Index measured as a scaled Euclidean distance from perfect fidelity score of
 #'  indices x and y, where z = 0 denotes perfect fidelity (correlation and similarity measures
 #'  both equal 1); z = 1 denotes no fidelity (correlation and similarity measures both equal 0);
 #'  and z < 1 denotes cases where inverse correlation is observed.
 #'
-#' @param live A species/taxon abundance matrix with counts of live-collected specimens
-#'    (rows=samples, columns=species/taxa)
+#' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
+#'  Dimensions of 'live' and 'dead' matrices must match exactely.
 #'
-#' @param dead A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-#'    (dimensions of 'live' and 'dead' must match)
+#' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
+#'  Dimensions of 'live' and 'dead' matrices must match exactely.
 #'
-#' @param gp An optional factor, with two or more levels, defining sample groups
-#'    (the length of gp must equal number of rows in live and dead)
+#' @param gp An optional univariate factor defining groups of sites. The length of gp must
+#'  equal number of rows of 'live' and 'dead' matrices.
 #'
-#' @param cor.measure defines correlation coefficient (stats function 'vignettecor') used to measure pairwise
-#'    live-dead correlations (default='spearman').
+#' @param cor.measure A character string (default='spearman') defining correlation measure
+#'  (stats function 'vignettecor') used to estimate live-dead correlations.
 #'
-#' @param sim.measure A measure of similarity to measure live-dead agreement (default='Chao')
+#' @param sim.measure A character string (default='chao') defining similarity measure (vegan
+#'   function 'vegdist') used to estiamte live-dead similiarity. Any measure accepatble by
+#'   'vegdist' can be used.
 #'
-#' @param report Print compliance report from function FidelitySummary
+#' @param report Logical (default=TRUE) to print compliance report from function 'FidelitySummary'.
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
 #'

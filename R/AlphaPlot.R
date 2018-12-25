@@ -1,4 +1,4 @@
-#' AlphaPlot produces a cross plot of live-dead offsets in alpha diversity and evenness
+#' A bivariate plot of live-dead offsets in alpha diversity and evenness
 #'
 #' AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
 #' and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
@@ -7,35 +7,35 @@
 #' visualizing live-dead differences in alpha diversity and evenness. Confidence bars around
 #' DELTA S and DELTA PIE estimates are also plotted. If a grouping factor is provided, symbols
 #' and bars are color-coded by levels and group means are plotted in addition to grand mean
-#' for all sites. No object is returned by this function.
+#' for all sites.
 #'
 #' @param x An object (a list) returned by FidelityDiv function
 #'
 #' @param col A character string or number defining color of symbols for individual sites
-#' (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.
+#'  (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.
 #'
 #' @param col.bar A character string or a number defining color of confidence bars for individual
 #'  sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.
 #'
 #' @param bgpt A character string or number defining background color of symbols for individual
-#' sites (default = 'white')
+#'  sites (default = 'white').
 #'
-#' @param cf.bars Logical (default=TRUE) to indicate if confidence bars should be plotted
+#' @param cf.bars Logical (default=TRUE) to indicate if confidence bars should be plotted.
 #'
-#' @param cex a numerical value (default=0.8) defining expansion factor for symbols
+#' @param cex A numerical value (default=0.8) defining expansion factor for symbols.
 #'
-#' @param pch A number defining symbol type (default = 21) (filled symbols (21-25) should be used)
+#' @param pch An integer defining symbol type (default=21). Filled symbols (21-25) should be used.
 #'
 #' @param colmean A character string or number defining color of bars representing
-#' mean estimates for all sites (default = 'white')
+#'  mean estimates for all sites (default = 'white')
 #'
 #' @param col.gp A character string or number defining colors for group (default = 1:#levels)
-#' for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
-#' must match number of levels in a grouping factor
+#'  for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
+#'  must match number of levels in a grouping factor
 #'
-#' @param addlegend Logical (default=TRUE): adds legend to the plot (only when 'gp' factor is provided)
+#' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.
 #'
-#' @return A single bivariate plot produce by plot function
+#' @return A single bivariate plot produce by plot function.
 #'
 #'
 #' @examples

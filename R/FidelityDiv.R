@@ -1,13 +1,9 @@
-#' FidelityDiv estimates pairwise live-dead differences in alpha diversity and evenness
+#' Live-Dead differences in alpha diversity and evenness
 #'
 #' FidelityDiv provides estimates of differences in diversity between pairs of live and dead samples
-#' using matrices with species/taxon abundance data. In the case of datastes representing more than
-#' one site, the function returns also means of differences.
-#' If 'gp' factor is provided to aggregate sets of sites/samples, means for groups are returned as well.
-#'
-#'
-#'
-#' The offset in evenness is measured as the difference between Hurlbert's PIE (PIE-dead - PIE-live).
+#' using community abundance data. In the case of datastes representing more than one site, the
+#' function returns also means of differences. If 'gp' factor is provided to aggregate sets of
+#' sites/samples, means for groups are returned as well.
 #'
 #'@details FidelityDiv assess live-dead offsets in evenness/diversity between pairs of sympatric
 #' live and dead samples using a bivariate approch as described in  Olszewski and Kidwell (2007).
@@ -29,18 +25,17 @@
 #' DELTA PIE = PIE(DEAD) - PIE(LIVE)
 #'
 #' A negative value indicates that evenness of live samples exceeds evenness of the sympatric
-#' dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta S = 0
+#' dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta PIE = 0
 #' are also reported.
 #'
+#' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
+#'  Dimensions of 'live' and 'dead' matrices must match exactely.
 #'
-#' @param live A species/taxon abundance matrix with counts of live-collected specimens
-#'    (rows=samples, columns=species/taxa)
+#' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
+#'  Dimensions of 'live' and 'dead' matrices must match exactely.
 #'
-#' @param dead A matrix with counts of dead specimens (rows=samples, columns=species/taxa)
-#'    (dimensions of 'live' and 'dead' must match)
-#'
-#' @param gp An optional factor, with two or more levels, defining sample groups
-#'    (the length of gp must equal number of rows in live and dead)
+#' @param gp An optional univariate factor defining groups of sites. The length of gp must
+#'  equal number of rows of 'live' and 'dead' matrices.
 #'
 #' @param report Logical (default=FALSE) to print compliance report from function FidelitySummary
 #'

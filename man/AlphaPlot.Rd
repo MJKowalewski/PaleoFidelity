@@ -2,7 +2,7 @@
 % Please edit documentation in R/AlphaPlot.R
 \name{AlphaPlot}
 \alias{AlphaPlot}
-\title{AlphaPlot produces a cross plot of live-dead offsets in alpha diversity and evenness}
+\title{A bivariate plot of live-dead offsets in alpha diversity and evenness}
 \usage{
 AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
   cf.bars = TRUE, cex = 0.8, pch = 21, colmean = "black",
@@ -18,13 +18,13 @@ AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
 sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
 
 \item{bgpt}{A character string or number defining background color of symbols for individual
-sites (default = 'white')}
+sites (default = 'white').}
 
-\item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted}
+\item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted.}
 
-\item{cex}{a numerical value (default=0.8) defining expansion factor for symbols}
+\item{cex}{A numerical value (default=0.8) defining expansion factor for symbols.}
 
-\item{pch}{A number defining symbol type (default = 21) (filled symbols (21-25) should be used)}
+\item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
 
 \item{colmean}{A character string or number defining color of bars representing
 mean estimates for all sites (default = 'white')}
@@ -33,10 +33,10 @@ mean estimates for all sites (default = 'white')}
 for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
 must match number of levels in a grouping factor}
 
-\item{addlegend}{Logical (default=TRUE): adds legend to the plot (only when 'gp' factor is provided)}
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
 }
 \value{
-A single bivariate plot produce by plot function
+A single bivariate plot produce by plot function.
 }
 \description{
 AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
@@ -47,7 +47,7 @@ AlphaPlot function uses the output of FidelityDiv function to produce a crossplo
 visualizing live-dead differences in alpha diversity and evenness. Confidence bars around
 DELTA S and DELTA PIE estimates are also plotted. If a grouping factor is provided, symbols
 and bars are color-coded by levels and group means are plotted in addition to grand mean
-for all sites. No object is returned by this function.
+for all sites.
 }
 \examples{
 

@@ -1,7 +1,7 @@
 Package: PaleoFidelity
 Type: Package
 Title: Live-dead fidelity estimates 
-Version: 0.3.1
+Version: 0.3.2
 Depends:
     R (>= 3.5.0)
 Imports:
