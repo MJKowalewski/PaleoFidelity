@@ -5,8 +5,12 @@
 #' \alias{FidData}
 #' \title{FidData: An example of a live-dead dataset}
 #' \description{
-#' A live-dead dataset including live and dead specimen counts from 44 sampling station off the coast of
-#' North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates.
+#' An example of live-dead dataset based on marine macrobenthic invertebrate assemblages.
+#' }
+#' \details{
+#' A live-dead dataset including live and dead specimen counts from 44 sampling station off
+#' the coast of North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates
+#' and represents a part of the dataset described in Tyler and Kowalewski (2018).
 #' }
 #' \usage{PaleoFidelity}
 #'
@@ -18,5 +22,7 @@
 #'   \item{fossiltype}{a 2-level factor describing categorizing species in terms their fossilization potential}
 #'   ...
 #' }
+#' @references Tyler, C.L., and Kowalewski, M., 2018, Regional surveys of macrobenthic shelf
+#'  invertebrate communities in Onslow Bay, North Carolina, USA. Scientific data 5, 180054.
 #' @source \url{https://www.nature.com/articles/sdata201854}
 #' \keyword{datasets}

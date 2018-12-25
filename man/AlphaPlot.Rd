@@ -2,29 +2,29 @@
 % Please edit documentation in R/AlphaPlot.R
 \name{AlphaPlot}
 \alias{AlphaPlot}
-\title{AlphaPlot (a cross plot of live-dead offsets in alpha diversity and evenness)}
+\title{AlphaPlot produces a cross plot of live-dead offsets in alpha diversity and evenness}
 \usage{
-AlphaPlot(x, colpt = "gray", colci = "gray", bgpt = "white",
-  cf.bars = TRUE, cex = 0.8, pchpt = 21, colmean = "black",
+AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
+  cf.bars = TRUE, cex = 0.8, pch = 21, colmean = "black",
   col.gp = NULL, addlegend = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityDiv function}
 
-\item{colpt}{A character string or number defining color of symbols for individual sites
-(default = 'gray')}
+\item{col}{A character string or number defining color of symbols for individual sites
+(default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
 
-\item{colci}{A character string or number defining color of confidence bars for individual
-sites (default = 'gray')}
+\item{col.bar}{A character string or number defining color of confidence bars for individual
+sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
 
-\item{bgpt}{A character string or number defining color of symbols for individual
+\item{bgpt}{A character string or number defining background color of symbols for individual
 sites (default = 'white')}
 
 \item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted}
 
 \item{cex}{a numerical value (default=0.8) defining expansion factor for symbols}
 
-\item{pchpt}{A number defining symbol type (default = 21) (filled symbols (21-25) should be used)}
+\item{pch}{A number defining symbol type (default = 21) (filled symbols (21-25) should be used)}
 
 \item{colmean}{A character string or number defining color of bars representing
 mean estimates for all sites (default = 'white')}
@@ -33,32 +33,28 @@ mean estimates for all sites (default = 'white')}
 for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
 must match number of levels in a grouping factor}
 
-\item{addlegend}{Logical (default=TRUE): add legend
-Note: The legend is plotted only when 'gp' factor provided}
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot (only when 'gp' factor is provided)}
 }
 \value{
 A single bivariate plot produce by plot function
 }
 \description{
-AlphaPlot function generates a bivariate plot of an offset in alpha diversity (DELTA S)
-on x axis versus an offset in evenness (DELTA PIE) for all live-dead pairwise comparisons.
+AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
+and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 }
 \details{
-AlphaPlot function uses the output of FidelityDiv function to produce
-a cross plot visualizing differences in estimates of alpha diversty and evenness between
-pairs of sympatric live and dead samples. In its default form, an approch proposed by
-Olszewski and Kidwell (2007) is used. The offset in alpha diversity is measured as the difference
-between natural logarithms of sample standardized richness log(R-dead) - log(R-live). The offset
-in evenness is measured as the difference between Hurlbert's PIE (PIE-dead - PIE-live).
-Confidence bars depitcting user-specified confidence intervals are also plotted.
-If a grouping factor is provided, symbols and bars are color-coded by levels and
-group means are plotted in addition to grand mean for all sites.
+AlphaPlot function uses the output of FidelityDiv function to produce a crossplot
+visualizing live-dead differences in alpha diversity and evenness. Confidence bars around
+DELTA S and DELTA PIE estimates are also plotted. If a grouping factor is provided, symbols
+and bars are color-coded by levels and group means are plotted in addition to grand mean
+for all sites. No object is returned by this function.
 }
 \examples{
 
 my.fid1 <- FidelityDiv(FidData$live, FidData$dead, n.filters=30)
 AlphaPlot(my.fid1)
-my.fid2 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=1000, CI=0.95)
+my.fid2 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat,
+                       n.filters=50, iter=1000, CI=0.95)
 AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
 
 }

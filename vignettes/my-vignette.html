@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Michal Kowalewski" />
+
+<meta name="date" content="2018-12-24" />
+
+<title>PaleoFidelity</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">PaleoFidelity</h1>
+<h4 class="author"><em>Michal Kowalewski</em></h4>
+<h4 class="date"><em>2018-12-24</em></h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The package “PaleoFidelity” carries out common types of fidelity analyses (live-dead comparisons). The package is specifically designed for compositional data that represent specimen counts of taxa with separate tallies for live and dead components of each sample. The package can be used for a single site (one live-dead comparison), but it is probably more useful when sets of sites need to be analyzed. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups. An additional grouping factor that splits species/taxa into subsets can also be provided to assess how fidelity varies across major taxonomic, ecological or taphonomic groups within the analyzed data.</p>
+<p>Currently, PaleoFidelity allows users to carry the following analyses (discussed in detail below):</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>FidelityEst</strong> function performs compositional fidelity analysis based on a correlation measure, a similarity measure, and an integrated fidelity metric.</p></li>
+<li><p><strong>FidelityDiv</strong> function performs alpha diversity and evenness analysis (live-dead offsets in standardized diversity and evenness).</p></li>
+<li><p><strong>Beta diversity</strong> analysis assessing sample-standardized offsets in compositional heterogeneity across sites. (FORTHCOMING)</p></li>
+</ol>
+<p>In addition, the following custom plotting functions are provided:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>SJPlot</strong> function to plot a fidelity cross-plot of Correlation and Similarity measures of fidelity</p></li>
+<li><p><strong>AlphaPlot</strong> function to plot a fidelity cross-plot of live-dead offsets in alpha diversity and eveness</p></li>
+</ol>
+</div>
+<div id="installing-paleofidelity-package" class="section level2">
+<h2>Installing PaleoFidelity Package</h2>
+<p>Currently the package can be only installed from github. Use the following set of statements to install PaleoFidelity package.</p>
+<p>library(devtools)</p>
+<p>devtools::install_github(‘mjkowalewski/PaleoFidelity’)</p>
+<p>If you do not have the devtools library already installed, run the following statement in r first: install.packages(‘devtools’)</p>
+</div>
+<div id="example-dataset" class="section level2">
+<h2>Example dataset</h2>
+<p>The example dataset included in the package illustrates the type of live-dead data most suitable for comopsitional fidelity analyses.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PaleoFidelity)
+<span class="kw">str</span>(FidData) <span class="co"># check the structure of the example dataset</span>
+<span class="co">#&gt; List of 4</span>
+<span class="co">#&gt;  $ live      : int [1:44, 1:202] 0 0 0 1 4 0 0 92 0 1 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:202] &quot;species 1&quot; &quot;species 2&quot; &quot;species 3&quot; &quot;species 4&quot; ...</span>
+<span class="co">#&gt;  $ dead      : int [1:44, 1:202] 0 1 6 70 52 1 0 52 1 0 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:202] &quot;species 1&quot; &quot;species 2&quot; &quot;species 3&quot; &quot;species 4&quot; ...</span>
+<span class="co">#&gt;  $ habitat   : Factor w/ 2 levels &quot;nearshore&quot;,&quot;offshore&quot;: 2 2 2 1 1 2 2 1 1 1 ...</span>
+<span class="co">#&gt;  $ fossiltype: Factor w/ 2 levels &quot;durable&quot;,&quot;fragile&quot;: 2 2 2 2 2 2 2 2 2 2 ...</span></code></pre></div>
+<p>The example dataset is assembled as a single object (a list with 4 items), but your data can be a set of separate <em>R</em> objects, as long as they conform to package requirements. Specifically, the live and dead datasets must be formatted as matrices (my.data2 &lt;- as.matrix(mydata) should do the trick). And the two categorical variables that can be passed through need to be univariate factors.</p>
+<p>Let’s first explore the example dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out1 &lt;-<span class="st"> </span><span class="kw">FidelityEst</span>(<span class="dt">live=</span>FidData<span class="op">$</span>live, <span class="dt">dead=</span>FidData<span class="op">$</span>dead, <span class="dt">gp=</span>FidData<span class="op">$</span>habitat, <span class="dt">n.filters=</span><span class="dv">30</span>, <span class="dt">dbzero=</span>F, <span class="dt">iter=</span><span class="dv">999</span>)
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n.filters=30, 6 samples (rows) removed, 0 taxa (columns) removed</span>
+out1<span class="op">$</span>observed.means
+<span class="co">#&gt;             spearman       chao fid.index</span>
+<span class="co">#&gt; total     0.05872748 0.13339662 0.9058349</span>
+<span class="co">#&gt; nearshore 0.06972939 0.15319194 0.8906368</span>
+<span class="co">#&gt; offshore  0.03756996 0.09532869 0.9350620</span></code></pre></div>
+<p>When the data include multiple sites that can be grouped into subsets, the function will report mean fidelity estimates for total data and each group. Three measures are reported: a correlation measure (default=Spearman), a similarity measure (default=Jaccard-Chao), and a combined fidelity measure (fid.index). Fid.index is a sqrt(2)-scaled Euclidean distance from perfect fidelity (correlation=1, simlarity=1). When fid.index = 0, fidelity is perfect; when fid.index=1, live-dead assemblages are completely disassociated (correlation=0, similarity=0); and when fid.index &gt; 1 an inverse correlation between live and dead taxa may be present.</p>
+<p>Note also that correlation can be computed with double zeroes included or excluded. In this example, double zeroes were kept (dbzero=F).</p>
+<p>The function outputs (among others) a summary that evaluates the data against a ‘Perfect Fidelity’ model in which departures from perfect fidelity are due solely to sampling a perfectly congruent live-dead system.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out1<span class="op">$</span>PF.stats
+<span class="co">#&gt;                group num.sites     PFest   observed    PF.debt     p</span>
+<span class="co">#&gt; spearman    all data        38 0.7066326 0.05872748  0.6479051    NA</span>
+<span class="co">#&gt; chao        all data        38 0.9797977 0.13339662  0.8464011    NA</span>
+<span class="co">#&gt; Fid.index   all data        38 0.2092423 0.90583491 -0.6965926 0.001</span>
+<span class="co">#&gt; spearman2  nearshore        25 0.7356302 0.06972939  0.6659008    NA</span>
+<span class="co">#&gt; chao2      nearshore        25 0.9844216 0.15319194  0.8312297    NA</span>
+<span class="co">#&gt; Fid.index2 nearshore        25 0.1880769 0.89063681 -0.7025599 0.001</span>
+<span class="co">#&gt; spearman1   offshore        13 0.6521456 0.03756996  0.6145757    NA</span>
+<span class="co">#&gt; chao1       offshore        13 0.9701220 0.09532869  0.8747933    NA</span>
+<span class="co">#&gt; Fid.index1  offshore        13 0.2491624 0.93506204 -0.6858996 0.001</span></code></pre></div>
+<p>If grouping factor ‘gp’ is provided, per group evaluations are also possible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out1<span class="op">$</span>gp.prob
+<span class="co">#&gt;         gp1      gp2 p.value sign Bonferroni</span>
+<span class="co">#&gt; 1 nearshore offshore   0.229    -          -</span></code></pre></div>
+<p>To explore data visually use SJPlot function. In its default form, this function produces a bubble plot with points scaled by the sample size of the smaller of the two (live or dead) compared samples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SJPlot</span>(out1, <span class="dt">gpcol=</span><span class="kw">c</span>(<span class="st">'aquamarine3'</span>, <span class="st">'coral3'</span>))</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Set bubble plot to FALSE to plot unscaled symbols.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SJPlot</span>(out1, <span class="dt">gpcol=</span><span class="kw">c</span>(<span class="st">'aquamarine3'</span>, <span class="st">'coral3'</span>), <span class="dt">bubble=</span>F)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>To evaluate live-dead fidelity in terms of alpha diversity and evenness, use FidelityDiv function. For example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out2 &lt;-<span class="st"> </span><span class="kw">FidelityDiv</span>(FidData<span class="op">$</span>live, FidData<span class="op">$</span>dead, <span class="dt">iter=</span><span class="dv">1000</span>)
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: gp factor has not been provided (by-group analyses and tests not possible)</span>
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n.filters=0: no samples (rows) were removed</span>
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n.filters=0, 0 samples (rows) removed, 0 taxa (columns) removed</span>
+<span class="co">#&gt; Warning in FidelitySummary(live, dead, gp, report = report, n.filters =</span>
+<span class="co">#&gt; n.filters, : small samples present (n&lt;30): consider applying &quot;n.filters &gt;=</span>
+<span class="co">#&gt; 30&quot;</span>
+<span class="kw">str</span>(out2)
+<span class="co">#&gt; List of 9</span>
+<span class="co">#&gt;  $ gp      : NULL</span>
+<span class="co">#&gt;  $ x       : num [1:44, 1:5] 32 45 102 258 412 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:5] &quot;n.std&quot; &quot;est&quot; &quot;25%&quot; &quot;75%&quot; ...</span>
+<span class="co">#&gt;  $ y       : num [1:44, 1:5] 32 45 102 258 412 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:5] &quot;n.std&quot; &quot;est&quot; &quot;25%&quot; &quot;75%&quot; ...</span>
+<span class="co">#&gt;  $ xmean   : Named num [1:3] 0.406 0.362 0.45</span>
+<span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ ymean   : Named num [1:3] 0.026 0.0115 0.0402</span>
+<span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ xgp     : NULL</span>
+<span class="co">#&gt;  $ ygp     : NULL</span>
+<span class="co">#&gt;  $ p.values: num [1, 1:2] 0.001 0.001</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : NULL</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;Delta.S.p&quot; &quot;Delta.PIE.p&quot;</span>
+<span class="co">#&gt;  $ p.gps   : NULL</span></code></pre></div>
+<p>To visualize those results call function AlphaPlot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AlphaPlot</span>(out2)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>When sites are categorized into groups, alpha diversity/evenness analyses include by group analyses.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out3 &lt;-<span class="st"> </span><span class="kw">FidelityDiv</span>(FidData<span class="op">$</span>live, FidData<span class="op">$</span>dead, FidData<span class="op">$</span>habitat, <span class="dt">CI=</span><span class="fl">0.95</span>, <span class="dt">iter=</span><span class="dv">1000</span>)
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n.filters=0: no samples (rows) were removed</span>
+<span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n.filters=0, 0 samples (rows) removed, 0 taxa (columns) removed</span>
+<span class="co">#&gt; Warning in FidelitySummary(live, dead, gp, report = report, n.filters =</span>
+<span class="co">#&gt; n.filters, : small samples present (n&lt;30): consider applying &quot;n.filters &gt;=</span>
+<span class="co">#&gt; 30&quot;</span>
+<span class="kw">str</span>(out3)
+<span class="co">#&gt; List of 9</span>
+<span class="co">#&gt;  $ gp      : Factor w/ 2 levels &quot;nearshore&quot;,&quot;offshore&quot;: 2 2 2 1 1 2 2 1 1 1 ...</span>
+<span class="co">#&gt;  $ x       : num [1:44, 1:5] 32 45 102 258 412 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:5] &quot;n.std&quot; &quot;est&quot; &quot;2.5%&quot; &quot;97.5%&quot; ...</span>
+<span class="co">#&gt;  $ y       : num [1:44, 1:5] 32 45 102 258 412 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:44] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span>
+<span class="co">#&gt;   .. ..$ : chr [1:5] &quot;n.std&quot; &quot;est&quot; &quot;2.5%&quot; &quot;97.5%&quot; ...</span>
+<span class="co">#&gt;  $ xmean   : Named num [1:3] 0.406 0.367 0.448</span>
+<span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ ymean   : Named num [1:3] 0.0262 0.0106 0.0402</span>
+<span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ xgp     : num [1:2, 1:4] 27 17 0.385 0.439 0.343 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;nearshore&quot; &quot;offshore&quot;</span>
+<span class="co">#&gt;   .. ..$ : chr [1:4] &quot;n.sites&quot; &quot;est&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ ygp     : num [1:2, 1:4] 27 17 0.0367 0.0095 0.0217 ...</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;nearshore&quot; &quot;offshore&quot;</span>
+<span class="co">#&gt;   .. ..$ : chr [1:4] &quot;n.sites&quot; &quot;est&quot; &quot;0.5%&quot; &quot;99.5%&quot;</span>
+<span class="co">#&gt;  $ p.values: num [1, 1:2] 0.001 0.001</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : NULL</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;Delta.S.p&quot; &quot;Delta.PIE.p&quot;</span>
+<span class="co">#&gt;  $ p.gps   : num [1:2, 1:2] 0.001 0.001 0.001 0.402</span>
+<span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;nearshore&quot; &quot;offshore&quot;</span>
+<span class="co">#&gt;   .. ..$ : chr [1:2] &quot;p.Delta.S&quot; &quot;p.Delta.PIE&quot;</span></code></pre></div>
+<p>By-group plotting can be produced using AlphaPlot</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AlphaPlot</span>(out3, <span class="dt">col.gp=</span><span class="kw">c</span>(<span class="st">'aquamarine3'</span>, <span class="st">'coral3'</span>), <span class="dt">bgpt=</span><span class="st">'beige'</span>, <span class="dt">pch=</span><span class="dv">22</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

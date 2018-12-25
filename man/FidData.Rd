@@ -5,8 +5,8 @@
 FidData: An example of a live-dead dataset
 }
 \description{
-A live-dead dataset including live and dead specimen counts from 44 sampling station off the coast of
-North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates. For more information about this dataset please see Tyler and Kowalewski (2018) https://www.nature.com/articles/sdata201854
+A live-dead dataset including live and dead specimen counts from 44 sampling station off
+the coast of North Carolina, USA.
 }
 \usage{data("FidData")}
 \format{
@@ -19,7 +19,9 @@ North Carolina, USA. Data include counts of live and dead macrobenthic invertebr
  }
 }
 \details{
-%%  ~~ If necessary, more details than the __description__ above ~~
+A live-dead dataset including live and dead specimen counts from 44 sampling station off
+the coast of North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates.
+For more information about this dataset please see Tyler and Kowalewski (2018).
 }
 \source{
 \url{https://www.nature.com/articles/sdata201854}
