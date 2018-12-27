@@ -91,7 +91,8 @@ FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.filter
 {
 
   # 1. Data assessment and filtering
-  out <- FidelitySummary(live, dead, gp, report=report, n.filters=n.filters, t.filters=t.filters) # check/filter data
+  out <- FidelitySummary(live, dead, gp, report=report, output=TRUE,
+                         n.filters=n.filters, t.filters=t.filters) # check/filter data
   if (length(out) == 2) {live <- out$live;  dead <- out$dead}
   if (length(out) == 3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
   # 2. Alpha Diversity/Evenness

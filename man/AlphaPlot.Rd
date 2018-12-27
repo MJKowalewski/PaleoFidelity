@@ -5,8 +5,8 @@
 \title{A bivariate plot of live-dead offsets in alpha diversity and evenness}
 \usage{
 AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
-  cf.bars = TRUE, cex = 0.8, pch = 21, colmean = "black",
-  col.gp = NULL, addlegend = TRUE)
+  cf.bars = TRUE, cex = 0.8, legend.cex = 1, pch = 21,
+  colmean = "black", col.gp = NULL, addlegend = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityDiv function}
@@ -23,6 +23,8 @@ sites (default = 'white').}
 \item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted.}
 
 \item{cex}{A numerical value (default=0.8) defining expansion factor for symbols.}
+
+\item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
 
 \item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
 

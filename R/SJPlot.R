@@ -26,6 +26,8 @@
 #'
 #' @param cex A numeric value (default = 1) defining symbol size (applicable if Bubble = FALSE).
 #'
+#' @param legend.cex A numerical value (default = 1) defining text size for legend.
+#'
 #' @param pch An integer or a single character (default = 21) specifying symbol type.
 #'
 #' @param col Color name (default = 'black') defining symbol color, applicable when 'gp' factor
@@ -41,6 +43,8 @@
 #' @param PF Logical (deafault=FALSE): to add scatterplot of resampled fidelity estimates
 #'  for the null model postulating perfect fidelity.
 #'
+#' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.
+#'
 #' @return A single bivariate plot produce by plot function.
 #'
 #'
@@ -51,8 +55,8 @@
 #'
 #' @export
 
-SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1,
-                        pch=21, col='black', gpcol=NULL, pch2='+', PF=FALSE)
+SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1, legend.cex=1,
+                        pch=21, col='black', gpcol=NULL, pch2='+', PF=FALSE, addlegend=TRUE)
 {
   graphics::plot(x$x, x$y, type='n', xlim=xlim, ylim=ylim,
                  xlab=x$measures[1], ylab=x$measures[2], las=1)
@@ -68,17 +72,21 @@ SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1
     cexR <- apply(cbind(rowSums(x$live), rowSums(x$dead)), 1, min)
     if (max(cexR) - min(cexR) == 0) cex=cex
     else cex <- 2.5*(0.3 + (cexR - min(cexR)) / (max(cexR) - min(cexR)))
+    if (addlegend) {
     graphics::legend('topleft', pch=pch, col=col, pt.cex=c(max(cex), min(cex)),
-                     as.character(c(max(cexR),min(cexR))), title = 'N min')
+                     cex=legend.cex, as.character(c(max(cexR),min(cexR))), title = 'N min')
+    }
   }
   if (length(x$gp) > 0) {
     ifelse(length(gpcol) == 0, gpcol <- 1:length(levels(x$gp)), gpcol <- gpcol)
     graphics::points(x$x, x$y, pch=pch, bg=grDevices::adjustcolor(gpcol, trans)[x$gp],
                      col=gpcol[x$gp], cex=cex)
     graphics::points(x$observed.means[-1,1:2], pch=pch2, col=gpcol, cex=2)
-    graphics::legend('bottomleft', pch=pch, col=gpcol,
-                     pt.bg=grDevices::adjustcolor(gpcol, trans), pt.cex=1,
+    if (addlegend) {
+      graphics::legend('bottomleft', pch=pch, col=gpcol, cex=legend.cex,
+                     pt.bg=grDevices::adjustcolor(gpcol, trans), pt.cex=legend.cex,
                      levels(x$gp), title = 'groups')
+    }
   }
   else {
     graphics::points(x[[1]], x[[2]], pch=pch, bg=grDevices::adjustcolor(col, trans), col=col, cex=cex)

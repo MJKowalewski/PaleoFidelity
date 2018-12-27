@@ -5,8 +5,8 @@
 \title{A bivariate fidelity plot}
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
-  trans = 0.3, cex = 1, pch = 21, col = "black", gpcol = NULL,
-  pch2 = "+", PF = FALSE)
+  trans = 0.3, cex = 1, legend.cex = 1, pch = 21, col = "black",
+  gpcol = NULL, pch2 = "+", PF = FALSE, addlegend = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityEst function.}
@@ -22,6 +22,8 @@ SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
 
 \item{cex}{A numeric value (default = 1) defining symbol size (applicable if Bubble = FALSE).}
 
+\item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
+
 \item{pch}{An integer or a single character (default = 21) specifying symbol type.}
 
 \item{col}{Color name (default = 'black') defining symbol color, applicable when 'gp' factor
@@ -36,6 +38,8 @@ for grand or group means.}
 
 \item{PF}{Logical (deafault=FALSE): to add scatterplot of resampled fidelity estimates
 for the null model postulating perfect fidelity.}
+
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
 }
 \value{
 A single bivariate plot produce by plot function.

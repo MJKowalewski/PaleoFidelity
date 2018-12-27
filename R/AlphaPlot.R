@@ -24,6 +24,8 @@
 #'
 #' @param cex A numerical value (default=0.8) defining expansion factor for symbols.
 #'
+#' @param legend.cex A numerical value (default = 1) defining text size for legend.
+#'
 #' @param pch An integer defining symbol type (default=21). Filled symbols (21-25) should be used.
 #'
 #' @param colmean A character string or number defining color of bars representing
@@ -49,7 +51,7 @@
 #' @export
 
 AlphaPlot <- function(x, col='gray', col.bar='gray', bgpt='white', cf.bars=TRUE, cex=0.8,
-                      pch=21, colmean='black', col.gp=NULL, addlegend=TRUE) {
+                      legend.cex=1, pch=21, colmean='black', col.gp=NULL, addlegend=TRUE) {
   xmax <- 1.2 * max(abs(x$x[,2]))
   ymax <- 1.2 * max(abs(x$y[,2]))
   graphics::plot(x$x[,2], x$y[,2], xlim=c(-xmax, xmax), ylim=c(-ymax, ymax), type='n', las=1,
@@ -92,7 +94,7 @@ if (nrow(x$x) > 1) {
 
 }
 
-  if (addlegend & length(x$gp) > 0) graphics::legend('topleft', pch=pch, pt.bg=bgpt,
-                                                     col=col.gp, levels(x$gp), pt.cex=cex)
+  if (addlegend & length(x$gp) > 0) graphics::legend('topleft', pch=pch, pt.bg=bgpt, cex=legend.cex,
+                                                     col=col.gp, levels(x$gp), pt.cex=legend.cex)
   graphics::box()
 }

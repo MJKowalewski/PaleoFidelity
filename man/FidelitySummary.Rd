@@ -5,7 +5,7 @@
 \title{Data filtering and compliance assessment}
 \usage{
 FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0,
-  t.filters = 1)
+  t.filters = 1, output = FALSE)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -22,6 +22,8 @@ equal number of rows of 'live' and 'dead' matrices.}
 \item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
 
 \item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences}
+
+\item{output}{Logical (default=FALSE) determines if output data should be produced}
 }
 \value{
 A list including the following components:

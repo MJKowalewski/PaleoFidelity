@@ -18,47 +18,72 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The package "PaleoFidelity" carries out common types of fidelity analyses (live-dead comparisons). The package is specifically designed for compositional data that represent specimen counts of taxa with separate tallies for live and dead components of each sample. The package can be used for a single site (one live-dead comparison), but it is probably more useful when sets of sites need to be analyzed. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups. An additional grouping factor that splits species/taxa into subsets can also be provided to assess how fidelity varies across major taxonomic, ecological or taphonomic groups within the analyzed data.
+The package "PaleoFidelity" carries out standard fidelity analyses (live-dead comparisons) and is intended for compositional data that represent specimen counts of taxa with separate tallies for live and dead components of each sample. The package can be used for a single site (one live-dead comparison), but it is more useful when sets of sites need to be analyzed. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups (habitats, regions, etc.). An additional grouping factor that splits species/taxa into subsets can be used to assess how fidelity varies across taxon groups (e.g., phyla, functional categeories, or taphonomic groups).
 
-Currently, PaleoFidelity allows users to carry the following analyses (discussed in more detail below):
+Currently, the following analyses (discussed in more detail below) can be performed:
 
-1. __FidelityEst__ function performs compositional fidelity analysis based on a correlation measure, a similarity measure, and an integrated fidelity metric.
-
-2. __FidelityDiv__ function performs alpha diversity and evenness analysis (live-dead offsets in standardized diversity and evenness).
-
-3. __Beta diversity__ analysis assessing sample-standardized offsets in compositional heterogeneity across sites. (FORTHCOMING)
-
-In addition, the following custom plotting functions are provided:
-
-1. __SJPlot__ function to plot a fidelity cross-plot of Correlation and Similarity measures of fidelity 
-
-2. __AlphaPlot__ function to plot a fidelity cross-plot of live-dead offsets in alpha diversity and eveness 
+1. __FidelitySummary__ function to pre-assess data prior to any other fidelity analysis.
+2. __FidelityEst__ function performs compositional fidelity analysis based on a correlation measure, a similarity measure, and an integrated fidelity measure.
+3. __FidelityDiv__ function performs alpha diversity and evenness analysis (live-dead offsets in standardized diversity and evenness).
+4. __Beta diversity__ analysis assessing sample-standardized offsets in compositional heterogeneity across sites. (FORTHCOMING)
+5. __SJPlot__ plots a fidelity cross-plot of correlation and similarity measures of fidelity 
+6. __AlphaPlot__ plots a fidelity cross-plot of live-dead offsets in alpha diversity and eveness 
 
 ## Installing PaleoFidelity Package
 
-Currently the package can be only installed from github. Use the following set of statements to install PaleoFidelity package.
+Currently, the package is available at github. Use the following statements to install and upload it:
+**library(devtools)**
 
-library(devtools)
+**devtools::install_github('mjkowalewski/PaleoFidelity')**
 
-devtools::install_github('mjkowalewski/PaleoFidelity')
+**library(PaleoFidelity)**
 
-If you do not have the devtools library already installed, run the following statement in r first: install.packages('devtools')
+If you do not have the 'devtools' library already installed, run the following line first: 
+**install.packages('devtools')**
 
 ## Example dataset
 
-The example dataset included in the package illustrates the type of live-dead data most suitable for comopsitional fidelity analyses.
+An example dataset is included in the package to illustrate live-dead data suitable for compositional and diversity fidelity analyses.
 
 ```{r data example}
 library(PaleoFidelity)
 str(FidData) # check the structure of the example dataset
 ```
 
-The example dataset is assembled as a single object (a list with 4 items), but your data can be a set of separate _R_ objects, as long as they conform to package requirements. Specifically, the live and dead datasets must be formatted as matrices (my.data2 <- as.matrix(mydata) should do the trick). And the two categorical variables that can be passed through need to be univariate factors.
+The example dataset is assembled as a single list with 4 items, but data can be separate objects. Live and dead datasets must be formatted as matrices (use __as.matrix__ function to convert) and their dimensions must match exactely. The two categorical variables that can be included need to be univariate factors.
 
-Let's first explore the example dataset.
+## FidelitySummary Function
+
+A function _FidelitySummary_ assesses data for format compliance and numerical adequacy for carrying out a meaningful fidelity analysis. The function also allows to filter rare taxa and small samples. Note that this function is called by other PaleoFidelity functions and the data filters should be set in those functions before the analysis is carried out. Whereas _FidelitySummary_ is a convenient way to pre-assess data and determine filters, it does not produce any analytical outcomes.
+
+When the function is applied to the example dataset in its default form (but with report=TRUE), a report, notes, and one warning are printed.
+
+```{r fidelity summary function}
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+```
+
+Note that the report indicates that there are 44 samples and 202 taxa with at least one observation and nothing was removed from the data (otherwise, some columns and/or rows would have been be removed and the number of rows and columns removed would have been reported). You can also learn now that the grouping factor included 2 levels and both levels contained more than one sample making those levels 'useful' for statistical analyses. However, a warning indicates that some samples are small (n < 30) and smallest sample sizes are listed in the report as 17 for live and 20 for dead, respectively.
+
+The function can be used to explore the consequence of applying the filters. For example, let's remove all samples with n < 30. 
+
+```{r fidelity summary function part 2}
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
+                report=TRUE, n.filters=30)
+```
+
+Note that no taxa were lost (i.e., the sites that were removed did not comntain any unique species), 6 sites were removed (the number of sites is now 38 compared to 44 originally present), and the grouping factor still includes more than 1 site per level. This, the n.filter=30 did not reduce data dimensionality at all and levels remained viable for statistical analyses. How about n.filters=100?
+
+```{r fidelity summary function part 3}
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
+                report=TRUE, n.filters=100)
+```
+
+Now, 12 taxa were lost and only 21 sites were retained. Perhaps 100 is an unreasonably high n.filter?
+
+Once the appropriate filters are determined, other fidelity functions can be called. 
 
 ```{r fidelity estimates}
-out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=999)
+out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=99)
 out1$observed.means
 ```
 
@@ -80,14 +105,16 @@ out1$gp.prob
 
 To explore data visually use SJPlot function. In its default form, this function produces a bubble plot with points scaled by the sample size of the smaller of the two (live or dead) compared samples.
 
-```{r classic fidelity plot}
-SJPlot(out1, gpcol=c('aquamarine3', 'coral3'))
+```{r classic fidelity plot, fig.width=7.5, fig.height=4}
+par(mar=c(4, 4, 0.5, 0.5))
+SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), legend.cex=0.8)
 ```
 
 Set bubble plot to FALSE to plot unscaled symbols.
 
-```{r classic fidelity plot 2}
-SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F)
+```{r classic fidelity plot 2, fig.width=7.5, fig.height=4}
+par(mar=c(4, 4, 0.5, 0.5))
+SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F, legend.cex=0.8)
 ```
 
 To evaluate live-dead fidelity in terms of alpha diversity and evenness, use FidelityDiv function. For example:
@@ -99,8 +126,9 @@ str(out2)
 
 To visualize those results call function AlphaPlot.
 
-```{r plot alpha 1}
-AlphaPlot(out2)
+```{r plot alpha 1, fig.width=7.5, fig.height=4}
+par(mar=c(4, 4.5, 0.5, 0.5))
+AlphaPlot(out2, legend.cex=0.8)
 ```
 
 When sites are categorized into groups, alpha diversity/evenness analyses include by group analyses. 
@@ -112,7 +140,7 @@ str(out3)
 
 By-group plotting can be produced using AlphaPlot
 
-```{r plot alpha 2}
-AlphaPlot(out3, col.gp=c('aquamarine3', 'coral3'), bgpt='beige', pch=22)
+```{r plot alpha 2, fig.width=7.5, fig.height=4}
+par(mar=c(4, 4.5, 0.5, 0.5))
+AlphaPlot(out3, col.gp=c('aquamarine3', 'coral3'), bgpt='beige', pch=22, legend.cex=0.8)
 ```
-

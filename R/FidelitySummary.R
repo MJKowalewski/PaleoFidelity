@@ -31,6 +31,8 @@
 #'
 #' @param t.filters Integer (default = 1) to remove rare taxa with t < t.filters occurrences
 #'
+#' @param output Logical (default=FALSE) determines if output data should be produced
+#'
 #' @return A list including the following components:
 #'   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
 #'   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
@@ -45,7 +47,8 @@
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 
-FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.filters=1) {
+FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.filters=1,
+                            output=FALSE) {
 
 # PART 1: Initial complience checks
   if (sum(is.matrix(live), is.matrix(dead)) != 2)
@@ -167,7 +170,9 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.
   print(report)
   }
 
+ if(output) {
   if (length(gp) == 0) return(list(live=live, dead=dead))
   if (length(gp) > 0) return(list(live=live, dead=dead, gp=gp))
-
+  }
 }
+
