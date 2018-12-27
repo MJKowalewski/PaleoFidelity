@@ -80,10 +80,10 @@ FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
 
 Now, 12 taxa were lost and only 21 sites were retained. Perhaps 100 is an unreasonably high n.filter?
 
-Once the appropriate filters are determined, other fidelity functions can be called. 
+Once the appropriate filters are determined, they can be implemented in other fidelity functions. For example: 
 
 ```{r fidelity estimates}
-out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=99)
+out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=999)
 out1$observed.means
 ```
 

@@ -29,7 +29,7 @@ sites (default = 'white').}
 \item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
 
 \item{colmean}{A character string or number defining color of bars representing
-mean estimates for all sites (default = 'white')}
+mean estimates for all sites (default = 'black')}
 
 \item{col.gp}{A character string or number defining colors for group (default = 1:#levels)
 for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors

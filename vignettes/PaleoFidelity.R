@@ -20,7 +20,7 @@ FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
                 report=TRUE, n.filters=100)
 
 ## ----fidelity estimates--------------------------------------------------
-out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=99)
+out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=999)
 out1$observed.means
 
 ## ----fidelity estimates part 2-------------------------------------------
