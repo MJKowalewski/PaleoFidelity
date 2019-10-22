@@ -47,7 +47,7 @@
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 
-FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.filters=1,
+FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0, t.filters=1,
                             output=FALSE) {
 
 # PART 1: Initial complience checks
@@ -80,7 +80,7 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.
   if (length(gp) > 0)
     {
     if (length(gp) != nrow(live))
-      stop('the length "gp" factor must equal the number of rows in live and dead')
+      stop('the length of "gp" factor must equal the number of rows in live and dead')
     if (!is.factor(gp))
       stop('"gp" object must be a factor')
     if (sum(table(gp) == 0) > 0)
@@ -93,6 +93,23 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.
     }
   if (length(gp) == 0)
     message('NOTE: gp factor has not been provided (by-group analyses and tests not possible)')
+
+  if (length(tax) > 0)
+  {
+    if (length(tax) != ncol(live))
+      stop('the length of "tax" factor must equal the number of columns in live and dead')
+    if (!is.factor(tax))
+      stop('"tax" must be a factor')
+    if (sum(table(tax) == 0) > 0)
+    {
+      warning('empty levels detected and will be dropped')
+      tax <- droplevels(tax)
+    }
+    if (sum(table(tax) > 1) < 2)
+      warning('"tax" factor should include n > 1 observations for at least two levels')
+  }
+  if (length(tax) == 0)
+    message('NOTE: tax factor has not been provided (by-taxon-group analyses and tests not possible)')
 
   # PART III: Apply n.filters and t.filters (or not)
   if (n.filters == 0)
@@ -149,12 +166,20 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.
     if (sum(table(gp) > 1) < 2)
       warning('gp factor should include n > 1 observations for at least two levels')
   }
+  # check 2: check again if "tax" factor still compliant
+  if (length(tax) > 0)
+  {
+    if (sum(table(tax) > 1) < 2)
+      warning('"tax" factor should include n > 1 observations for at least two levels')
+  }
 
   # PART V: Generate report (if requested)
   if(report) # default setting "report=F" (none of the lines below executed)
   {
     ifelse(length(gp) == 0, num.groups <- 0, num.groups <- length(levels(gp)))
     ifelse(length(gp) == 0, num.use.groups <- 0, num.use.groups <- sum(table(gp)>1))
+    ifelse(length(tax) == 0, num.tax.groups <- 0, num.tax.groups <- length(levels(tax)))
+    ifelse(length(tax) == 0, num.use.tax.groups <- 0, num.use.tax.groups <- sum(table(tax)>1))
     report <- rbind('number of live samples' = nrow(live),
                'number of live taxa' = ncol(live),
                'number of dead samples' = nrow(dead),
@@ -165,14 +190,19 @@ FidelitySummary <- function(live, dead, gp = NULL, report=FALSE, n.filters=0, t.
                'smallest sample (dead)' = min(rowSums(dead)),
                'number of levels in "gp" factor' = num.groups,
                 'number of observations in "gp" factor' = length(gp),
-               'number of useful levels (levels with n>1)' = sum(table(gp) > 1))
+               'number of useful levels (levels with n>1)' = num.use.groups,
+               'number of levels in "tax" factor' = num.tax.groups,
+               'number of observations in "tax" factor' = length(tax),
+                'number of useful levels (levels with n>1)' = num.use.tax.groups)
     colnames(report) <- 'outcomes'
   print(report)
   }
 
  if(output) {
-  if (length(gp) == 0) return(list(live=live, dead=dead))
-  if (length(gp) > 0) return(list(live=live, dead=dead, gp=gp))
-  }
+  if (length(gp) == 0 & length(tax) == 0) return(list(live=live, dead=dead))
+  if (length(gp) > 0 & length(tax) == 0) return(list(live=live, dead=dead, gp=gp))
+  if (length(gp) == 0 & length(tax) > 0) return(list(live=live, dead=dead, tax=tax))
+  if (length(gp) > 0 & length(tax) > 0) return(list(live=live, dead=dead, gp=gp, tax=tax))
+ }
 }
 
