@@ -6,7 +6,8 @@
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
   trans = 0.3, cex = 1, legend.cex = 1, pch = 21, col = "black",
-  gpcol = NULL, pch2 = "+", PF = FALSE, addlegend = TRUE)
+  gpcol = NULL, pch2 = "+", PF = TRUE, addlegend = TRUE,
+  CI = TRUE, adjF = TRUE, unadjF = TRUE, addInfo = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityEst function.}
@@ -40,9 +41,17 @@ for grand or group means.}
 for the null model postulating perfect fidelity.}
 
 \item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
+
+\item{CI}{Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates}
+
+\item{adjF}{Logical (default=TRUE): plots adjusted fidelity estimates}
+
+\item{unadjF}{Logical (default=FALSE): plots unadjusted fidellity estimates}
+
+\item{addInfo}{Logical (default=FALSE): provides paramter values used in the analysis}
 }
 \value{
-A single bivariate plot produce by plot function.
+A single bivariate plot.
 }
 \description{
 SJPlot function generates a bivariate plot of a correlation measure (x axis) versus
@@ -50,13 +59,13 @@ a similarity measure (y axis) for all live-dead pairwise comparisons.
 }
 \details{
 SJPlot function is designed to use the output of FidelityEst function to produce
-a classic fidelity plot (see Kidwell 2007). Specifically, if default arguments
+a fidelity plot (see Kidwell 2007). Specifically, if default arguments
 for fidelity measures ('Spearman' and 'Chao') are used in FidelityEst function,
 a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
 If a grouping factor is provided, symbols are color-coded by levels and group means are plotted.
 Bivariate distributions produced by resampling models can also be included.
 
-NOTE: This is a simple wrap-up of plot function, including some of its common graphic arguments.
+NOTE: This function utilizes graphics::plot function, including some of its common graphic arguments.
 It allows for quick exploratory plots and should be readily editable to derive more customized plots.
 }
 \examples{

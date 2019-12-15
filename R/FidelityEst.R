@@ -28,57 +28,73 @@
 #'  (stats function 'vignettecor') used to estimate live-dead correlations.
 #'
 #' @param sim.measure A character string (default='chao') defining similarity measure (vegan
-#'   function 'vegdist') used to estiamte live-dead similiarity. Any measure accepatble by
+#'   function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptable by
 #'   'vegdist' can be used.
-#'
-#' @param report Logical (default=TRUE) to print compliance report from function 'FidelitySummary'.
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
 #'
 #' @param t.filters An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)
 #'
-#' @param iter An integer defining number of resampling iteration (default iter=0)
+#' @param iter An integer defining number of resampling iteration (default iter=1)
 #'
-#' @param dbzero Logical (default dbzero = TRUE) (removes double 0's when computing correlation measure)
+#' @param rm.zero Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)
+#'
+#' @param tfsd A character string (default='wisconsin') specifying data standardization
+#' or transformations (applicable only for similarity measure).The following options are
+#' available: 'none' (or any unused character string) - no standardization or transformation,
+#' 'total' - relative abundance, 'wisconsin' - double relativization,
+#' 'r4' - 4th root transformation, 'log' - ecological log-transformation,
+#' 'total4' - 4th root transformation of relative abundances.
 #'
 #' @return A list containing the following components:
 #'   \item{x}{Live-dead correlation coefficients for each site}
 #'   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-#'   \item{z}{Live-dead fidelity index for each live-dead comparison}
-#'   \item{measures}{The names of fidelity measures used}
-#'   \item{observed.means}{Grand means of fidelity measures (means of  $x, $y, & $z) and
-#'        by-group mean when 'gp' factor provided}
-#'   \item{PF.stats}{Statistical summary under "Perfect Fidelity" model}
-#'   \item{PF.dist}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-#'   \item{PF.dist.gp}{By-group resampling distribution of fidelity measures under
-#'        "Perfect Fidelity" model when 'gp' factor provided}
-#'   \item{gp.prob}{Pairwise significance tests for level combinations}
+#'   \item{xc}{Adjusted live-dead correlation coefficients, 95% confidence intervals,
+#'    and estimated live-dead correlation coefficients for perfect fidelity model}
+#'   \item{yc}{Adjusted live-dead similarity coefficients, 95% confidence intervals,
+#'    and estimated live-dead similarity coefficients for perfect fidelity model}
+#'    \item{x.pf.dist}{Distriutions of randomized correlation values for perfect
+#'     fidelity model for each of the samples}
+#'    \item{y.pf.dist}{Distriutions of randomized correlation values for perfect
+#'     fidelity model for each of the samples}
+#'    \item{xc.dist}{Distriutions of model adjusted correlation values for
+#'    each of the samples}
+#'    \item{y.pf.dist}{Distriutions of model adjusted similarity values for
+#'    each of the samples}
+#'   \item{x.stats}{Statistical summary for correlation coefficients for all data
+#'   and for each group when 'gp' factor provided}
+#'   \item{y.stats}{Statistical summary for simialrity coefficients for all data
+#'   and for each group when 'gp' factor provided}
 #'   \item{live}{The post-processed version of 'live' data matrix used in analyses}
 #'   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
 #'   \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}
+#'   \item{values}{A list with values of parameters used in the analysis}
 #'
 #' @examples
 #'
 #' data(FidData)
-#' out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
+#' out1 <- FidelityEst(live = FidData$live[6:9,], dead = FidData$dead[6:9,],
+#'                     gp = FidData$habitat[6:9], cor.measure='spearman',
+#'                     sim.measure='bray', n.filters=20, iter=99, rm.zero=FALSE, tfsd='total4')
 #' SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 #'
 #' @export
 #' @importFrom vegan vegdist
 
-FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='chao',
-                        report=FALSE, n.filters=0, t.filters=1, iter=0, dbzero=TRUE)
+FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='bray',
+                        n.filters=0, t.filters=1, iter=99,
+                        rm.zero=FALSE, tfsd='wisconsin')
  {
 
 # 1.1. Data assessment and filtering
-  out <- FidelitySummary(live, dead, gp, report=report, output=TRUE,
+  out <- FidelitySummary(live, dead, gp, report=FALSE, output=TRUE,
                          n.filters=n.filters, t.filters=t.filters) # check/filter data
   if (length(out)==2) {live <- out$live;  dead <- out$dead}
   if (length(out)==3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
 
 # 1.2. Correlation function with an option to remove double zeros
   my.cor.F <- function(x, y) {
-    if(dbzero) {
+    if(rm.zero) {
       if(sum(colSums(rbind(x, y)) == 0) > 0) {
         good.taxa <- which(colSums(rbind(x, y)) > 0)
         x <- x[good.taxa]
@@ -89,24 +105,27 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
     }
 
 # 2. Observed fidelity values
-  fid.M <- function(x, y) sqrt((1 - x)^2 + (1 - y)^2) / sqrt(2) # fidelity index function
   x1 <- as.data.frame(t(live))
   x2 <- as.data.frame(t(dead))
   cor.e <- mapply(function(x, y) my.cor.F(x, y), x1, x2)
-  sim.e <- mapply(function(x, y) 1 - vegan::vegdist(rbind(x,y), method=sim.measure), x1, x2)
-  fid.e <- fid.M(cor.e, sim.e)
-  fid.sam <- cbind(cor.e, sim.e, fid.e)
-  colnames(fid.sam) <- c(cor.measure, sim.measure, "fid.index")
-  mean.measures <- c(mean(cor.e), mean(sim.e), mean(fid.e))
-  names(mean.measures) <- c(cor.measure, sim.measure, "fid.index")
+  x3 <- x1; x4 <- x2
+if(tfsd=='total') {x3 <- vegan::decostand(x1, 'total'); x4 <- vegan::decostand(x2, 'total')}
+if(tfsd=='total4') {x3 <- vegan::decostand(x1, 'total')^(1/4); x4 <- vegan::decostand(x2, 'total')^(1/4)}
+if(tfsd=='wisconsin') {x3 <- vegan::wisconsin(x1); x4 <- vegan::wisconsin(x2)}
+if(tfsd=='log') {x3 <- vegan::decostand(x1, 'log'); x4 <- vegan::decostand(x2, 'log')}
+if(tfsd=='r4') {x3 <- x1^0.25; x4 <- x2^0.25}
+  sim.e <- mapply(function(x, y) 1 - vegan::vegdist(rbind(x,y), method=sim.measure), x3, x4)
+  fid.sam <- data.frame(cor.e, sim.e)
+  colnames(fid.sam) <- c(cor.measure, sim.measure)
+  mean.measures <- c(mean(cor.e), mean(sim.e))
+  names(mean.measures) <- c(cor.measure, sim.measure)
   if(length(gp) == 0)  mean.gp <- NA
   if(length(gp) > 0)  {
-    mean.gp <- cbind(tapply(cor.e, gp, mean), tapply(sim.e, gp, mean), tapply(fid.e, gp, mean))
-    colnames(mean.gp) <- c(cor.measure, sim.measure, "fid.index")
+    mean.gp <- cbind(tapply(cor.e, gp, mean), tapply(sim.e, gp, mean))
+    colnames(mean.gp) <- c(cor.measure, sim.measure)
     }
 
-# 3. "Perfect Fidelity" NULL MODEL
-    if (iter > 0) {
+# 3. "Perfect Fidelity" MODEL
       FidPerfModel <- function(live, dead) {
         pooled <- live + dead
         rlive <- vegan::rrarefy(x=pooled, rowSums(live))
@@ -114,71 +133,65 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
         rx1 <- as.data.frame(t(rlive))
         rx2 <- as.data.frame(t(rdead))
         r.cor.e = mapply(function(x,y) my.cor.F(x, y), rx1, rx2)
-        r.sim.e = mapply(function(x,y) 1-vegan::vegdist(rbind(x,y), method = sim.measure), rx1, rx2)
-        return(cbind(mean(r.cor.e), mean(r.sim.e), mean(fid.M(r.cor.e, r.sim.e))))
+        rx3 <- rx1; rx4 <- rx2
+        if(tfsd=='total') {rx3 <- vegan::decostand(rx1, 'total'); rx4 <- vegan::decostand(rx2, 'total')}
+        if(tfsd=='total4') {rx3 <- vegan::decostand(rx1, 'total')^(1/4); rx4 <- vegan::decostand(rx2, 'total')^(1/4)}
+        if(tfsd=='wisconsin') {rx3 <- vegan::wisconsin(rx1); rx4 <- vegan::wisconsin(rx2)}
+        if(tfsd=='log') {rx3 <- vegan::decostand(rx1, 'log'); rx4 <- vegan::decostand(rx2, 'log')}
+        if(tfsd=='r4') {rx3 <- rx1^0.25; rx4 <- rx2^0.25}
+        r.sim.e = mapply(function(x,y) 1-vegan::vegdist(rbind(x,y), method = sim.measure), rx3, rx4)
+        return(cbind(mean(r.cor.e), mean(r.sim.e)))
       }
-     my.output <- matrix(0, iter, 3)
-     for (i in 1:iter)  my.output[i,] <- FidPerfModel(live, dead)
-     colnames(my.output) <- c(cor.measure, sim.measure, 'Fid.index')
-     perfidest <- colMeans(my.output)
-     ppfFI.1 <- sum(my.output[,3] >= mean.measures[3])
-     ppfFI.2 <- sum(my.output[,3] <= mean.measures[3])
-     pcorr <- (2 * min(ppfFI.1, ppfFI.2) + 1) / (iter + 1)
-     pfstatout <- data.frame(group = 'all data', num.sites = rep(nrow(live), 3), PFest = perfidest,
-                       observed = mean.measures, PF.debt = perfidest - mean.measures,
-                       p = c(NA, NA, pcorr))
-    }
-  ifelse(exists('my.output'), PF.stats <- pfstatout, PF.stats <- NA)
-  ifelse(exists('my.output'), PF.dist <- my.output, PF.dist <- NA)
-
-# 4. STATISTICAL COMPARISON OF GROUPS (PAIRWISE COMPARISONS)
-  if (length(gp)>0 & iter > 0) {
-    outlist2 <- vector("list", length(levels(gp)))
-    kk <- 0
-    for (k in levels(gp)) {
-    kk <- kk + 1
-    my.output.gp <- matrix(0, iter, 3)
-    colnames(my.output.gp) <- c(cor.measure, sim.measure, 'Fid.index')
-    livegp <- live[which(gp == k),]
-    deadgp <- dead[which(gp == k),]
-    for (j in 1:iter)  my.output.gp[j,] <- FidPerfModel(livegp, deadgp)
-    perfidest.gp <- colMeans(my.output.gp)
-    ppfFI.gp.1 <- sum(my.output.gp[,3] >= mean.gp[kk, 3])
-    ppfFI.gp.2 <- sum(my.output.gp[,3] <= mean.gp[kk, 3])
-    pcorr.gp <- (1 + 2 * min(ppfFI.gp.1, ppfFI.gp.2)) / (iter + 1)
-    pfstatout.gp <- data.frame(group = k, num.sites = rep(table(gp)[k], 3),
-                               PFest = perfidest.gp, observed = mean.gp[kk,],
-                               PF.debt = perfidest.gp - mean.gp[kk,], p = c(NA, NA, pcorr.gp))
-    ifelse(kk == 1, outlist1 <- pfstatout.gp, outlist1 <- rbind(outlist1, pfstatout.gp))
-    outlist2[[kk]] <- my.output.gp
-    }
-    p.gp.out <- NULL
-    for (m in 1:length(levels(gp))) {
-      for (n in 2:length(levels(gp))) {
-         if (n > m) {
-      bgp1 <- outlist2[[m]][,3] - mean.gp[m,3]
-      bgp2 <- outlist2[[n]][,3] - mean.gp[n,3]
-      p.gp <- (1 + (2 * min(sum(bgp1 >= bgp2), sum(bgp1 <= bgp2))))/(iter+1)
-      num.comp <- (length(levels(gp))/2) * (length(levels(gp)) - 1)
-      ifelse(p.gp < 0.05, sgnf.1 <- '***', sgnf.1 <- '-')
-      ifelse(p.gp*num.comp < 0.05, sgnf.2 <- '***', sgnf.2 <- '-')
-      p.gp.out <- rbind(p.gp.out, data.frame(gp1=levels(gp)[m], gp2=levels(gp)[n],
-                        p.value=p.gp, sign=sgnf.1, Bonferroni=sgnf.2))
-      }
+     pf.output <- array(0, dim=c(iter, nrow(live), 2),
+                        dimnames=list(1:iter, rownames(live),
+                                      c(cor.measure, sim.measure)))
+     for (i in 1:iter)  {
+       for (j in 1:nrow(live)) {
+       pf.output[i,j,] <- FidPerfModel(rbind(live[j,]), rbind(dead[j,]))
+       }
      }
-    }
-   }
-  ifelse(exists('my.output.gp'), PF.stats.gp <- outlist1, PF.stats.gp <- NA)
-  ifelse(exists('my.output.gp'), PF.dist.gp <- outlist2, PF.dist.gp <- NA)
-  ifelse(exists('my.output.gp'), PF.gp.p <- p.gp.out, PF.gp.p <- NA)
-
-# 5. OUTPUT
-  ifelse(length(gp) > 0, rep1 <- rbind(total=mean.measures, mean.gp), rep1 <- mean.measures)
-  ifelse(length(gp) > 0, rep2 <- rbind(PF.stats, PF.stats.gp), rep2 <- PF.stats)
-  out1 <- list(x=fid.sam[,1], y=fid.sam[,2], z=fid.sam[,3],
-                measures=c(cor.measure, sim.measure, "fid.index"),
-                observed.means = rep1, PF.stats = rep2, PF.dist = PF.dist,
-                PF.dist.gp = PF.dist.gp, gp.prob = PF.gp.p,
-                live = live, dead = dead, gp = gp)
+      perfidest <- apply(pf.output, c(2,3), stats::median)
+      cor.obs.rep <- matrix(fid.sam[,1], iter, length(fid.sam[,1]), byrow=T)
+      sim.obs.rep <- matrix(fid.sam[,2], iter, length(fid.sam[,2]), byrow=T)
+      cor.m.adj <- (1 - pf.output[,,1]) +  cor.obs.rep
+      sim.m.adj <- (1 - pf.output[,,2]) + sim.obs.rep
+      cor.m.adj[cor.m.adj>1] <- 1
+      sim.m.adj[sim.m.adj>1] <- 1
+      cor.adj.sam <- apply(cor.m.adj, 2, mean)
+      sim.adj.sam <- apply(sim.m.adj, 2, mean)
+      cor.adj.sam.CI <- apply(cor.m.adj, 2, stats::quantile, prob=c(0.025, 0.975))
+      sim.adj.sam.CI <- apply(sim.m.adj, 2, stats::quantile, prob=c(0.025, 0.975))
+      corrected <- cbind(cor.adj.sam, sim.adj.sam)
+      corrected.mean <- c(mean(cor.m.adj), mean(sim.m.adj))
+      names(corrected.mean) <- c(cor.measure, sim.measure)
+      x.stat <- c(mean(corrected[,1]), stats::quantile(corrected[,1], prob=c(0.025, 0.5, 0.975)))
+      y.stat <- c(mean(corrected[,2]), stats::quantile(corrected[,2], prob=c(0.025, 0.5, 0.975)))
+      if (length(gp) > 0) {
+        statsgp.x1 <- tapply(corrected[,1], gp, mean)
+        statsgp.x2 <- tapply(corrected[,1], gp, stats::quantile, prob=c(0.025, 0.5, 0.975))
+        statsgp.x3 <- cbind(statsgp.x1, matrix(unlist(statsgp.x2), length(levels(gp)), 3, byrow=T))
+        statsgp.y1 <- tapply(corrected[,2], gp, mean)
+        statsgp.y2 <- tapply(corrected[,2], gp, stats::quantile, prob=c(0.025, 0.5, 0.975))
+        statsgp.y3 <- cbind(statsgp.y1, matrix(unlist(statsgp.y2), length(levels(gp)), 3, byrow=T))
+        x.stat <- rbind('all.samples'=x.stat, statsgp.x3)
+        y.stat <- rbind('all.samples'=y.stat, statsgp.y3)
+        colnames(x.stat) <- c('mean', '2.5%', 'median', '97.5%')
+        colnames(y.stat) <- c('mean', '2.5%', 'median', '97.5%')
+      }
+      x.stat <- as.data.frame(x.stat)
+      y.stat <- as.data.frame(y.stat)
+      xc.sum <- data.frame(corrected[,1], t(cor.adj.sam.CI), perfidest[,1])
+      names(xc.sum)[c(1,4)] <- c(paste(cor.measure,'.ADJ', sep=''),
+                                 paste(cor.measure,'.PF', sep=''))
+      yc.sum <- data.frame(corrected[,2], t(sim.adj.sam.CI), perfidest[,2])
+      names(yc.sum)[c(1,4)] <- c(paste(sim.measure,'.ADJ', sep=''),
+                                 paste(sim.measure,'.PF', sep=''))
+### 4. OUTPUT
+  out1 <- list(x=fid.sam[,1], y=fid.sam[,2], xc=xc.sum, yc=yc.sum,
+               x.pf.dist = pf.output[,,1], y.pf.dist = pf.output[,,2],
+               xc.dist = cor.m.adj, yc.dist = sim.m.adj, x.stats=x.stat,
+               y.stats=y.stat, live = live, dead = dead, gp = gp,
+               values=list(measures=c(cor.measure, sim.measure), data.transf=tfsd,
+                          remove.double.zeros=rm.zero, iterations=iter))
   return(out1)
 }

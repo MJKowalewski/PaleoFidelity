@@ -4,9 +4,9 @@
 \alias{FidelityDiv}
 \title{Live-Dead differences in alpha diversity and evenness}
 \usage{
-FidelityDiv(live, dead, gp = NULL, report = FALSE, n.filters = 0,
-  t.filters = 1, iter = 100, CI = 0.5, CImean = 0.99,
-  outdata = FALSE)
+FidelityDiv(live, dead, gp = NULL, tax = NULL, report = FALSE,
+  n.filters = 0, t.filters = 1, iter = 100, CI = 0.5,
+  CImean = 0.99, outdata = FALSE, messages = F)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -17,6 +17,9 @@ Dimensions of 'live' and 'dead' matrices must match exactely.}
 
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
+
+\item{tax}{An optional univariate factor defining groups of species. The length of tax
+must equal number of columns of 'live' and 'dead' matrices.}
 
 \item{report}{Logical (default=FALSE) to print compliance report from function FidelitySummary}
 
@@ -36,12 +39,16 @@ range, 0.95 - plots 95% confidence bars, etc. Confidence bars are estimated as p
 subsampled estimates of Delta S and Delta PIE.}
 
 \item{outdata}{Logical (default = FALSE) to determine if data files should be included in the output}
+
+\item{messages}{Logical (default = FALSE) to enable printing notes generated internally
+by FidelitySummary function.}
 }
 \value{
 A list containing the following components:
   \item{live}{The post-processed version of 'live' data matrix used in all analyses}
   \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
   \item{gp}{The post-processed version of 'gp' factor, when provided}
+  \item{tax}{The post-processed version of 'tax' factor, when provided}
   \item{x}{DELTA S values for each live-dead comparisons (site-level differences in sample standardized
            species richness)}
   \item{y}{DELTA PIE values for each live-dead comparisons (site-level differences in evenness
@@ -56,7 +63,7 @@ A list containing the following components:
 }
 \description{
 FidelityDiv provides estimates of differences in diversity between pairs of live and dead samples
-using community abundance data. In the case of datastes representing more than one site, the
+using community abundance data. In the case of datasets representing more than one site, the
 function returns also means of differences. If 'gp' factor is provided to aggregate sets of
 sites/samples, means for groups are returned as well.
 }

@@ -1,7 +1,7 @@
 #' Live-Dead differences in alpha diversity and evenness
 #'
 #' FidelityDiv provides estimates of differences in diversity between pairs of live and dead samples
-#' using community abundance data. In the case of datastes representing more than one site, the
+#' using community abundance data. In the case of datasets representing more than one site, the
 #' function returns also means of differences. If 'gp' factor is provided to aggregate sets of
 #' sites/samples, means for groups are returned as well.
 #'
@@ -37,6 +37,9 @@
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
 #'
+#' @param tax An optional univariate factor defining groups of species. The length of tax
+#'  must equal number of columns of 'live' and 'dead' matrices.
+#'
 #' @param report Logical (default=FALSE) to print compliance report from function FidelitySummary
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
@@ -56,10 +59,15 @@
 #'
 #' @param outdata Logical (default = FALSE) to determine if data files should be included in the output
 #'
+#' @param messages Logical (default = FALSE) to enable printing notes generated internally
+#' by FidelitySummary function.
+#'
+#'
 #' @return A list containing the following components:
 #'   \item{live}{The post-processed version of 'live' data matrix used in all analyses}
 #'   \item{dead}{The post-processed version of 'dead' data matrix used in all analyses}
 #'   \item{gp}{The post-processed version of 'gp' factor, when provided}
+#'   \item{tax}{The post-processed version of 'tax' factor, when provided}
 #'   \item{x}{DELTA S values for each live-dead comparisons (site-level differences in sample standardized
 #'            species richness)}
 #'   \item{y}{DELTA PIE values for each live-dead comparisons (site-level differences in evenness
@@ -86,17 +94,24 @@
 #' @references Olszewski, T.D., and Kidwell, S.M., 2007, The preservational fidelity of evenness
 #'             in molluscan death assemblages. Paleobiology 33: 1:23.
 
-FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.filters=1,
-                        iter=100, CI=0.5, CImean=0.99, outdata=FALSE)
+FidelityDiv <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0, t.filters=1,
+                        iter=100, CI=0.5, CImean=0.99, outdata=FALSE, messages=F)
 {
 
   # 1. Data assessment and filtering
-  out <- FidelitySummary(live, dead, gp, report=report, output=TRUE,
+
+  if (messages) out <- FidelitySummary(live, dead, gp, tax, report=report, output=TRUE,
                          n.filters=n.filters, t.filters=t.filters) # check/filter data
+
+  if (!messages) out <- suppressMessages(FidelitySummary(live, dead, gp, tax, report=report,
+                                                        output=TRUE, n.filters=n.filters,
+                                                        t.filters=t.filters)) # check/filter data
+
   if (length(out) == 2) {live <- out$live;  dead <- out$dead}
   if (length(out) == 3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
+  if (length(out) == 4) {live <- out$live;  dead <- out$dead; gp <- out$gp; tax <- out$tax}
+
   # 2. Alpha Diversity/Evenness
-  min.sam <- apply(cbind(rowSums(live), rowSums(dead)), 1, min)
   pie.f <- function(x) (sum(x > 0) / (sum(x > 0) - 1)) * (1 - sum((x / sum(x)) ^ 2))
   delta.alpha <- function(x, y, min) {
     a <- vegan::rrarefy(x, sample=min)
@@ -104,24 +119,28 @@ FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.filter
     cbind(log(apply(b, 1, function(z) sum(z > 0))) - log(apply(a, 1, function(z) sum(z > 0))),
     apply(b, 1, pie.f) - apply(a, 1, pie.f))
   }
+  min.sam <- apply(cbind(rowSums(live), rowSums(dead)), 1, min)
   out1 <- array(NA, dim=c(nrow(live), 2, iter))
   for (i in 1:iter) out1[,,i] <- delta.alpha(live, dead, min.sam)
-  p1DS <- apply(rbind(out1[,1,]), 1, function(x) sum(x > 0))
-  p2DS <- apply(rbind(out1[,1,]), 1, function(x) sum(x < 0))
-  p1DP <- apply(rbind(out1[,1,]), 1, function(x) sum(x > 0))
-  p2DP <- apply(rbind(out1[,1,]), 1, function(x) sum(x < 0))
-  p.DS <- 2 * apply(cbind(p1DS, p2DS), 1, min) / iter
-  p.DP <- 2 * apply(cbind(p1DP, p2DP), 1, min) / iter
+   p1DS <- apply(rbind(out1[,1,]), 1, function(x) sum(x > 0))
+   p2DS <- apply(rbind(out1[,1,]), 1, function(x) sum(x < 0))
+   p1DP <- apply(rbind(out1[,2,]), 1, function(x) sum(x > 0))
+   p2DP <- apply(rbind(out1[,2,]), 1, function(x) sum(x < 0))
+   p.DS <- 2 * apply(cbind(p1DS, p2DS), 1, min) / iter
+   p.DP <- 2 * apply(cbind(p1DP, p2DP), 1, min) / iter
   if (sum(p.DS == 0) > 0) p.DS[p.DS == 0] <- 1 / iter
   if (sum(p.DP == 0) > 0) p.DP[p.DP == 0] <- 1 / iter
-  DS <- cbind(n.std=min.sam, est=rowMeans(rbind(out1[,1,])),
+   DS <- cbind(n.std=min.sam, est=rowMeans(rbind(out1[,1,])),
               t(apply(rbind(out1[,1,]), 1, stats::quantile, prob=c((1 - CI) / 2, 1 - (1 - CI) / 2))),
               p=p.DS)
-  DP <- cbind(n.std=min.sam, est=rowMeans(rbind(out1[,2,])),
+   DP <- cbind(n.std=min.sam, est=rowMeans(rbind(out1[,2,])),
               t(apply(rbind(out1[,2,]), 1, stats::quantile, prob=c((1 - CI) / 2, 1 - (1 - CI) / 2))),
               p=p.DP)
+   outDS3 <- NULL
+   outDP3 <- NULL
+   p.GP <- NULL
 
-  # 3.Means for all data and by groups (if 'gp' factor provided)
+# 3.Means for all data and by groups (if 'gp' factor provided)
   # All data
   allS <- colMeans(rbind(out1[,1,]))
   allP <- colMeans(rbind(out1[,2,]))
@@ -143,21 +162,29 @@ FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.filter
    gpDS2 <- apply(outDS, 1, function(x) sum(x>0))
    gpDP1 <- apply(outDP, 1, function(x) sum(x<0))
    gpDP2 <- apply(outDP, 1, function(x) sum(x>0))
-   p.gp.DS <- 2 *  apply(cbind(gpDS1, gpDS2), 1, min) / iter
-   p.gp.DP <- 2 *  apply(cbind(gpDP1, gpDP2), 1, min) / iter
+   p.gp.DS <- 2 * apply(cbind(gpDS1, gpDS2), 1, min) / iter
+   p.gp.DP <- 2 * apply(cbind(gpDP1, gpDP2), 1, min) / iter
    if (sum(p.gp.DS == 0) > 0) p.gp.DS[p.gp.DS == 0] <- 1 / iter
    if (sum(p.gp.DP == 0) > 0) p.gp.DP[p.gp.DP == 0] <- 1 / iter
-  }
-outDS3 <- NULL
-outDP3 <- NULL
+#  }
+# outDS3 <- NULL
+# outDP3 <- NULL
 p.GP <- NULL
 if (length(gp) > 0) outDS3 <- outDS2
 if (length(gp) > 0) outDP3 <- outDP2
 if (length(gp) > 0)  p.GP <- cbind(p.Delta.S=p.gp.DS, p.Delta.PIE=p.gp.DP)
+# }
+outDS3 <- data.frame(outDS3, group=levels(gp), measure='Delta S')
+outDP3 <- data.frame(outDP3, group=levels(gp), measure='Delta PIE')
+rownames(outDP3) <- NULL
+rownames(outDS3) <- NULL
+}
 
-if (outdata) out1 <- list(live=live, dead=dead, gp=gp, out=out1, x=DS, y=DP, xmean=meanDS, ymean=meanDP,
-                          xgp=outDS3, ygp=outDP3, p.values=cbind(Delta.S.p, Delta.PIE.p))
-if (!outdata) out1 <- list(gp=gp, x=DS, y=DP, xmean=meanDS, ymean=meanDP, xgp=outDS3, ygp=outDP3,
+#rep1 <- rbind(outDS3, outDP3, p.GP)
+
+if (outdata) out1 <- list(live=live, dead=dead, gp=gp, tax=tax, out=out1, x=DS, y=DP, xmean=meanDS, ymean=meanDP,
+                          xgp=outDS3, ygp=outDP3, p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)
+if (!outdata) out1 <- list(gp=gp, tax=tax, x=DS, y=DP, xmean=meanDS, ymean=meanDP, xgp=outDS3, ygp=outDP3,
                            p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)
   return(out1)
 }

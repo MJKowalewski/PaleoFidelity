@@ -4,8 +4,8 @@
 \alias{FidelitySummary}
 \title{Data filtering and compliance assessment}
 \usage{
-FidelitySummary(live, dead, gp = NULL, report = FALSE, n.filters = 0,
-  t.filters = 1, output = FALSE)
+FidelitySummary(live, dead, gp = NULL, tax = NULL, report = FALSE,
+  n.filters = 0, t.filters = 1, output = FALSE)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -16,6 +16,9 @@ Dimensions of 'live' and 'dead' matrices must match exactely.}
 
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
+
+\item{tax}{An optional univariate factor defining groups of species. The length of gp must
+equal number of columns of 'live' and 'dead' matrices.}
 
 \item{report}{Logical (default=FALSE), set report=TRUE to print additional warnings and data summary}
 
@@ -30,6 +33,7 @@ A list including the following components:
   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
   \item{gp}{The grouping factor associated with sites (if provided)}
+  \item{tax}{The grouping factor associated with taxa (if provided)}
 }
 \description{
 FidelitySummary function checks if the input objects are appropriately formatted and contain

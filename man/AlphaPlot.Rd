@@ -5,8 +5,10 @@
 \title{A bivariate plot of live-dead offsets in alpha diversity and evenness}
 \usage{
 AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
-  cf.bars = TRUE, cex = 0.8, legend.cex = 1, pch = 21,
-  colmean = "black", col.gp = NULL, addlegend = TRUE)
+  cf.bars = TRUE, cex = 0.8, xlab = bquote(Delta[" S"]),
+  ylab = bquote(Delta[" PIE"]), xmax = NULL, ymax = NULL,
+  legend.cex = 1, pch = 21, colmean = "black", col.gp = NULL,
+  addlegend = TRUE, transp_mean = 1, transp = 1)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityDiv function}
@@ -24,6 +26,16 @@ sites (default = 'white').}
 
 \item{cex}{A numerical value (default=0.8) defining expansion factor for symbols.}
 
+\item{xlab}{A character string defining x axis label (default=bquote(Delta['S']).
+Use xlab='' to supress the label}
+
+\item{ylab}{A character string defining y axis label (default=bquote(Delta['PIE']).
+Use xlab='' to supress the label}
+
+\item{xmax}{A positive numerical value defining x axis range (-xmax, xmax)}
+
+\item{ymax}{A positive numerical value defining y axis range (-ymax, ymax)}
+
 \item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
 
 \item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
@@ -35,10 +47,18 @@ mean estimates for all sites (default = 'black')}
 for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
 must match number of levels in a grouping factor}
 
-\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided}
+
+\item{transp_mean}{Numerical (default=1): defines transparency of individual datapoints
+and associated confidence interavls. Allowed values range from 0
+(transparent = invisible) to 1 (opaque)}
+
+\item{transp}{Numerical (default=1): defines transparency of means and associated
+confidence interavls. Allowed values range from 0 (transparent = invisible)
+to 1 (opaque)}
 }
 \value{
-A single bivariate plot produce by plot function.
+A bivariate plot.
 }
 \description{
 AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)

@@ -25,6 +25,9 @@
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
 #'
+#' @param tax An optional univariate factor defining groups of species. The length of gp must
+#'  equal number of columns of 'live' and 'dead' matrices.
+#'
 #' @param report Logical (default=FALSE), set report=TRUE to print additional warnings and data summary
 #'
 #' @param n.filters Integer (default = 0) to remove small samples with n < n.filters occurrences
@@ -37,6 +40,7 @@
 #'   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
 #'   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
 #'   \item{gp}{The grouping factor associated with sites (if provided)}
+#'   \item{tax}{The grouping factor associated with taxa (if provided)}
 #'
 #' @examples
 #' data(FidData)
@@ -67,9 +71,9 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
        if (t.filters == 0) message('NOTE: combined live+dead data contain empty columns. They will NOT be removed. Use t.filters > 0')
      }
   if (min(rowSums(live)) == 0)
-    stop('live dataset contains empty rows')
+    warning('live dataset contains empty rows')
   if (min(rowSums(dead)) == 0)
-    stop('dead dataset contains empty rows')
+    warning('dead dataset contains empty rows')
 
     if (!identical(colnames(live), colnames(dead)))
        warning('column labels do not match between "live" and "dead" datasets')
@@ -108,8 +112,6 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
     if (sum(table(tax) > 1) < 2)
       warning('"tax" factor should include n > 1 observations for at least two levels')
   }
-  if (length(tax) == 0)
-    message('NOTE: tax factor has not been provided (by-taxon-group analyses and tests not possible)')
 
   # PART III: Apply n.filters and t.filters (or not)
   if (n.filters == 0)
@@ -174,7 +176,7 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
   }
 
   # PART V: Generate report (if requested)
-  if(report) # default setting "report=F" (none of the lines below executed)
+  if(report)
   {
     ifelse(length(gp) == 0, num.groups <- 0, num.groups <- length(levels(gp)))
     ifelse(length(gp) == 0, num.use.groups <- 0, num.use.groups <- sum(table(gp)>1))

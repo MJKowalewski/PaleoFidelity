@@ -5,8 +5,8 @@
 \title{Compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "chao", report = FALSE, n.filters = 0,
-  t.filters = 1, iter = 0, dbzero = TRUE)
+  sim.measure = "bray", n.filters = 0, t.filters = 1, iter = 99,
+  rm.zero = FALSE, tfsd = "wisconsin")
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -22,35 +22,48 @@ equal number of rows of 'live' and 'dead' matrices.}
 (stats function 'vignettecor') used to estimate live-dead correlations.}
 
 \item{sim.measure}{A character string (default='chao') defining similarity measure (vegan
-function 'vegdist') used to estiamte live-dead similiarity. Any measure accepatble by
+function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptable by
 'vegdist' can be used.}
-
-\item{report}{Logical (default=TRUE) to print compliance report from function 'FidelitySummary'.}
 
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
 
 \item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
 
-\item{iter}{An integer defining number of resampling iteration (default iter=0)}
+\item{iter}{An integer defining number of resampling iteration (default iter=1)}
 
-\item{dbzero}{Logical (default dbzero = TRUE) (removes double 0's when computing correlation measure)}
+\item{rm.zero}{Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)}
+
+\item{tfsd}{A character string (default='wisconsin') specifying data standardization
+or transformations (applicable only for similarity measure).The following options are
+available: 'none' (or any unused character string) - no standardization or transformation,
+'total' - relative abundance, 'wisconsin' - double relativization,
+'r4' - 4th root transformation, 'log' - ecological log-transformation,
+'total4' - 4th root transformation of relative abundances.}
 }
 \value{
 A list containing the following components:
   \item{x}{Live-dead correlation coefficients for each site}
   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-  \item{z}{Live-dead fidelity index for each live-dead comparison}
-  \item{measures}{The names of fidelity measures used}
-  \item{observed.means}{Grand means of fidelity measures (means of  $x, $y, & $z) and
-       by-group mean when 'gp' factor provided}
-  \item{PF.stats}{Statistical summary under "Perfect Fidelity" model}
-  \item{PF.dist}{Resampling distribution of fidelity measures under "Perfect Fidelity" model}
-  \item{PF.dist.gp}{By-group resampling distribution of fidelity measures under
-       "Perfect Fidelity" model when 'gp' factor provided}
-  \item{gp.prob}{Pairwise significance tests for level combinations}
+  \item{xc}{Adjusted live-dead correlation coefficients, 95% confidence intervals,
+   and estimated live-dead correlation coefficients for perfect fidelity model}
+  \item{yc}{Adjusted live-dead similarity coefficients, 95% confidence intervals,
+   and estimated live-dead similarity coefficients for perfect fidelity model}
+   \item{x.pf.dist}{Distriutions of randomized correlation values for perfect
+    fidelity model for each of the samples}
+   \item{y.pf.dist}{Distriutions of randomized correlation values for perfect
+    fidelity model for each of the samples}
+   \item{xc.dist}{Distriutions of model adjusted correlation values for
+   each of the samples}
+   \item{y.pf.dist}{Distriutions of model adjusted similarity values for
+   each of the samples}
+  \item{x.stats}{Statistical summary for correlation coefficients for all data
+  and for each group when 'gp' factor provided}
+  \item{y.stats}{Statistical summary for simialrity coefficients for all data
+  and for each group when 'gp' factor provided}
   \item{live}{The post-processed version of 'live' data matrix used in analyses}
   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
   \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}
+  \item{values}{A list with values of parameters used in the analysis}
 }
 \description{
 FidelityEst computes live-dead fidelity measures by comparing two matching matrices (live
@@ -72,7 +85,9 @@ FidelityEst assesses compositional fidelity using three measures
 \examples{
 
 data(FidData)
-out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat)
+out1 <- FidelityEst(live = FidData$live[6:9,], dead = FidData$dead[6:9,],
+                    gp = FidData$habitat[6:9], cor.measure='spearman',
+                    sim.measure='bray', n.filters=20, iter=99, rm.zero=FALSE, tfsd='total4')
 SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 
 }

@@ -83,24 +83,26 @@ Now, 12 taxa were lost and only 21 sites were retained. Perhaps 100 is an unreas
 Once the appropriate filters are determined, they can be implemented in other fidelity functions. For example: 
 
 ```{r fidelity estimates}
-out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, dbzero=F, iter=999)
+out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, rm.zero=F, iter=999)
 out1$observed.means
 ```
 
 When the data include multiple sites that can be grouped into subsets, the function will report mean fidelity estimates for total data and each group. Three measures are reported: a correlation measure (default=Spearman), a similarity measure (default=Jaccard-Chao), and a combined fidelity measure (fid.index). Fid.index is a sqrt(2)-scaled Euclidean distance from perfect fidelity (correlation=1, simlarity=1). When fid.index = 0, fidelity is perfect; when fid.index=1, live-dead assemblages are completely disassociated (correlation=0, similarity=0); and when fid.index > 1 an inverse correlation between live and dead taxa may be present.
 
-Note also that correlation can be computed with double zeroes included or excluded. In this example, double zeroes were kept (dbzero=F).
+Note also that correlation can be computed with double zeroes included or excluded. In this example, double zeroes were kept (rm.zero=F).
 
 The function outputs (among others) a summary that evaluates the data against a 'Perfect Fidelity' model in which departures from perfect fidelity are due solely to sampling a perfectly congruent live-dead system.
 
 ```{r fidelity estimates part 2}
-out1$PF.stats
+out1$x.stats
+out1$y.stats
 ```
 
 If grouping factor 'gp' is provided, per group evaluations are also possible.
 
 ```{r fidelity estimates part 3}
-out1$gp.prob
+out1$x.stats
+out1$y.stats
 ```
 
 To explore data visually use SJPlot function. In its default form, this function produces a bubble plot with points scaled by the sample size of the smaller of the two (live or dead) compared samples.

@@ -4,13 +4,13 @@
 #' a similarity measure (y axis) for all live-dead pairwise comparisons.
 #'
 #' @details SJPlot function is designed to use the output of FidelityEst function to produce
-#' a classic fidelity plot (see Kidwell 2007). Specifically, if default arguments
+#' a fidelity plot (see Kidwell 2007). Specifically, if default arguments
 #' for fidelity measures ('Spearman' and 'Chao') are used in FidelityEst function,
 #' a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
 #' If a grouping factor is provided, symbols are color-coded by levels and group means are plotted.
 #' Bivariate distributions produced by resampling models can also be included.
 #'
-#' NOTE: This is a simple wrap-up of plot function, including some of its common graphic arguments.
+#' NOTE: This function utilizes graphics::plot function, including some of its common graphic arguments.
 #' It allows for quick exploratory plots and should be readily editable to derive more customized plots.
 #'
 #' @param x An object (a list) returned by FidelityEst function.
@@ -45,7 +45,15 @@
 #'
 #' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.
 #'
-#' @return A single bivariate plot produce by plot function.
+#' @param CI Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates
+#'
+#' @param adjF Logical (default=TRUE): plots adjusted fidelity estimates
+#'
+#' @param unadjF Logical (default=FALSE): plots unadjusted fidellity estimates
+#'
+#' @param addInfo Logical (default=FALSE): provides paramter values used in the analysis
+#'
+#' @return A single bivariate plot.
 #'
 #'
 #' @examples
@@ -55,23 +63,26 @@
 #'
 #' @export
 
-SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1, legend.cex=1,
-                        pch=21, col='black', gpcol=NULL, pch2='+', PF=FALSE, addlegend=TRUE)
+SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1,
+                   legend.cex=1, pch=21, col='black', gpcol=NULL, pch2='+', PF=TRUE,
+                   addlegend=TRUE, CI=TRUE, adjF=TRUE, unadjF=TRUE, addInfo=TRUE)
 {
-  graphics::plot(x$x, x$y, type='n', xlim=xlim, ylim=ylim,
-                 xlab=x$measures[1], ylab=x$measures[2], las=1)
+
+  graphics::plot(x$xc[,1], x$yc[,1], type='n', xlim=xlim, ylim=ylim, las=1,
+                 xlab=x$values$measures[1], ylab=x$values$measures[2])
 
   graphics::abline(h = 0.5, v = 0, lwd = 1.5, col = 'darkgray')
 
   if (PF) {
-    graphics::points(x$PF.dist[,1], x$PF.dist[,2], pch='.', col='coral3')
-    graphics::points(mean(x$PF.dist[,1]), mean(x$PF.dist[,2]), pch=21, col='coral3', bg='white', cex=1)
+    graphics::points(x$x.pf.dist, x$y.pf.dist, pch='.', col='coral3')
+    graphics::points(mean(x$x.pf.dist), mean(x$y.pf.dist), pch=21, col='coral3',
+                     bg='white', cex=1)
   }
 
   if (bubble) {
     cexR <- apply(cbind(rowSums(x$live), rowSums(x$dead)), 1, min)
     if (max(cexR) - min(cexR) == 0) cex=cex
-    else cex <- 2.5*(0.3 + (cexR - min(cexR)) / (max(cexR) - min(cexR)))
+    else cex <- 2 * (0.3 + (cexR - min(cexR)) / (max(cexR) - min(cexR)))
     if (addlegend) {
     graphics::legend('topleft', pch=pch, col=col, pt.cex=c(max(cex), min(cex)),
                      cex=legend.cex, as.character(c(max(cexR),min(cexR))), title = 'N min')
@@ -79,18 +90,40 @@ SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1
   }
   if (length(x$gp) > 0) {
     ifelse(length(gpcol) == 0, gpcol <- 1:length(levels(x$gp)), gpcol <- gpcol)
-    graphics::points(x$x, x$y, pch=pch, bg=grDevices::adjustcolor(gpcol, trans)[x$gp],
-                     col=gpcol[x$gp], cex=cex)
-    graphics::points(x$observed.means[-1,1:2], pch=pch2, col=gpcol, cex=2)
+    if (CI & adjF) graphics::arrows(x$xc[,2], x$yc[,1], x$xc[,3], x$yc[,1],
+                                    length=0, col=gpcol[x$gp], lwd=0.3)
+    if (CI & adjF) graphics::arrows(x$xc[,1], x$yc[,2], x$xc[,1], x$yc[,3],
+                                    length=0, col=gpcol[x$gp], lwd=0.3)
+    if (adjF) graphics::points(x$xc[,1], x$yc[,1], pch=pch, col=gpcol[x$gp], cex=cex,
+                               bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
+    if (adjF) graphics::points(x$x.stats[-1,1], x$y.stats[-1,1], pch=21,
+                               col=gpcol, bg=gpcol, cex=1.5)
+    if (unadjF) graphics::points(x$x, x$y, pch=23, col=gpcol[x$gp], cex=cex,
+                                 bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
     if (addlegend) {
-      graphics::legend('bottomleft', pch=pch, col=gpcol, cex=legend.cex,
+      graphics::legend('bottomright', pch=pch, col=gpcol, cex=legend.cex,
                      pt.bg=grDevices::adjustcolor(gpcol, trans), pt.cex=legend.cex,
                      levels(x$gp), title = 'groups')
-    }
-  }
+     }
+   }
   else {
-    graphics::points(x[[1]], x[[2]], pch=pch, bg=grDevices::adjustcolor(col, trans), col=col, cex=cex)
-    graphics::points(rbind(x$observed.means[1:2]), pch=pch2, col=col, cex=2)
-  }
-}
+    if (adjF) graphics::arrows(x$xc[,1], x$yc[,2], x$xc[,1], x$yc[,3],
+                               length=0, col=col, lwd=0.1)
+    if (adjF) graphics::arrows(x$xc[,2], x$yc[,1], x$xc[,3], x$yc[,1],
+                               length=0, col=col, lwd=0.1)
+    if (adjF) graphics::points(x$xc[,1], x$yc[,1], pch=pch, col=col, cex=cex,
+                               bg=grDevices::adjustcolor(col, trans))
+    if (adjF) graphics::points(x$x.stats[1,1], x$y.stats[1,1],
+                               pch=pch2, col=col, bg='black', cex=1.5)
+    if (unadjF) graphics::points(x$x, x$y, pch=23, col=col, cex=cex,
+                                 bg=grDevices::adjustcolor(col, trans))
+    if (unadjF) graphics::points(mean(x$x), mean(x$y),
+                               pch=23, col=col, bg='black', cex=1.5)
 
+  }
+ if (addInfo) {
+   graphics::mtext(side=3, line=0.8, cex=0.8,
+                   paste('transformation =', x$values$data.transf,
+                               '   ', 'iterations =', x$values$iterations))
+ }
+}
