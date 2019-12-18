@@ -65,7 +65,7 @@ AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DEL
 and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 }
 \details{
-AlphaPlot function uses the output of FidelityDiv function to produce a crossplot
+AlphaPlot function uses the object produced by FidelityDiv function to produce a crossplot
 visualizing live-dead differences in alpha diversity and evenness. Confidence bars around
 DELTA S and DELTA PIE estimates are also plotted. If a grouping factor is provided, symbols
 and bars are color-coded by levels and group means are plotted in addition to grand mean
@@ -76,7 +76,7 @@ for all sites.
 my.fid1 <- FidelityDiv(FidData$live, FidData$dead, n.filters=30)
 AlphaPlot(my.fid1)
 my.fid2 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat,
-                       n.filters=50, iter=1000, CI=0.95)
+                       n.filters=50, iter=100, CI=0.95)
 AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
 
 }

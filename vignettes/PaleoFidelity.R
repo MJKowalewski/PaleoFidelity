@@ -21,13 +21,14 @@ FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
 
 ## ----fidelity estimates-------------------------------------------------------
 out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, rm.zero=F, iter=999)
-out1$observed.means
+out1$x
+out1$y
+
+## ----fidelity estimates outputs-----------------------------------------------
+out1$xc # adjusted correlation measure summary
+out1$yc # adjusted similarity measure summary
 
 ## ----fidelity estimates part 2------------------------------------------------
-out1$x.stats
-out1$y.stats
-
-## ----fidelity estimates part 3------------------------------------------------
 out1$x.stats
 out1$y.stats
 
@@ -37,21 +38,24 @@ SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), legend.cex=0.8)
 
 ## ----classic fidelity plot 2, fig.width=7.5, fig.height=4---------------------
 par(mar=c(4, 4, 0.5, 0.5))
-SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F, legend.cex=0.8)
+SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F, unadj=T, legend.cex=0.8)
 
-## ----alpha 1------------------------------------------------------------------
-out2 <- FidelityDiv(FidData$live, FidData$dead, iter=1000)
-str(out2)
+## ----alpha diversity----------------------------------------------------------
+out3 <- FidelityDiv(FidData$live, FidData$dead, iter=1000)
+out3$x
+out3$y
 
-## ----plot alpha 1, fig.width=7.5, fig.height=4--------------------------------
-par(mar=c(4, 4.5, 0.5, 0.5))
-AlphaPlot(out2, legend.cex=0.8)
-
-## ----alpha 2------------------------------------------------------------------
-out3 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, CI=0.95, iter=1000)
-str(out3)
+## ----alpha diversity 2--------------------------------------------------------
+out4 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, iter=1000)
+out4$xmean
+out4$ymean
+out4$xgp
+out4$ygp
+out4$p.values
+out4$p.gps
 
 ## ----plot alpha 2, fig.width=7.5, fig.height=4--------------------------------
+out3 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, CI=0.95, iter=1000)
 par(mar=c(4, 4.5, 0.5, 0.5))
 AlphaPlot(out3, col.gp=c('aquamarine3', 'coral3'), bgpt='beige', pch=22, legend.cex=0.8)
 

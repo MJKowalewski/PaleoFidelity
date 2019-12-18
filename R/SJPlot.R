@@ -51,21 +51,22 @@
 #'
 #' @param unadjF Logical (default=FALSE): plots unadjusted fidellity estimates
 #'
-#' @param addInfo Logical (default=FALSE): provides paramter values used in the analysis
+#' @param addInfo Logical (default=TRUE): provides parameter values used in the analysis
 #'
 #' @return A single bivariate plot.
 #'
 #'
 #' @examples
 #'
-#' out1 <- FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1)
+#' out1 <- FidelityEst(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
+#'                    n.filters=30, iter=99, t.filters=1)
 #' SJPlot(out1)
 #'
 #' @export
 
 SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1,
                    legend.cex=1, pch=21, col='black', gpcol=NULL, pch2='+', PF=TRUE,
-                   addlegend=TRUE, CI=TRUE, adjF=TRUE, unadjF=TRUE, addInfo=TRUE)
+                   addlegend=TRUE, CI=TRUE, adjF=TRUE, unadjF=FALSE, addInfo=TRUE)
 {
 
   graphics::plot(x$xc[,1], x$yc[,1], type='n', xlim=xlim, ylim=ylim, las=1,
@@ -97,7 +98,7 @@ SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1
     if (adjF) graphics::points(x$xc[,1], x$yc[,1], pch=pch, col=gpcol[x$gp], cex=cex,
                                bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
     if (adjF) graphics::points(x$x.stats[-1,1], x$y.stats[-1,1], pch=21,
-                               col=gpcol, bg=gpcol, cex=1.5)
+                               col=gpcol, bg='white', cex=1.5)
     if (unadjF) graphics::points(x$x, x$y, pch=23, col=gpcol[x$gp], cex=cex,
                                  bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
     if (addlegend) {
@@ -114,11 +115,11 @@ SJPlot <- function(x, bubble=TRUE, xlim=c(-1, 1), ylim=c(0, 1), trans=0.3, cex=1
     if (adjF) graphics::points(x$xc[,1], x$yc[,1], pch=pch, col=col, cex=cex,
                                bg=grDevices::adjustcolor(col, trans))
     if (adjF) graphics::points(x$x.stats[1,1], x$y.stats[1,1],
-                               pch=pch2, col=col, bg='black', cex=1.5)
+                               pch=pch2, col=col, bg='white', cex=1.5)
     if (unadjF) graphics::points(x$x, x$y, pch=23, col=col, cex=cex,
                                  bg=grDevices::adjustcolor(col, trans))
     if (unadjF) graphics::points(mean(x$x), mean(x$y),
-                               pch=23, col=col, bg='black', cex=1.5)
+                               pch=23, col=col, bg='white', cex=1.5)
 
   }
  if (addInfo) {

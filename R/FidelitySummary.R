@@ -1,19 +1,18 @@
 #' Data filtering and compliance assessment
 #'
-#' FidelitySummary function checks if the input objects are appropriately formatted and contain
-#' adequate data needed to carry out fidelity analysis. The function also allows the user to
-#' filter data by removing small samples and rare taxa
+#' FidelitySummary function evaluates if the input data are adequate and properly stored for
+#' carrying out fidelity analyses. When called by other PaleoFidelity function, FidelitySummary
+#' allows the user to filter data by removing small samples and rare taxa
 #'
-#' @details This function is implemented in other PaleoFidelity functions. However, users
-#' are encouraged to use it prior to using any other functions in order to:
-#' 1). Check for errors and warnings;
-#' 2). Generate a basic summary of user-provided objects (set logical argument report=TRUE)
-#' 3). Explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
+#' @details This function is implemented in other PaleoFidelity functions. However,
+#' it is recommended to prior to any fidelity analysis to check for errors and warnings,
+#' generate a basic summary of datasets (set logical argument report=TRUE), and
+#' explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 #'
-#' NOTE: FidelitySummary function will provide an initial compliance evaluation. Also the function
+#' NOTE: FidelitySummary function will provide an initial compliance evaluation. The function
 #'  allows the user to detect small samples and assess if removing those samples is advisable
 #'  in terms of data dimensionality. If removal of small samples is desirable for subsequent
-#'  analyses, please specify the desired numerical value of "n.filters" and "t.filters"
+#'  analyses, the desired numerical values of "n.filters" and "t.filters" need to be specified
 #'  in other PaleoFidelity functions.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -32,11 +31,12 @@
 #'
 #' @param n.filters Integer (default = 0) to remove small samples with n < n.filters occurrences
 #'
-#' @param t.filters Integer (default = 1) to remove rare taxa with t < t.filters occurrences
+#' @param t.filters Integer (default = 1) to remove rare taxa with t < t.filters occurrences.
+#' Note that the default value of 1 keeps all taxa, but removes empty columns.
 #'
-#' @param output Logical (default=FALSE) determines if output data should be produced
+#' @param output Logical (default=FALSE) determines if an output with filtered datasets should be produced.
 #'
-#' @return A list including the following components:
+#' @return A list (returned only if output=TRUE) including the following components:
 #'   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
 #'   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
 #'   \item{gp}{The grouping factor associated with sites (if provided)}
@@ -183,19 +183,20 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
     ifelse(length(tax) == 0, num.tax.groups <- 0, num.tax.groups <- length(levels(tax)))
     ifelse(length(tax) == 0, num.use.tax.groups <- 0, num.use.tax.groups <- sum(table(tax)>1))
     report <- rbind('number of live samples' = nrow(live),
-               'number of live taxa' = ncol(live),
                'number of dead samples' = nrow(dead),
-               'number of dead taxa' = ncol(dead),
+               'number of live taxa' = sum(colSums(live) > 0),
+               'number of dead taxa' = sum(colSums(dead) > 0),
+               'total number of taxa' = ncol(live),
                'number of live specimens' = sum(live),
                'number of dead specimens' = sum(dead),
                'smallest sample (live)' = min(rowSums(live)),
                'smallest sample (dead)' = min(rowSums(dead)),
                'number of levels in "gp" factor' = num.groups,
                 'number of observations in "gp" factor' = length(gp),
-               'number of useful levels (levels with n>1)' = num.use.groups,
+               'number of levels with n > 1' = num.use.groups,
                'number of levels in "tax" factor' = num.tax.groups,
                'number of observations in "tax" factor' = length(tax),
-                'number of useful levels (levels with n>1)' = num.use.tax.groups)
+                'number of levels with n > 1' = num.use.tax.groups)
     colnames(report) <- 'outcomes'
   print(report)
   }

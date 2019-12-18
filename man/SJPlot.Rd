@@ -7,7 +7,7 @@
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
   trans = 0.3, cex = 1, legend.cex = 1, pch = 21, col = "black",
   gpcol = NULL, pch2 = "+", PF = TRUE, addlegend = TRUE,
-  CI = TRUE, adjF = TRUE, unadjF = TRUE, addInfo = TRUE)
+  CI = TRUE, adjF = TRUE, unadjF = FALSE, addInfo = TRUE)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityEst function.}
@@ -48,7 +48,7 @@ for the null model postulating perfect fidelity.}
 
 \item{unadjF}{Logical (default=FALSE): plots unadjusted fidellity estimates}
 
-\item{addInfo}{Logical (default=FALSE): provides paramter values used in the analysis}
+\item{addInfo}{Logical (default=TRUE): provides parameter values used in the analysis}
 }
 \value{
 A single bivariate plot.
@@ -70,7 +70,8 @@ It allows for quick exploratory plots and should be readily editable to derive m
 }
 \examples{
 
-out1 <- FidelityEst(FidData$live, FidData$dead, n.filters=30, t.filters=1)
+out1 <- FidelityEst(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
+                   n.filters=30, iter=99, t.filters=1)
 SJPlot(out1)
 
 }

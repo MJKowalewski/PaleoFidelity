@@ -5,16 +5,16 @@
 #' function returns also means of differences. If 'gp' factor is provided to aggregate sets of
 #' sites/samples, means for groups are returned as well.
 #'
-#'@details FidelityDiv assess live-dead offsets in evenness/diversity between pairs of sympatric
+#'@details FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of sympatric
 #' live and dead samples using a bivariate approch as described in  Olszewski and Kidwell (2007).
-#' The estimates of (1) alpha diversity and (2) evenness are returned as 2 separate objects.
+#' The estimates of offsets in alpha diversityand evenness are returned as two separate objects.
 #'
 #' (1) x - Live-dead offsets in alpha diversity for individual sites. The difference is measured
 #' as the difference between natural logarithms of sample-standardized species richness of
 #' sympatric dead and live samples:
 #'
-#' DELTA S = ln(S-dead) - log(S-live)
-
+#' DELTA S = ln(S[dead]) - log(S[live])
+#'
 #' A negative value indicates that the sample standardized alpha diversity of a live sample
 #' exceeds alpha diversity of the sympatric dead sample (and vice versa). Confidence intervals
 #' and p.values for Null H: Delta S = 0 are also reported.
@@ -22,7 +22,7 @@
 #' (2) y - Live-dead offsets in evenness for individual sites. The difference is measured as the
 #' difference between sample-standardized estimates of Hurlbert's PIE for live and dead samples:
 #'
-#' DELTA PIE = PIE(DEAD) - PIE(LIVE)
+#' DELTA[PIE] = PIE[DEAD] - PIE[LIVE]
 #'
 #' A negative value indicates that evenness of live samples exceeds evenness of the sympatric
 #' dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta PIE = 0
@@ -53,9 +53,9 @@
 #'  Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.
 #'
 #' @param CImean A numerical value (default = 0.99) defining confidence bars for means of all sites
-#'  or groups of sites (if 'gp' factor was provided). Note: 0.5 - plots bars represnting inter-quartile
+#'  or groups of sites (if 'gp' factor was provided). Note: 0.5 - bars representing inter-quartile
 #'  range, 0.95 - plots 95% confidence bars, etc. Confidence bars are estimated as percentiles of
-#'  subsampled estimates of Delta S and Delta PIE.
+#'  subsampled estimates of Delta S and Delta PIE based on n (=iter) replicate subsamples.
 #'
 #' @param outdata Logical (default = FALSE) to determine if data files should be included in the output
 #'
@@ -74,7 +74,6 @@
 #'            estimated as Hurlbert's PIE)}
 #'   \item{xmean}{Grand mean of Delta S}
 #'   \item{ymean}{Grand mean of Delta PIE}
-#'   \item{xmean}{Grand mean of Delta S}
 #'   \item{xgp}{Group means of Delta S (when 'gp' factor provided)}
 #'   \item{ygp}{Group means of Delta PIE (when 'gp' factor provided)}
 #'   \item{p.values}{p.values for Null H: Delta.S.p=0 and Delta.PIE.p=0}
@@ -82,10 +81,10 @@
 #'
 #' @examples
 #'
-#' FidelityDiv(FidData$live, FidData$dead, n.filters=30)
-#' my.fid <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=1000, CI=0.95)
+#' my.fid <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=100, CI=0.95)
 #' my.fid$x # site-level estimates of Delta S with 95% CIs and p values
 #' my.fid$p.gps # p values for means of groups
+#' AlphaPlot(my.fid, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
 #'
 #' @export
 #'

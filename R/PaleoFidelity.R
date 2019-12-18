@@ -5,9 +5,6 @@
 #' multiple aspects of fidelity, including faunal composition, alpha diversity,
 #' and beta diversity.
 #'
-#' PaleoFidelity package also offers permutation tests for one-sample, two-sample, and
-#' multi-sample hypotheses as well as bootstrapped confidence intervals for fidelity statistics.
-#'
 #' Plot functions to visualize fidelity patterns are also provided.
 #'
 #' @author Michal Kowalewski \email{kowalewski@@ufl.edu}
@@ -25,7 +22,7 @@
 #' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
 #'
 #' # Returns estimates of compositional fidelity
-#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat)
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, iter=49)
 #'
 #'
 #' @importFrom vegan vegdist rrarefy

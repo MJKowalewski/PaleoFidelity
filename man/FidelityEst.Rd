@@ -5,7 +5,7 @@
 \title{Compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "bray", n.filters = 0, t.filters = 1, iter = 99,
+  sim.measure = "bray", n.filters = 0, t.filters = 1, iter = 49,
   rm.zero = FALSE, tfsd = "wisconsin")
 }
 \arguments{
@@ -29,13 +29,13 @@ function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptab
 
 \item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
 
-\item{iter}{An integer defining number of resampling iteration (default iter=1)}
+\item{iter}{An integer defining number of resampling iteration (default iter = 99)}
 
 \item{rm.zero}{Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)}
 
 \item{tfsd}{A character string (default='wisconsin') specifying data standardization
 or transformations (applicable only for similarity measure).The following options are
-available: 'none' (or any unused character string) - no standardization or transformation,
+available: 'none' (or any unused character string) - no standardization/transformation,
 'total' - relative abundance, 'wisconsin' - double relativization,
 'r4' - 4th root transformation, 'log' - ecological log-transformation,
 'total4' - 4th root transformation of relative abundances.}
@@ -48,17 +48,17 @@ A list containing the following components:
    and estimated live-dead correlation coefficients for perfect fidelity model}
   \item{yc}{Adjusted live-dead similarity coefficients, 95% confidence intervals,
    and estimated live-dead similarity coefficients for perfect fidelity model}
-   \item{x.pf.dist}{Distriutions of randomized correlation values for perfect
-    fidelity model for each of the samples}
-   \item{y.pf.dist}{Distriutions of randomized correlation values for perfect
-    fidelity model for each of the samples}
-   \item{xc.dist}{Distriutions of model adjusted correlation values for
+   \item{x.pf.dist}{Distributions of randomized correlation values under perfect
+    fidelity model for each of the live-dead sample comparison}
+   \item{y.pf.dist}{Distributions of randomized correlation values under perfect
+    fidelity model for each of the live-dead sample comparison}
+   \item{xc.dist}{Distributions of model adjusted correlation values for
    each of the samples}
-   \item{y.pf.dist}{Distriutions of model adjusted similarity values for
+   \item{y.pf.dist}{Distributions of model adjusted similarity values for
    each of the samples}
   \item{x.stats}{Statistical summary for correlation coefficients for all data
   and for each group when 'gp' factor provided}
-  \item{y.stats}{Statistical summary for simialrity coefficients for all data
+  \item{y.stats}{Statistical summary for similarity coefficients for all data
   and for each group when 'gp' factor provided}
   \item{live}{The post-processed version of 'live' data matrix used in analyses}
   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
@@ -66,21 +66,28 @@ A list containing the following components:
   \item{values}{A list with values of parameters used in the analysis}
 }
 \description{
-FidelityEst computes live-dead fidelity measures by comparing two matching matrices (live
+FidelityEst estimates compositional fidelity measures by comparing two matching matrices (live
 and dead) with community abundance data. The function returns  fidelity estimates for indiviudal
 sites and for groups of sites if 'gp' factor is provided.
 }
 \details{
-FidelityEst assesses compositional fidelity using three measures
-(returned as 3 separate objects):
-(1) x - one of the three common measures of correlation/association:
- spearman (default), kendall, or pearson;
-(2) y - an abundance based measure of similarity such as: jaccard-chao (default)
- or bray ('vegdist' in 'vegan');
-(3) z - Fidelity Index measured as a scaled Euclidean distance from perfect fidelity score of
- indices x and y, where z = 0 denotes perfect fidelity (correlation and similarity measures
- both equal 1); z = 1 denotes no fidelity (correlation and similarity measures both equal 0);
- and z < 1 denotes cases where inverse correlation is observed.
+FidelityEst assesses compositional fidelity using
+measures of correlation/associations/similarity.
+(1) x - a measure of correlation/association: spearman (default), kendall, or pearson;
+(2) y - an abundance-based indices of similarity such as bray (default) or jaccard-chao.
+
+Because many of those fildeity measures tend to be sensitive to unbalanced sampling,
+FidelityEst function attempts to correct sampling bias by assessing data-specific biases
+in correlation/similarity measures. The bias is estimated using a resampling protocol
+under the perfect fidelity (PF) model, in which pooled (live + dead) counts are randomly
+partitioned into replicate pairs of samples (using sample sizes of original samples), thus
+creating sample pairs derived from a single underlying rank abundance distribution
+of species (i.e., perfect fidelity). For an unbiased estimator, the resampled fidelity
+measures should indicate perfect fidelity (e.g., Spearman rho = 1). The offset between
+the expected observed PF value (1 - PF) provides a data-specific estimate of sampling bias.
+The adjusted fidelity measure is then given by Adjusted = Observed + (1 - PF).
+Replicate resampling produces a distribution of PF values and resulting adjusted fidelity
+measures, from which confidence intervals and signifiance tests can be derived.
 }
 \examples{
 

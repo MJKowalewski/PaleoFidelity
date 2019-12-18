@@ -24,33 +24,33 @@ equal number of columns of 'live' and 'dead' matrices.}
 
 \item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
 
-\item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences}
+\item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences.
+Note that the default value of 1 keeps all taxa, but removes empty columns.}
 
-\item{output}{Logical (default=FALSE) determines if output data should be produced}
+\item{output}{Logical (default=FALSE) determines if an output with filtered datasets should be produced.}
 }
 \value{
-A list including the following components:
+A list (returned only if output=TRUE) including the following components:
   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
   \item{gp}{The grouping factor associated with sites (if provided)}
   \item{tax}{The grouping factor associated with taxa (if provided)}
 }
 \description{
-FidelitySummary function checks if the input objects are appropriately formatted and contain
-adequate data needed to carry out fidelity analysis. The function also allows the user to
-filter data by removing small samples and rare taxa
+FidelitySummary function evaluates if the input data are adequate and properly stored for
+carrying out fidelity analyses. When called by other PaleoFidelity function, FidelitySummary
+allows the user to filter data by removing small samples and rare taxa
 }
 \details{
-This function is implemented in other PaleoFidelity functions. However, users
-are encouraged to use it prior to using any other functions in order to:
-1). Check for errors and warnings;
-2). Generate a basic summary of user-provided objects (set logical argument report=TRUE)
-3). Explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
+This function is implemented in other PaleoFidelity functions. However,
+it is recommended to prior to any fidelity analysis to check for errors and warnings,
+generate a basic summary of datasets (set logical argument report=TRUE), and
+explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 
-NOTE: FidelitySummary function will provide an initial compliance evaluation. Also the function
+NOTE: FidelitySummary function will provide an initial compliance evaluation. The function
  allows the user to detect small samples and assess if removing those samples is advisable
  in terms of data dimensionality. If removal of small samples is desirable for subsequent
- analyses, please specify the desired numerical value of "n.filters" and "t.filters"
+ analyses, the desired numerical values of "n.filters" and "t.filters" need to be specified
  in other PaleoFidelity functions.
 }
 \examples{
