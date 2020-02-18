@@ -5,15 +5,15 @@
 \title{Compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "bray", n.filters = 0, t.filters = 1, iter = 49,
+  sim.measure = "bray", n.filters = 0, t.filters = 0, iter = 49,
   rm.zero = FALSE, tfsd = "wisconsin")
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-Dimensions of 'live' and 'dead' matrices must match exactely.}
+Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactely.}
 
 \item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-Dimensions of 'live' and 'dead' matrices must match exactely.}
+Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exactely.}
 
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
@@ -27,7 +27,7 @@ function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptab
 
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
 
-\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
+\item{t.filters}{An integer used to filter out rare taxa (default t.filters=0, all taxa kept)}
 
 \item{iter}{An integer defining number of resampling iteration (default iter = 99)}
 
@@ -66,9 +66,10 @@ A list containing the following components:
   \item{values}{A list with values of parameters used in the analysis}
 }
 \description{
-FidelityEst estimates compositional fidelity measures by comparing two matching matrices (live
-and dead) with community abundance data. The function returns  fidelity estimates for indiviudal
-sites and for groups of sites if 'gp' factor is provided.
+FidelityEst estimates compositional fidelity by comparing two matching matrices (live
+and dead) with community abundance data. The function returns fidelity measures for
+indiviudal sites, mean measures across sites, and means for groups of sites
+(if 'gp' factor is provided).
 }
 \details{
 FidelityEst assesses compositional fidelity using
@@ -76,18 +77,19 @@ measures of correlation/associations/similarity.
 (1) x - a measure of correlation/association: spearman (default), kendall, or pearson;
 (2) y - an abundance-based indices of similarity such as bray (default) or jaccard-chao.
 
-Because many of those fildeity measures tend to be sensitive to unbalanced sampling,
-FidelityEst function attempts to correct sampling bias by assessing data-specific biases
-in correlation/similarity measures. The bias is estimated using a resampling protocol
-under the perfect fidelity (PF) model, in which pooled (live + dead) counts are randomly
-partitioned into replicate pairs of samples (using sample sizes of original samples), thus
-creating sample pairs derived from a single underlying rank abundance distribution
-of species (i.e., perfect fidelity). For an unbiased estimator, the resampled fidelity
-measures should indicate perfect fidelity (e.g., Spearman rho = 1). The offset between
-the expected observed PF value (1 - PF) provides a data-specific estimate of sampling bias.
-The adjusted fidelity measure is then given by Adjusted = Observed + (1 - PF).
-Replicate resampling produces a distribution of PF values and resulting adjusted fidelity
-measures, from which confidence intervals and signifiance tests can be derived.
+Because many of those fidelity measures are sensitive to undersampling or
+unbalanced sampling, FidelityEst function attempts to correct sampling bias by
+assessing data-specific biases in correlation/similarity measures.The bias is estimated
+using a resampling protocol under the perfect fidelity (PF) model, in which
+pooled (live + dead) counts are randomly partitioned into replicate pairs of samples
+(using sample sizes of original samples), thus creating sample pairs derived from
+a single underlying rank abundance distribution of species (i.e., perfect fidelity).
+For an unbiased estimator, the resampled fidelity measures should indicate perfect
+fidelity (e.g., Spearman rho = 1). The offset between the expected observed
+PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
+fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
+produces a distribution of PF values and resulting adjusted fidelity measures,
+from which confidence intervals and signifiance tests can be derived.
 }
 \examples{
 

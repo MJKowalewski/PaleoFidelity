@@ -1,13 +1,14 @@
 #' Live-Dead differences in alpha diversity and evenness
 #'
-#' FidelityDiv provides estimates of differences in diversity between pairs of live and dead samples
-#' using community abundance data. In the case of datasets representing more than one site, the
-#' function returns also means of differences. If 'gp' factor is provided to aggregate sets of
-#' sites/samples, means for groups are returned as well.
+#' FidelityDiv provides estimates of differences in alpha diversity between pairs of
+#' live and dead samples from single sites using community abundance data. In the case of
+#' datasets representing more than one site, the function returns also means of differences.
+#' If 'gp' factor is provided to aggregate sets of sites, means for groups are also returned.
 #'
-#'@details FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of sympatric
-#' live and dead samples using a bivariate approch as described in  Olszewski and Kidwell (2007).
-#' The estimates of offsets in alpha diversityand evenness are returned as two separate objects.
+#'@details FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of
+#' sympatric live and dead samples using a bivariate approch  described in Olszewski and
+#' Kidwell (2007). The estimates of offsets in alpha diversityand evenness are returned
+#' as two separate objects.
 #'
 #' (1) x - Live-dead offsets in alpha diversity for individual sites. The difference is measured
 #' as the difference between natural logarithms of sample-standardized species richness of

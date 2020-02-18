@@ -1,4 +1,4 @@
-#' A bivariate plot of live-dead offsets in alpha diversity and evenness
+#' A Bivariate Plot of Live-Dead Offsets in Alpha Diversity and Evenness
 #'
 #' AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
 #' and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.

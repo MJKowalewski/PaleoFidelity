@@ -2,7 +2,7 @@
 % Please edit documentation in R/AlphaPlot.R
 \name{AlphaPlot}
 \alias{AlphaPlot}
-\title{A bivariate plot of live-dead offsets in alpha diversity and evenness}
+\title{A Bivariate Plot of Live-Dead Offsets in Alpha Diversity and Evenness}
 \usage{
 AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
   cf.bars = TRUE, cex = 0.8, xlab = bquote(Delta[" S"]),

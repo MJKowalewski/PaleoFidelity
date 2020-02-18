@@ -2,7 +2,7 @@
 % Please edit documentation in R/SJPlot.R
 \name{SJPlot}
 \alias{SJPlot}
-\title{A bivariate fidelity plot}
+\title{A Bivariate Fidelity Plot}
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
   trans = 0.3, cex = 1, legend.cex = 1, pch = 21, col = "black",
@@ -12,7 +12,7 @@ SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
 \arguments{
 \item{x}{An object (a list) returned by FidelityEst function.}
 
-\item{bubble}{Logical (default=TRUE): to produce a bubble plot with symbols scaled by N min
+\item{bubble}{Logical (default=TRUE): to produce a bubble plot with symbols scaled by N-min
 (the number of obeservations in the smaller of the two (live vs. dead) compared samples).}
 
 \item{xlim}{A vector with two numerical values representing x axis limits (default = c(-1, 1)).}
@@ -62,11 +62,12 @@ SJPlot function is designed to use the output of FidelityEst function to produce
 a fidelity plot (see Kidwell 2007). Specifically, if default arguments
 for fidelity measures ('Spearman' and 'Chao') are used in FidelityEst function,
 a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
-If a grouping factor is provided, symbols are color-coded by levels and group means are plotted.
-Bivariate distributions produced by resampling models can also be included.
+If a grouping factor is provided, symbols are color-coded by levels and group means
+are plotted. Bivariate distributions produced by resampling models can also be included.
 
-NOTE: This function utilizes graphics::plot function, including some of its common graphic arguments.
-It allows for quick exploratory plots and should be readily editable to derive more customized plots.
+NOTE: This function utilizes graphics::plot function, including some of its common
+graphic arguments. It allows for quick exploratory plots and should be readily
+editable to derive more customized plots.
 }
 \examples{
 

@@ -1,32 +1,34 @@
 #' Compositional measures of live-dead fidelity
 #'
-#' FidelityEst estimates compositional fidelity measures by comparing two matching matrices (live
-#' and dead) with community abundance data. The function returns  fidelity estimates for indiviudal
-#' sites and for groups of sites if 'gp' factor is provided.
+#' FidelityEst estimates compositional fidelity by comparing two matching matrices (live
+#' and dead) with community abundance data. The function returns fidelity measures for
+#' indiviudal sites, mean measures across sites, and means for groups of sites
+#' (if 'gp' factor is provided).
 #'
 #' @details FidelityEst assesses compositional fidelity using
 #' measures of correlation/associations/similarity.
 #' (1) x - a measure of correlation/association: spearman (default), kendall, or pearson;
 #' (2) y - an abundance-based indices of similarity such as bray (default) or jaccard-chao.
 #'
-#' Because many of those fildeity measures tend to be sensitive to unbalanced sampling,
-#' FidelityEst function attempts to correct sampling bias by assessing data-specific biases
-#' in correlation/similarity measures. The bias is estimated using a resampling protocol
-#' under the perfect fidelity (PF) model, in which pooled (live + dead) counts are randomly
-#' partitioned into replicate pairs of samples (using sample sizes of original samples), thus
-#' creating sample pairs derived from a single underlying rank abundance distribution
-#' of species (i.e., perfect fidelity). For an unbiased estimator, the resampled fidelity
-#' measures should indicate perfect fidelity (e.g., Spearman rho = 1). The offset between
-#' the expected observed PF value (1 - PF) provides a data-specific estimate of sampling bias.
-#' The adjusted fidelity measure is then given by Adjusted = Observed + (1 - PF).
-#' Replicate resampling produces a distribution of PF values and resulting adjusted fidelity
-#' measures, from which confidence intervals and signifiance tests can be derived.
+#' Because many of those fidelity measures are sensitive to undersampling or
+#' unbalanced sampling, FidelityEst function attempts to correct sampling bias by
+#' assessing data-specific biases in correlation/similarity measures.The bias is estimated
+#' using a resampling protocol under the perfect fidelity (PF) model, in which
+#' pooled (live + dead) counts are randomly partitioned into replicate pairs of samples
+#' (using sample sizes of original samples), thus creating sample pairs derived from
+#' a single underlying rank abundance distribution of species (i.e., perfect fidelity).
+#' For an unbiased estimator, the resampled fidelity measures should indicate perfect
+#' fidelity (e.g., Spearman rho = 1). The offset between the expected observed
+#' PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
+#' fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
+#' produces a distribution of PF values and resulting adjusted fidelity measures,
+#' from which confidence intervals and signifiance tests can be derived.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactely.
 #'
 #' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exactely.
 #'
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
@@ -40,7 +42,7 @@
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
 #'
-#' @param t.filters An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)
+#' @param t.filters An integer used to filter out rare taxa (default t.filters=0, all taxa kept)
 #'
 #' @param iter An integer defining number of resampling iteration (default iter = 99)
 #'
@@ -89,7 +91,7 @@
 #' @importFrom vegan vegdist
 
 FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='bray',
-                        n.filters=0, t.filters=1, iter=49,
+                        n.filters=0, t.filters=0, iter=49,
                         rm.zero=FALSE, tfsd='wisconsin')
  {
 
@@ -114,7 +116,7 @@ FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure
 # 2. Observed fidelity values
   x1 <- as.data.frame(t(live))
   x2 <- as.data.frame(t(dead))
-  cor.e <- mapply(function(x, y) my.cor.F(x, y), x1, x2)
+  cor.e <- mapply(function(x, y) my.cor.F(as.vector(x), as.vector(y)), x1, x2)
   x3 <- x1; x4 <- x2
 if(tfsd=='total') {x3 <- vegan::decostand(x1, 'total'); x4 <- vegan::decostand(x2, 'total')}
 if(tfsd=='total4') {x3 <- vegan::decostand(x1, 'total')^(1/4); x4 <- vegan::decostand(x2, 'total')^(1/4)}
@@ -135,19 +137,17 @@ if(tfsd=='r4') {x3 <- x1^0.25; x4 <- x2^0.25}
 # 3. "Perfect Fidelity" MODEL
       FidPerfModel <- function(live, dead) {
         pooled <- live + dead
-        rlive <- vegan::rrarefy(x=pooled, rowSums(live))
-        rdead <- vegan::rrarefy(x=pooled, rowSums(dead))
-        rx1 <- as.data.frame(t(rlive))
-        rx2 <- as.data.frame(t(rdead))
-        r.cor.e = mapply(function(x,y) my.cor.F(x, y), rx1, rx2)
-        rx3 <- rx1; rx4 <- rx2
-        if(tfsd=='total') {rx3 <- vegan::decostand(rx1, 'total'); rx4 <- vegan::decostand(rx2, 'total')}
-        if(tfsd=='total4') {rx3 <- vegan::decostand(rx1, 'total')^(1/4); rx4 <- vegan::decostand(rx2, 'total')^(1/4)}
-        if(tfsd=='wisconsin') {rx3 <- vegan::wisconsin(rx1); rx4 <- vegan::wisconsin(rx2)}
-        if(tfsd=='log') {rx3 <- vegan::decostand(rx1, 'log'); rx4 <- vegan::decostand(rx2, 'log')}
-        if(tfsd=='r4') {rx3 <- rx1^0.25; rx4 <- rx2^0.25}
-        r.sim.e = mapply(function(x,y) 1-vegan::vegdist(rbind(x,y), method = sim.measure), rx3, rx4)
-        return(cbind(mean(r.cor.e), mean(r.sim.e)))
+        rlive <- as.vector(vegan::rrarefy(x=pooled, sum(live)))
+        rdead <- as.vector(vegan::rrarefy(x=pooled, sum(dead)))
+        r.cor.e = my.cor.F(rlive, rdead)
+        rx3 <- rlive; rx4 <- rdead
+        if(tfsd=='total') {rx3 <- vegan::decostand(rlive, 'total'); rx4 <- vegan::decostand(rdead, 'total')}
+        if(tfsd=='total4') {rx3 <- vegan::decostand(rlive, 'total')^(1/4); rx4 <- vegan::decostand(rdead, 'total')^(1/4)}
+        if(tfsd=='wisconsin') {rx3 <- vegan::wisconsin(rlive); rx4 <- vegan::wisconsin(rdead)}
+        if(tfsd=='log') {rx3 <- vegan::decostand(rlive, 'log'); rx4 <- vegan::decostand(rdead, 'log')}
+        if(tfsd=='r4') {rx3 <- rlive^0.25; rx4 <- rdead^0.25}
+        r.sim.e = 1-vegan::vegdist(t(cbind(rx3,rx4)), method = sim.measure)
+        return(c(r.cor.e, r.sim.e))
       }
      pf.output <- array(0, dim=c(iter, nrow(live), 2),
                         dimnames=list(1:iter, rownames(live),

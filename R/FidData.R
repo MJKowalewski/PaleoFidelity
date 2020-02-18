@@ -10,7 +10,7 @@
 #' \details{
 #' A live-dead dataset including live and dead specimen counts from 44 sampling station off
 #' the coast of North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates
-#' and represents a part of the dataset described in Tyler and Kowalewski (2018).
+#' and represents a subset of a larger dataset described in Tyler and Kowalewski (2018).
 #' }
 #' \usage{PaleoFidelity}
 #'
