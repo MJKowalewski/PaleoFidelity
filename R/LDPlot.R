@@ -106,9 +106,9 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplim
                                            lwd = barwidth, lend = 3, col = col1)
   }
   graphics::axis(2, labels = toplivenames, at = 1:toplimit, lwd = 0, las = 1,
-                 padj = 0.5, hadj = 0.7, font = 3, cex.axis = cex.names)
+                 padj = 0.5, hadj = 1, font = 3, cex.axis = cex.names)
   graphics::axis(4, labels = topdeadnames, at = 1:toplimit, lwd = 0, las = 1,
-                 padj = 0.5, hadj = 0.3, font = 3, cex.axis = cex.names)
+                 padj = 0.5, hadj = 0, font = 3, cex.axis = cex.names)
   graphics::axis(1, labels = my.x.lab, padj = -1.5, tck = tck, at = my.x.at,
                  cex.axis = cex.axis)
   graphics::lines(c(0.42 * xlim2, 0.58 * xlim2), c(toplimit, toplimit), lwd = 50,
