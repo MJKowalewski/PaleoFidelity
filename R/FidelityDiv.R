@@ -140,7 +140,7 @@ FidelityDiv <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0
    outDP3 <- NULL
    p.GP <- NULL
 
-# 3.Means for all data and by groups (if 'gp' factor provided)
+# 3.Means for all data and by groups (if 'gp' factor is provided)
   # All data
   allS <- colMeans(rbind(out1[,1,]))
   allP <- colMeans(rbind(out1[,2,]))

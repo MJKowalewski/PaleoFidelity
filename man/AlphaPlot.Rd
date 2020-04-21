@@ -49,13 +49,13 @@ must match number of levels in a grouping factor}
 
 \item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided}
 
-\item{transp_mean}{Numerical (default=1): defines transparency of individual datapoints
-and associated confidence interavls. Allowed values range from 0
-(transparent = invisible) to 1 (opaque)}
-
-\item{transp}{Numerical (default=1): defines transparency of means and associated
+\item{transp_mean}{Numerical (default=1): defines transparency of means and associated
 confidence interavls. Allowed values range from 0 (transparent = invisible)
 to 1 (opaque)}
+
+\item{transp}{Numerical (default=1): defines transparency of individual datapoints
+and associated confidence interavls. Allowed values range from 0
+(transparent = invisible) to 1 (opaque)}
 }
 \value{
 A bivariate plot.

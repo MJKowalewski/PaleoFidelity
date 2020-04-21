@@ -47,13 +47,13 @@
 #'
 #' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided
 #'
-#' @param transp_mean Numerical (default=1): defines transparency of individual datapoints
-#'  and associated confidence interavls. Allowed values range from 0
-#'  (transparent = invisible) to 1 (opaque)
-#'
-#' @param transp Numerical (default=1): defines transparency of means and associated
+#' @param transp_mean Numerical (default=1): defines transparency of means and associated
 #' confidence interavls. Allowed values range from 0 (transparent = invisible)
 #' to 1 (opaque)
+#'
+#' @param transp Numerical (default=1): defines transparency of individual datapoints
+#'  and associated confidence interavls. Allowed values range from 0
+#'  (transparent = invisible) to 1 (opaque)
 #'
 #' @return A bivariate plot.
 #'

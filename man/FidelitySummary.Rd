@@ -40,7 +40,7 @@ A list (returned only if output=TRUE) including the following components:
 \description{
 FidelitySummary function evaluates if the input data are adequate and properly stored for
 carrying out fidelity analyses. When called by other PaleoFidelity function, FidelitySummary
-allows the user to filter data by removing small samples and rare taxa
+allows the user to filter data by removing small samples and rare taxa.
 }
 \details{
 This function is implemented in other PaleoFidelity functions. However,

@@ -2,7 +2,7 @@
 #'
 #' FidelitySummary function evaluates if the input data are adequate and properly stored for
 #' carrying out fidelity analyses. When called by other PaleoFidelity function, FidelitySummary
-#' allows the user to filter data by removing small samples and rare taxa
+#' allows the user to filter data by removing small samples and rare taxa.
 #'
 #' @details This function is implemented in other PaleoFidelity functions. However,
 #' prior to any fidelity analysis, it is recommended  to check for errors and warnings,

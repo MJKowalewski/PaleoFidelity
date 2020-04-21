@@ -64,8 +64,7 @@ is suitable for single live-dead comparisons only (single samples,
 sets of samples or datasets).
 
 NOTE: This function utilizes graphics::plot function, including some of its common
-graphic arguments. It allows for quick exploratory plots and should be readily
-editable to derive more customized plots.
+graphic arguments.
 }
 \examples{
 

@@ -8,7 +8,7 @@
 #' @details FidelityEst assesses compositional fidelity using
 #' measures of correlation/associations/similarity.
 #' (1) x - a measure of correlation/association: spearman (default), kendall, or pearson;
-#' (2) y - an abundance-based indices of similarity such as bray (default) or jaccard-chao.
+#' (2) y - an abundance-based index of similarity such as bray (default) or jaccard-chao.
 #'
 #' Because many of those fidelity measures are sensitive to undersampling or
 #' unbalanced sampling, FidelityEst function attempts to correct sampling bias by
