@@ -5,9 +5,10 @@
 \title{A Bivariate Fidelity Plot}
 \usage{
 SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
-  trans = 0.3, cex = 1, legend.cex = 1, pch = 21, col = "black",
-  gpcol = NULL, pch2 = "+", PF = TRUE, addlegend = TRUE,
-  CI = TRUE, adjF = TRUE, unadjF = FALSE, addInfo = TRUE)
+  trans = 0.3, cex = 1, cex.mean = 2, legend.cex = 0.8, axes = T,
+  pch = 21, col = "black", gpcol = NULL, pch2 = "+", PF = TRUE,
+  addlegend = TRUE, CI = TRUE, adjF = TRUE, ssF = FALSE,
+  unadjF = FALSE, addInfo = TRUE, xlab = NULL, ylab = NULL)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityEst function.}
@@ -19,15 +20,20 @@ SJPlot(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1),
 
 \item{ylim}{A vector with two numerical values representing y axis limits (default = c(0, 1)).}
 
-\item{trans}{A numeric value (default = 0.3) defining transparency of background fill for symbols.}
+\item{trans}{A numerical value (default = 0.3) defining transparency of background fill for symbols.}
 
-\item{cex}{A numeric value (default = 1) defining symbol size (applicable if Bubble = FALSE).}
+\item{cex}{A numerical value (default = 1) defining symbol size (applicable if Bubble = FALSE).}
+
+\item{cex.mean}{A numerical value (default = 2) defining symbol size for means
+across all samples or sample groups.}
 
 \item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
 
+\item{axes}{Logical (deafault = TRUE): to determine if axes should be plotted}
+
 \item{pch}{An integer or a single character (default = 21) specifying symbol type.}
 
-\item{col}{Color name (default = 'black') defining symbol color, applicable when 'gp' factor
+\item{col}{A character string (default = 'black') defining symbol color, applicable when 'gp' factor
 was provided in FidelityEst function.}
 
 \item{gpcol}{Color names (default = 1:#levels) defining colors for sample groups, applicable
@@ -46,9 +52,17 @@ for the null model postulating perfect fidelity.}
 
 \item{adjF}{Logical (default=TRUE): plots adjusted fidelity estimates}
 
+\item{ssF}{Logical (default=FALSE): plots sample-standardized fidelity estimates}
+
 \item{unadjF}{Logical (default=FALSE): plots unadjusted fidellity estimates}
 
 \item{addInfo}{Logical (default=TRUE): provides parameter values used in the analysis}
+
+\item{xlab}{Character string that provides x-axis label. The default value is inherited
+from FidelityEst object based on a correlation measure used there.}
+
+\item{ylab}{Character string that provides y-axis label. The default value is inherited
+from FidelityEst object based on a similarity measure used there.}
 }
 \value{
 A single bivariate plot.
@@ -59,10 +73,9 @@ a similarity measure (y axis) for all live-dead pairwise comparisons.
 }
 \details{
 SJPlot function is designed to use the output of FidelityEst function to produce
-a fidelity plot (see Kidwell 2007). Specifically, if default arguments
-for fidelity measures ('Spearman' and 'Chao') are used in FidelityEst function,
-a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
-If a grouping factor is provided, symbols are color-coded by levels and group means
+a fidelity plot. Specifically, if default arguments for fidelity measures ('Spearman' and 'Chao')
+are used in FidelityEst function, a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007)
+is produced. If a grouping factor is provided, symbols are color-coded by levels and group means
 are plotted. Bivariate distributions produced by resampling models can also be included.
 
 NOTE: This function utilizes graphics::plot function, including some of its common
@@ -72,7 +85,7 @@ editable to derive more customized plots.
 \examples{
 
 out1 <- FidelityEst(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
-                   n.filters=30, iter=99, t.filters=1)
+                   n.filters=30, iter=100, t.filters=1)
 SJPlot(out1)
 
 }

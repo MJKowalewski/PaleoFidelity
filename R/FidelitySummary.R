@@ -5,7 +5,7 @@
 #' allows the user to filter data by removing small samples and rare taxa
 #'
 #' @details This function is implemented in other PaleoFidelity functions. However,
-#' it is recommended to prior to any fidelity analysis to check for errors and warnings,
+#' prior to any fidelity analysis, it is recommended  to check for errors and warnings,
 #' generate a basic summary of datasets (set logical argument report=TRUE), and
 #' explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 #'
@@ -32,7 +32,8 @@
 #' @param n.filters Integer (default = 0) to remove small samples with n < n.filters occurrences
 #'
 #' @param t.filters Integer (default = 1) to remove rare taxa with t < t.filters occurrences.
-#' Note that the default value of 1 keeps all taxa, but removes empty columns.
+#' Note that the default value of 1 keeps all taxa, but removes empty columns (this may not be
+#' appropriate for certain applications such as simulations of null models).
 #'
 #' @param output Logical (default=FALSE) determines if an output with filtered datasets should be produced.
 #'
@@ -67,12 +68,12 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
     stop('at least 3 columns (species/variables) required to compute fidelity measures')
   if (min(colSums(live) + colSums(dead)) == 0)
      {
-       if (t.filters > 0) message('NOTE: combined live+dead data contain empty columns. They will be removed')
-       if (t.filters == 0) message('NOTE: combined live+dead data contain empty columns. They will NOT be removed. Use t.filters > 0')
+       if (t.filters > 0 & report == TRUE) message('NOTE: combined live+dead data contain empty columns. They will be removed')
+       if (t.filters == 0 & report == TRUE) message('NOTE: combined live+dead data contain empty columns. They will NOT be removed. Use t.filters > 0')
      }
-  if (min(rowSums(live)) == 0)
+  if (min(rowSums(live)) == 0 & report == TRUE)
     warning('live dataset contains empty rows')
-  if (min(rowSums(dead)) == 0)
+  if (min(rowSums(dead)) == 0 & report == TRUE)
     warning('dead dataset contains empty rows')
 
     if (!identical(colnames(live), colnames(dead)))
@@ -87,15 +88,15 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
       stop('the length of "gp" factor must equal the number of rows in live and dead')
     if (!is.factor(gp))
       stop('"gp" object must be a factor')
-    if (sum(table(gp) == 0) > 0)
+    if (sum(table(gp) == 0) > 0 & report == TRUE)
       {
       warning('empty levels detected and will be dropped')
       gp <- droplevels(gp)
       }
-    if (sum(table(gp) > 1) < 2)
+    if (sum(table(gp) > 1) < 2  & report == TRUE)
       warning('gp factor should include n > 1 observations for at least two levels')
     }
-  if (length(gp) == 0)
+  if (length(gp) == 0  & report == TRUE)
     message('NOTE: gp factor has not been provided (by-group analyses and tests not possible)')
 
   if (length(tax) > 0)
@@ -104,20 +105,20 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
       stop('the length of "tax" factor must equal the number of columns in live and dead')
     if (!is.factor(tax))
       stop('"tax" must be a factor')
-    if (sum(table(tax) == 0) > 0)
+    if (sum(table(tax) == 0) > 0  & report == TRUE)
     {
       warning('empty levels detected and will be dropped')
       tax <- droplevels(tax)
     }
-    if (sum(table(tax) > 1) < 2)
+    if (sum(table(tax) > 1) < 2  & report == TRUE)
       warning('"tax" factor should include n > 1 observations for at least two levels')
   }
 
   # PART III: Apply n.filters and t.filters (or not)
-  if (n.filters == 0)
+  if (n.filters == 0 & report == TRUE)
     message('NOTE: n.filters=0: no samples (rows) were removed')
 
-  if (t.filters == 0)
+  if (t.filters == 0  & report == TRUE)
     message('NOTE: t.filters=0: no species(columns) were removed')
 
   if (n.filters > 0 | t.filters > 0)
@@ -152,26 +153,26 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
     else
       rm.taxa <- 0
 
-    message(paste('NOTE: n.filters=', n.filters, ', ',
+    if (report == TRUE) { message(paste('NOTE: n.filters=', n.filters, ', ',
       rm.samples, ' samples (rows) removed, ',
       rm.taxa, ' taxa (columns) removed',
-      sep = ''))
+      sep = '')) }
   }
 
   # PART IV: Additional checks
   # check 1: check if samples with n < 30 are present in the data
-  if (min(c(rowSums(live), rowSums(dead))) < 30)
+  if (min(c(rowSums(live), rowSums(dead))) < 30 & report == T)
     warning('small samples present (n<30): consider applying "n.filters >= 30"')
   # check 2: check again if gp factor still compliant
   if (length(gp) > 0)
   {
-    if (sum(table(gp) > 1) < 2)
+    if (sum(table(gp) > 1) < 2 & report == TRUE)
       warning('gp factor should include n > 1 observations for at least two levels')
   }
   # check 2: check again if "tax" factor still compliant
   if (length(tax) > 0)
   {
-    if (sum(table(tax) > 1) < 2)
+    if (sum(table(tax) > 1) < 2  & report == TRUE)
       warning('"tax" factor should include n > 1 observations for at least two levels')
   }
 

@@ -5,8 +5,9 @@
 \title{Compositional measures of live-dead fidelity}
 \usage{
 FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "bray", n.filters = 0, t.filters = 0, iter = 49,
-  rm.zero = FALSE, tfsd = "wisconsin")
+  sim.measure = "bray", n.filters = 0, t.filters = 1,
+  report = FALSE, iter = 100, iter2 = 100, min.sam = 30,
+  CI = 0.95, rm.zero = FALSE, tfsd = "none")
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -27,14 +28,29 @@ function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptab
 
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
 
-\item{t.filters}{An integer used to filter out rare taxa (default t.filters=0, all taxa kept)}
+\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1,
+all taxa with at least one occurrence kept)}
 
-\item{iter}{An integer defining number of resampling iteration (default iter = 99)}
+\item{report}{Logical (default report = FALSE) (suppresses notes, warnings and data summary)}
+
+\item{iter}{An integer defining number of resampling iteration
+for perfect fidelity model (default iter = 100)}
+
+\item{iter2}{An integer defining number of resampling iteration for subsampling
+standardization (default iter2 = 100)}
+
+\item{min.sam}{An integer defining number of specimens for sample standardization (default = 30).
+This number must be smaller than the smallest sample in the datasest.}
+
+\item{CI}{A numerical value (default = 0.95) defining confidence limits for
+adjusted and sample-standardized estimates of fidelity based on percentiles of
+resampled estimates (perfect fidelity model estimates or sample-standardized
+fidelity estimates) of correlation and similarity measures.}
 
 \item{rm.zero}{Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)}
 
-\item{tfsd}{A character string (default='wisconsin') specifying data standardization
-or transformations (applicable only for similarity measure).The following options are
+\item{tfsd}{A character string (default='none') specifying data standardization
+or transformations (applicable only for some similarity measure).The following options are
 available: 'none' (or any unused character string) - no standardization/transformation,
 'total' - relative abundance, 'wisconsin' - double relativization,
 'r4' - 4th root transformation, 'log' - ecological log-transformation,
@@ -44,22 +60,34 @@ available: 'none' (or any unused character string) - no standardization/transfor
 A list containing the following components:
   \item{x}{Live-dead correlation coefficients for each site}
   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-  \item{xc}{Adjusted live-dead correlation coefficients, 95% confidence intervals,
+  \item{xc}{Adjusted live-dead correlation coefficients, confidence intervals,
    and estimated live-dead correlation coefficients for perfect fidelity model}
-  \item{yc}{Adjusted live-dead similarity coefficients, 95% confidence intervals,
+  \item{yc}{Adjusted live-dead similarity coefficients, confidence intervals,
    and estimated live-dead similarity coefficients for perfect fidelity model}
-   \item{x.pf.dist}{Distributions of randomized correlation values under perfect
+  \item{xs}{Sample-standardized live-dead correlation coefficients,
+  confidence intervals, and standardized sample size}
+  \item{ys}{Sample-standardized live-dead similarity coefficients,
+  confidence intervals, and standardized sample size}
+  \item{x.stats}{Statistical summary for raw correlation coefficients for
+  all data and for each group when 'gp' factor provided}
+  \item{y.stats}{Statistical summary for raw similarity coefficients for
+  all data and for each group when 'gp' factor provided}
+  \item{xc.stats}{Statistical summary for adjusted correlation coefficients for
+  all data and for each group when 'gp' factor provided}
+  \item{yc.stats}{Statistical summary for adjusted similarity coefficients for
+  all data and for each group when 'gp' factor provided}
+  \item{xs.stats}{Statistical summary for sample-standardized correlation
+  coefficients for all data and for each group when 'gp' factor provided}
+  \item{ys.stats}{Statistical summary for sample-standardized similarity
+  coefficients for all data and for each group when 'gp' factor provided}
+  \item{x.pf.dist}{Distributions of randomized correlation values under perfect
     fidelity model for each of the live-dead sample comparison}
-   \item{y.pf.dist}{Distributions of randomized correlation values under perfect
+  \item{y.pf.dist}{Distributions of randomized correlation values under perfect
     fidelity model for each of the live-dead sample comparison}
-   \item{xc.dist}{Distributions of model adjusted correlation values for
+  \item{xc.dist}{Distributions of model adjusted correlation values for
    each of the samples}
-   \item{y.pf.dist}{Distributions of model adjusted similarity values for
+   \item{yc.dist}{Distributions of model adjusted similarity values for
    each of the samples}
-  \item{x.stats}{Statistical summary for correlation coefficients for all data
-  and for each group when 'gp' factor provided}
-  \item{y.stats}{Statistical summary for similarity coefficients for all data
-  and for each group when 'gp' factor provided}
   \item{live}{The post-processed version of 'live' data matrix used in analyses}
   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
   \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}

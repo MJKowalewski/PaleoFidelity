@@ -42,14 +42,29 @@
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
 #'
-#' @param t.filters An integer used to filter out rare taxa (default t.filters=0, all taxa kept)
+#' @param t.filters An integer used to filter out rare taxa (default t.filters=1,
+#' all taxa with at least one occurrence kept)
 #'
-#' @param iter An integer defining number of resampling iteration (default iter = 99)
+#' @param report Logical (default report = FALSE) (suppresses notes, warnings and data summary)
+#'
+#' @param iter An integer defining number of resampling iteration
+#' for perfect fidelity model (default iter = 100)
+#'
+#' @param iter2 An integer defining number of resampling iteration for subsampling
+#' standardization (default iter2 = 100)
+#'
+#' @param min.sam An integer defining number of specimens for sample standardization (default = 30).
+#' This number must be smaller than the smallest sample in the datasest.
+#'
+#' @param CI A numerical value (default = 0.95) defining confidence limits for
+#' adjusted and sample-standardized estimates of fidelity based on percentiles of
+#' resampled estimates (perfect fidelity model estimates or sample-standardized
+#' fidelity estimates) of correlation and similarity measures.
 #'
 #' @param rm.zero Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)
 #'
-#' @param tfsd A character string (default='wisconsin') specifying data standardization
-#' or transformations (applicable only for similarity measure).The following options are
+#' @param tfsd A character string (default='none') specifying data standardization
+#' or transformations (applicable only for some similarity measure).The following options are
 #' available: 'none' (or any unused character string) - no standardization/transformation,
 #' 'total' - relative abundance, 'wisconsin' - double relativization,
 #' 'r4' - 4th root transformation, 'log' - ecological log-transformation,
@@ -58,22 +73,34 @@
 #' @return A list containing the following components:
 #'   \item{x}{Live-dead correlation coefficients for each site}
 #'   \item{y}{Live-dead similarity coefficients for each live-dead comparison}
-#'   \item{xc}{Adjusted live-dead correlation coefficients, 95% confidence intervals,
+#'   \item{xc}{Adjusted live-dead correlation coefficients, confidence intervals,
 #'    and estimated live-dead correlation coefficients for perfect fidelity model}
-#'   \item{yc}{Adjusted live-dead similarity coefficients, 95% confidence intervals,
+#'   \item{yc}{Adjusted live-dead similarity coefficients, confidence intervals,
 #'    and estimated live-dead similarity coefficients for perfect fidelity model}
-#'    \item{x.pf.dist}{Distributions of randomized correlation values under perfect
+#'   \item{xs}{Sample-standardized live-dead correlation coefficients,
+#'   confidence intervals, and standardized sample size}
+#'   \item{ys}{Sample-standardized live-dead similarity coefficients,
+#'   confidence intervals, and standardized sample size}
+#'   \item{x.stats}{Statistical summary for raw correlation coefficients for
+#'   all data and for each group when 'gp' factor provided}
+#'   \item{y.stats}{Statistical summary for raw similarity coefficients for
+#'   all data and for each group when 'gp' factor provided}
+#'   \item{xc.stats}{Statistical summary for adjusted correlation coefficients for
+#'   all data and for each group when 'gp' factor provided}
+#'   \item{yc.stats}{Statistical summary for adjusted similarity coefficients for
+#'   all data and for each group when 'gp' factor provided}
+#'   \item{xs.stats}{Statistical summary for sample-standardized correlation
+#'   coefficients for all data and for each group when 'gp' factor provided}
+#'   \item{ys.stats}{Statistical summary for sample-standardized similarity
+#'   coefficients for all data and for each group when 'gp' factor provided}
+#'   \item{x.pf.dist}{Distributions of randomized correlation values under perfect
 #'     fidelity model for each of the live-dead sample comparison}
-#'    \item{y.pf.dist}{Distributions of randomized correlation values under perfect
+#'   \item{y.pf.dist}{Distributions of randomized correlation values under perfect
 #'     fidelity model for each of the live-dead sample comparison}
-#'    \item{xc.dist}{Distributions of model adjusted correlation values for
+#'   \item{xc.dist}{Distributions of model adjusted correlation values for
 #'    each of the samples}
-#'    \item{y.pf.dist}{Distributions of model adjusted similarity values for
+#'    \item{yc.dist}{Distributions of model adjusted similarity values for
 #'    each of the samples}
-#'   \item{x.stats}{Statistical summary for correlation coefficients for all data
-#'   and for each group when 'gp' factor provided}
-#'   \item{y.stats}{Statistical summary for similarity coefficients for all data
-#'   and for each group when 'gp' factor provided}
 #'   \item{live}{The post-processed version of 'live' data matrix used in analyses}
 #'   \item{dead}{The post-processed version of 'dead' data matrix used in analyses}
 #'   \item{gp}{The post-processed version of 'gp', when 'gp' factor provided}
@@ -91,27 +118,28 @@
 #' @importFrom vegan vegdist
 
 FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='bray',
-                        n.filters=0, t.filters=0, iter=49,
-                        rm.zero=FALSE, tfsd='wisconsin')
+                        n.filters=0, t.filters=1, report=FALSE, iter=100, iter2=100,
+                        min.sam=30, CI=0.95, rm.zero=FALSE, tfsd='none')
  {
 
 # 1.1. Data assessment and filtering
-  out <- FidelitySummary(live, dead, gp, report=FALSE, output=TRUE,
-                         n.filters=n.filters, t.filters=t.filters) # check/filter data
+  out <- FidelitySummary(live, dead, gp, report = report, output = TRUE,
+                         n.filters = n.filters, t.filters = t.filters) # check/filter data
   if (length(out)==2) {live <- out$live;  dead <- out$dead}
   if (length(out)==3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
 
 # 1.2. Correlation function with an option to remove double zeros
+
   my.cor.F <- function(x, y) {
     if(rm.zero) {
-      if(sum(colSums(rbind(x, y)) == 0) > 0) {
+        if(sum(colSums(rbind(x, y)) == 0) > 0) {
         good.taxa <- which(colSums(rbind(x, y)) > 0)
         x <- x[good.taxa]
         y <- y[good.taxa]
         }
-       }
+     }
     stats::cor(x, y, method=cor.measure)
-    }
+  }
 
 # 2. Observed fidelity values
   x1 <- as.data.frame(t(live))
@@ -126,15 +154,68 @@ if(tfsd=='r4') {x3 <- x1^0.25; x4 <- x2^0.25}
   sim.e <- mapply(function(x, y) 1 - vegan::vegdist(rbind(x,y), method=sim.measure), x3, x4)
   fid.sam <- data.frame(cor.e, sim.e)
   colnames(fid.sam) <- c(cor.measure, sim.measure)
-  mean.measures <- c(mean(cor.e), mean(sim.e))
-  names(mean.measures) <- c(cor.measure, sim.measure)
+  rownames(fid.sam) <- rownames(live)
+  raw.stats <- cbind(mean(cor.e), mean(sim.e))
+  colnames(raw.stats) <- c(cor.measure, sim.measure)
+  rownames(raw.stats) <- "all samples"
   if(length(gp) == 0)  mean.gp <- NA
-  if(length(gp) > 0)  {
+  if(length(gp) > 0 & nrow(live) > 1)  {
     mean.gp <- cbind(tapply(cor.e, gp, mean), tapply(sim.e, gp, mean))
     colnames(mean.gp) <- c(cor.measure, sim.measure)
-    }
+    raw.stats <- rbind(raw.stats, mean.gp)
+  }
+  raw.x <- cbind(raw.stats[,1])
+  raw.y <- cbind(raw.stats[,2])
 
-# 3. "Perfect Fidelity" MODEL
+  # 3. Sample standardized fidelity values
+  if (iter2 >= 10) {
+  LCL <- (1 - CI) / 2 # define quantiles based on CI value
+  UCL <- 1 - LCL      # define quantiles based on CI value
+  fid.subsam <- function(x, y, min) {
+    a <- as.data.frame(t(vegan::rrarefy(x, sample=min)))
+    b <- as.data.frame(t(vegan::rrarefy(y, sample=min)))
+    cor.ab <- mapply(function(x, y) my.cor.F(as.vector(x), as.vector(y)), a, b)
+    sim.ab <- mapply(function(x, y) 1 - vegan::vegdist(rbind(x,y), method=sim.measure), a, b)
+    cbind(cor.ab, sim.ab)
+    }
+  outSS <- array(NA, dim = c(nrow(live), 2, iter2))
+  for (i in 1:iter2) outSS[,,i] <- fid.subsam(live, dead, min=min.sam)
+  SSCOR <- cbind(est=rowMeans(rbind(outSS[,1,])), t(apply(rbind(outSS[,1,]), 1,
+                 stats::quantile, prob=c((1 - CI)/2, 1 - (1 - CI)/2))), n.std = min.sam)
+  SSSIM <- cbind(est=rowMeans(rbind(outSS[,2,])), t(apply(rbind(outSS[,2,]), 1,
+                stats::quantile, prob=c((1 - CI)/2, 1 - (1 - CI)/2))),n.std = min.sam)
+  colnames(SSCOR)[1:3] <- c(paste(cor.measure,'.SS', sep=''), paste(LCL), paste(UCL))
+  colnames(SSSIM)[1:3] <- c(paste(sim.measure,'.SS', sep=''), paste(LCL), paste(UCL))
+  rownames(SSCOR) <- rownames(live)
+  rownames(SSSIM) <- rownames(live)
+  ifelse(nrow(live) > 1, xss <- colMeans(outSS[,1,]), xss <- mean(outSS[,1,]))
+  ifelse(nrow(live) > 1, yss <- colMeans(outSS[,2,]), yss <- mean(outSS[,2,]))
+  xss2 <- stats::quantile(xss, prob=c(LCL, 0.5, UCL))
+  yss2 <- stats::quantile(yss, prob=c(LCL, 0.5, UCL))
+  xs.stat <- data.frame(mean=mean(xss), LCL=xss2[1], median=xss2[2], UCL=xss2[3])
+  rownames(xs.stat) <- 'all samples'
+  ys.stat <- data.frame(mean=mean(yss), LCL=yss2[1], median=yss2[2], UCL=yss2[3])
+  rownames(ys.stat) <- 'all samples'
+  if (length(gp) > 0 & nrow(live) > 1) {
+    xsg <- apply(outSS[,1,], 2, function(x) tapply(x, gp, mean))
+    xsg2 <- t(rbind(apply(xsg, 1, mean), apply(xsg, 1, stats::quantile, prob=c(LCL, 0.5, UCL))))
+    colnames(xsg2) <- c('mean', 'LCL', 'median', 'UCL')
+    xs.stat <- rbind('all samples'=xs.stat, xsg2)
+    ysg <- apply(outSS[,2,], 2, function(x) tapply(x, gp, mean))
+    ysg2 <- t(rbind(apply(ysg, 1, mean), apply(ysg, 1, stats::quantile, prob=c(LCL, 0.5, UCL))))
+    colnames(ysg2) <- c('mean', 'LCL', 'median', 'UCL')
+    ys.stat <- rbind('all samples'=ys.stat, ysg2)
+  }
+  colnames(xs.stat)[c(2,4)] <- c(paste(LCL), paste(UCL))
+  colnames(ys.stat)[c(2,4)] <- c(paste(LCL), paste(UCL))
+  ss.cor.rep <- t(outSS[,1,])
+  ss.sim.rep <- t(outSS[,2,])
+  colnames(ss.cor.rep) <- rownames(live)
+  colnames(ss.sim.rep) <- rownames(live)
+  }
+
+# 4. "Perfect Fidelity" MODEL
+      if (iter >= 10) {
       FidPerfModel <- function(live, dead) {
         pooled <- live + dead
         rlive <- as.vector(vegan::rrarefy(x=pooled, sum(live)))
@@ -166,39 +247,61 @@ if(tfsd=='r4') {x3 <- x1^0.25; x4 <- x2^0.25}
       sim.m.adj[sim.m.adj>1] <- 1
       cor.adj.sam <- apply(cor.m.adj, 2, mean)
       sim.adj.sam <- apply(sim.m.adj, 2, mean)
-      cor.adj.sam.CI <- apply(cor.m.adj, 2, stats::quantile, prob=c(0.025, 0.975))
-      sim.adj.sam.CI <- apply(sim.m.adj, 2, stats::quantile, prob=c(0.025, 0.975))
+      cor.adj.sam.CI <- apply(cor.m.adj, 2, stats::quantile, prob=c(LCL, UCL))
+      sim.adj.sam.CI <- apply(sim.m.adj, 2, stats::quantile, prob=c(LCL, UCL))
       corrected <- cbind(cor.adj.sam, sim.adj.sam)
       corrected.mean <- c(mean(cor.m.adj), mean(sim.m.adj))
       names(corrected.mean) <- c(cor.measure, sim.measure)
-      x.stat <- c(mean(corrected[,1]), stats::quantile(corrected[,1], prob=c(0.025, 0.5, 0.975)))
-      y.stat <- c(mean(corrected[,2]), stats::quantile(corrected[,2], prob=c(0.025, 0.5, 0.975)))
-      if (length(gp) > 0) {
+      xc.stat <- c(mean(corrected[,1]), stats::quantile(corrected[,1], prob=c(LCL, 0.5, UCL)))
+      yc.stat <- c(mean(corrected[,2]), stats::quantile(corrected[,2], prob=c(LCL, 0.5, UCL)))
+      if (length(gp) == 0) {
+        xc.stat <- rbind(xc.stat)
+        yc.stat <- rbind(yc.stat)
+        colnames(xc.stat) <- c('mean', paste(LCL), 'median', paste(UCL))
+        colnames(yc.stat) <- c('mean', paste(LCL), 'median', paste(UCL))
+        rownames(xc.stat) <- 'all samples'
+        rownames(yc.stat) <- 'all samples'
+      }
+      if (length(gp) > 0 & nrow(live) > 1) {
         statsgp.x1 <- tapply(corrected[,1], gp, mean)
-        statsgp.x2 <- tapply(corrected[,1], gp, stats::quantile, prob=c(0.025, 0.5, 0.975))
+        statsgp.x2 <- tapply(corrected[,1], gp, stats::quantile, prob=c(LCL, 0.5, UCL))
         statsgp.x3 <- cbind(statsgp.x1, matrix(unlist(statsgp.x2), length(levels(gp)), 3, byrow=T))
         statsgp.y1 <- tapply(corrected[,2], gp, mean)
-        statsgp.y2 <- tapply(corrected[,2], gp, stats::quantile, prob=c(0.025, 0.5, 0.975))
+        statsgp.y2 <- tapply(corrected[,2], gp, stats::quantile, prob=c(LCL, 0.5, UCL))
         statsgp.y3 <- cbind(statsgp.y1, matrix(unlist(statsgp.y2), length(levels(gp)), 3, byrow=T))
-        x.stat <- rbind('all.samples'=x.stat, statsgp.x3)
-        y.stat <- rbind('all.samples'=y.stat, statsgp.y3)
-        colnames(x.stat) <- c('mean', '2.5%', 'median', '97.5%')
-        colnames(y.stat) <- c('mean', '2.5%', 'median', '97.5%')
+        xc.stat <- rbind('all.samples'=xc.stat, statsgp.x3)
+        yc.stat <- rbind('all.samples'=yc.stat, statsgp.y3)
+        colnames(xc.stat) <- c('mean', paste(LCL), 'median', paste(UCL))
+        colnames(yc.stat) <- c('mean', paste(LCL), 'median', paste(UCL))
       }
-      x.stat <- as.data.frame(x.stat)
-      y.stat <- as.data.frame(y.stat)
+      xc.stat <- as.data.frame(xc.stat)
+      yc.stat <- as.data.frame(yc.stat)
       xc.sum <- data.frame(corrected[,1], t(cor.adj.sam.CI), perfidest[,1])
-      names(xc.sum)[c(1,4)] <- c(paste(cor.measure,'.ADJ', sep=''),
-                                 paste(cor.measure,'.PF', sep=''))
+      names(xc.sum) <- c(paste(cor.measure,'.ADJ', sep=''), paste(LCL),
+                         paste(UCL), paste(cor.measure,'.PF', sep=''))
       yc.sum <- data.frame(corrected[,2], t(sim.adj.sam.CI), perfidest[,2])
-      names(yc.sum)[c(1,4)] <- c(paste(sim.measure,'.ADJ', sep=''),
-                                 paste(sim.measure,'.PF', sep=''))
-### 4. OUTPUT
-  out1 <- list(x=fid.sam[,1], y=fid.sam[,2], xc=xc.sum, yc=yc.sum,
-               x.pf.dist = pf.output[,,1], y.pf.dist = pf.output[,,2],
-               xc.dist = cor.m.adj, yc.dist = sim.m.adj, x.stats=x.stat,
-               y.stats=y.stat, live = live, dead = dead, gp = gp,
-               values=list(measures=c(cor.measure, sim.measure), data.transf=tfsd,
-                          remove.double.zeros=rm.zero, iterations=iter))
+      names(yc.sum) <- c(paste(sim.measure,'.ADJ', sep=''), paste(LCL),
+                                 paste(UCL), paste(sim.measure,'.PF', sep=''))
+      if(nrow(live) == 1) {raw.stats<-c(NA, NA); xc.stat<-NA;
+                           yc.stat<-NA; xs.stat<-NA; ys.stat<-NA}
+      }
+
+### 5. OUTPUT
+
+  if (iter < 10) {
+    xc.sum <- yc.sum <- xc.stat <- yc.stat <- cor.m.adj <- sim.m.adj <- 'NA'
+    pf.output <- array(dim = c(1,1,2)) }
+
+  if (iter2 < 10) SSCOR <- SSSIM <- xs.stat <- ys.stat <- ss.cor.rep <- ss.sim.rep <- 'NA'
+
+  out1 <- list(x = fid.sam[1], y = fid.sam[2], xc = xc.sum, yc = yc.sum, xs = SSCOR,
+               ys = SSSIM, x.stats = raw.x, y.stats = raw.y,
+               xc.stats = xc.stat, yc.stats = yc.stat, xs.stats = xs.stat,
+               ys.stats = ys.stat, x.pf.dist = pf.output[,,1], y.pf.dist = pf.output[,,2],
+               xc.dist = cor.m.adj, yc.dist = sim.m.adj, xs.dist=ss.cor.rep,
+               ys.dist=ss.sim.rep, live = live, dead = dead, gp = gp,
+               values = list(measures = c(cor.measure, sim.measure), data.transf = tfsd,
+                          remove.double.zeros = rm.zero, PFiter = iter,
+                          SSIter = iter2, min.sam = min.sam))
   return(out1)
 }

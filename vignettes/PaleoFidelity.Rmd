@@ -28,6 +28,7 @@ Currently, the following analyses (discussed in more detail below) can be perfor
 4. __FidelityBeta__ function assesses live-dead fidelity across sites (offsets in compositional heterogeneity or gradients across sites).
 5. __SJPlot__ plots a fidelity cross-plot of correlation and similarity measures of fidelity 
 6. __AlphaPlot__ plots a fidelity cross-plot of live-dead offsets in alpha diversity and eveness
+6. __LDPlot__ plots a comparative live-dead plot for the most common taxa
 
 ## Installing PaleoFidelity Package
 

@@ -25,7 +25,8 @@ equal number of columns of 'live' and 'dead' matrices.}
 \item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
 
 \item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences.
-Note that the default value of 1 keeps all taxa, but removes empty columns.}
+Note that the default value of 1 keeps all taxa, but removes empty columns (this may not be
+appropriate for certain applications such as simulations of null models).}
 
 \item{output}{Logical (default=FALSE) determines if an output with filtered datasets should be produced.}
 }
@@ -43,7 +44,7 @@ allows the user to filter data by removing small samples and rare taxa
 }
 \details{
 This function is implemented in other PaleoFidelity functions. However,
-it is recommended to prior to any fidelity analysis to check for errors and warnings,
+prior to any fidelity analysis, it is recommended  to check for errors and warnings,
 generate a basic summary of datasets (set logical argument report=TRUE), and
 explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 

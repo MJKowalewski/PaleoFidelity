@@ -55,7 +55,7 @@
 #'
 #' @param CImean A numerical value (default = 0.99) defining confidence bars for means of all sites
 #'  or groups of sites (if 'gp' factor was provided). Note: 0.5 - bars representing inter-quartile
-#'  range, 0.95 - plots 95% confidence bars, etc. Confidence bars are estimated as percentiles of
+#'  range, 0.99 - plots 99% confidence bars, etc. Confidence bars are estimated as percentiles of
 #'  subsampled estimates of Delta S and Delta PIE based on n (=iter) replicate subsamples.
 #'
 #' @param outdata Logical (default = FALSE) to determine if data files should be included in the output
