@@ -20,11 +20,11 @@ Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exa
 equal number of rows of 'live' and 'dead' matrices.}
 
 \item{cor.measure}{A character string (default='spearman') defining correlation measure
-(stats function 'vignettecor') used to estimate live-dead correlations.}
+(passed on to \code{\link[stats]{cor}} function) used to estimate live-dead correlations.}
 
-\item{sim.measure}{A character string (default='chao') defining similarity measure (vegan
-function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptable by
-'vegdist' can be used.}
+\item{sim.measure}{A character string (default='chao') defining similarity measure (passed
+on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any measure
+acceptable by vegdist can be used.}
 
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
 
@@ -97,7 +97,8 @@ A list containing the following components:
 FidelityEst estimates compositional fidelity by comparing two matching matrices (live
 and dead) with community abundance data. The function returns fidelity measures for
 indiviudal sites, mean measures across sites, and means for groups of sites
-(if 'gp' factor is provided).
+(if 'gp' factor is provided). Sample-standardized estimates and bias-corrected estimates
+are also provided.
 }
 \details{
 FidelityEst assesses compositional fidelity using
@@ -117,7 +118,9 @@ fidelity (e.g., Spearman rho = 1). The offset between the expected observed
 PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
 fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
 produces a distribution of PF values and resulting adjusted fidelity measures,
-from which confidence intervals and signifiance tests can be derived.
+from which confidence intervals and signifiance tests can be derived. A second corrective
+strategy provided here is sampling standardization where all samples are subsampled to a
+commone denominator given by the smalles sample.
 }
 \examples{
 

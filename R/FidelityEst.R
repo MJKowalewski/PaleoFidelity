@@ -3,7 +3,8 @@
 #' FidelityEst estimates compositional fidelity by comparing two matching matrices (live
 #' and dead) with community abundance data. The function returns fidelity measures for
 #' indiviudal sites, mean measures across sites, and means for groups of sites
-#' (if 'gp' factor is provided).
+#' (if 'gp' factor is provided). Sample-standardized estimates and bias-corrected estimates
+#' are also provided.
 #'
 #' @details FidelityEst assesses compositional fidelity using
 #' measures of correlation/associations/similarity.
@@ -22,7 +23,9 @@
 #' PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
 #' fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
 #' produces a distribution of PF values and resulting adjusted fidelity measures,
-#' from which confidence intervals and signifiance tests can be derived.
+#' from which confidence intervals and signifiance tests can be derived. A second corrective
+#' strategy provided here is sampling standardization where all samples are subsampled to a
+#' commone denominator given by the smalles sample.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
 #'  Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactely.
@@ -34,15 +37,15 @@
 #'  equal number of rows of 'live' and 'dead' matrices.
 #'
 #' @param cor.measure A character string (default='spearman') defining correlation measure
-#'  (stats function 'vignettecor') used to estimate live-dead correlations.
+#'  (passed on to \code{\link[stats]{cor}} function) used to estimate live-dead correlations.
 #'
-#' @param sim.measure A character string (default='chao') defining similarity measure (vegan
-#'   function 'vegdist') used to estiamte live-dead similiarity. Any measure acceptable by
-#'   'vegdist' can be used.
+#' @param sim.measure A character string (default='chao') defining similarity measure (passed
+#' on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any measure
+#' acceptable by vegdist can be used.
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
 #'
-#' @param t.filters An integer used to filter out rare taxa (default t.filters=1,
+#' @param t.filters An integer used to filter out rare taxa (default t.filters=0,
 #' all taxa with at least one occurrence kept)
 #'
 #' @param report Logical (default report = FALSE) (suppresses notes, warnings and data summary)
@@ -118,7 +121,7 @@
 #' @importFrom vegan vegdist
 
 FidelityEst <- function(live, dead, gp=NULL, cor.measure='spearman', sim.measure='bray',
-                        n.filters=0, t.filters=1, report=FALSE, iter=100, iter2=100,
+                        n.filters=0, t.filters=0, report=FALSE, iter=100, iter2=100,
                         min.sam=30, CI=0.95, rm.zero=FALSE, tfsd='none')
  {
 

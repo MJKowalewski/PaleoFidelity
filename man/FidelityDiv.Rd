@@ -34,7 +34,7 @@ Note: 0.5 - plots bars represnting inter-quartile ranges, 0.95 - plots 95% confi
 Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.}
 
 \item{CImean}{A numerical value (default = 0.99) defining confidence bars for means of all sites
-or groups of sites (if 'gp' factor was provided). Note: 0.5 - bars representing inter-quartile
+or groups of sites (if 'gp' factor is provided). Note: 0.5 - bars representing inter-quartile
 range, 0.99 - plots 99% confidence bars, etc. Confidence bars are estimated as percentiles of
 subsampled estimates of Delta S and Delta PIE based on n (=iter) replicate subsamples.}
 
@@ -61,14 +61,14 @@ A list containing the following components:
   \item{p.gps}{per-group p.values for Null H: Delta.S.p=0 and Delta.PIE.p=0}
 }
 \description{
-FidelityDiv provides estimates of differences in alpha diversity between pairs of
-live and dead samples from single sites using community abundance data. In the case of
-datasets representing more than one site, the function returns also means of differences.
-If 'gp' factor is provided to aggregate sets of sites, means for groups are also returned.
+FidelityDiv provides estimates of differences in alpha diversity and alpha evenness
+between pairs of live and dead samples from single sites using community abundance
+data. For datasets including multiple site, the function returns means of differences.
+If 'gp' factor is provided to aggregate sets of sites, means for groups are returned.
 }
 \details{
 FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of
-sympatric live and dead samples using a bivariate approch  described in Olszewski and
+sympatric live and dead samples using a bivariate approch described in Olszewski and
 Kidwell (2007). The estimates of offsets in alpha diversityand evenness are returned
 as two separate objects.
 
@@ -78,9 +78,11 @@ sympatric dead and live samples:
 
 DELTA S = ln(S[dead]) - log(S[live])
 
-A negative value indicates that the sample standardized alpha diversity of a live sample
-exceeds alpha diversity of the sympatric dead sample (and vice versa). Confidence intervals
-and p.values for Null H: Delta S = 0 are also reported.
+A negative value indicates that the sample-standardized alpha diversity of a live sample
+exceeds alpha diversity of the sympatric dead sample and a postive value indicates that a dead
+sample is more diverse than live sample. Confidence intervals and p-values for
+Null H: Delta S = 0 are reported. A vegan function \code{\link[vegan]{rrarefy}}
+is used to perform sample standardization
 
 (2) y - Live-dead offsets in evenness for individual sites. The difference is measured as the
 difference between sample-standardized estimates of Hurlbert's PIE for live and dead samples:
@@ -88,8 +90,8 @@ difference between sample-standardized estimates of Hurlbert's PIE for live and 
 DELTA[PIE] = PIE[DEAD] - PIE[LIVE]
 
 A negative value indicates that evenness of live samples exceeds evenness of the sympatric
-dead sample (and vice versa). Confidence intervals and p.values for Null H: Delta PIE = 0
-are also reported.
+dead sample and a postive value indicates that a dead sample is more diverse than live sample.
+Confidence intervals and p values for Null H: Delta PIE = 0 are reported.
 }
 \examples{
 

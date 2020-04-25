@@ -74,11 +74,12 @@ a similarity measure (y axis) for all live-dead pairwise comparisons.
 \details{
 SJPlot function is designed to use the output of FidelityEst function to produce
 a fidelity plot. Specifically, if default arguments for fidelity measures ('Spearman' and 'Chao')
-are used in FidelityEst function, a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007)
-is produced. If a grouping factor is provided, symbols are color-coded by levels and group means
-are plotted. Bivariate distributions produced by resampling models can also be included.
+are used in \code{\link{FidelityEst}} function, a Spearman vs. Jaccard-Chao fidelity plot
+(as in Kidwell, 2007) is produced. If a grouping factor is provided, symbols are color-coded by
+levels and group means are plotted. Bivariate distributions produced by resampling models can also
+be included.
 
-NOTE: This function utilizes graphics::plot function, including some of its common
+NOTE: This function utilizes \code{\link[graphics]{plot}} function, including some of its common
 graphic arguments. It allows for quick exploratory plots and should be readily
 editable to derive more customized plots.
 }
@@ -88,4 +89,8 @@ out1 <- FidelityEst(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9]
                    n.filters=30, iter=100, t.filters=1)
 SJPlot(out1)
 
+}
+\references{
+Kidwell, S.M., 2007, Discordance between living and death assemblages
+as evidence for anthropogenic ecological change. Proc Natl Acad Sci USA 104(45): 17701–17706.
 }

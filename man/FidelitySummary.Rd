@@ -17,18 +17,21 @@ Dimensions of 'live' and 'dead' matrices must match exactely.}
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
 
-\item{tax}{An optional univariate factor defining groups of species. The length of gp must
+\item{tax}{An optional univariate factor defining groups of species. The length of tax must
 equal number of columns of 'live' and 'dead' matrices.}
 
-\item{report}{Logical (default=FALSE), set report=TRUE to print additional warnings and data summary}
+\item{report}{Logical (default=FALSE), set report=TRUE to print notes,
+warnings, and data summary}
 
 \item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
 
 \item{t.filters}{Integer (default = 1) to remove rare taxa with t < t.filters occurrences.
-Note that the default value of 1 keeps all taxa, but removes empty columns (this may not be
-appropriate for certain applications such as simulations of null models).}
+Note that the default value of 1 keeps all taxa, but removes empty columns. This may not be
+appropriate for certain applications such as simulations of null models or when measuring
+live-dead rank correlation when assessing compositional fidelity.}
 
-\item{output}{Logical (default=FALSE) determines if an output with filtered datasets should be produced.}
+\item{output}{Logical (default=FALSE) determines if an output with filtered datasets should
+be produced.}
 }
 \value{
 A list (returned only if output=TRUE) including the following components:
@@ -38,13 +41,13 @@ A list (returned only if output=TRUE) including the following components:
   \item{tax}{The grouping factor associated with taxa (if provided)}
 }
 \description{
-FidelitySummary function evaluates if the input data are adequate and properly stored for
+FidelitySummary function evaluates if the input data are adequate and properly formatted for
 carrying out fidelity analyses. When called by other PaleoFidelity function, FidelitySummary
 allows the user to filter data by removing small samples and rare taxa.
 }
 \details{
 This function is implemented in other PaleoFidelity functions. However,
-prior to any fidelity analysis, it is recommended  to check for errors and warnings,
+prior to any fidelity analysis, it is recommended  to check for errors/warnings and
 generate a basic summary of datasets (set logical argument report=TRUE), and
 explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
 

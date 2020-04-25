@@ -10,9 +10,9 @@ LDPlot(live, dead, tax.names, toplimit = 10, barwidth = 150/toplimit,
   cex.label = 1)
 }
 \arguments{
-\item{live}{A vector with integer counts of live specimens}
+\item{live}{A vector of integers with counts of live specimens by taxa (or other units)}
 
-\item{dead}{A vector with integer counts of dead specimens}
+\item{dead}{A vector of integers with counts of dead specimens by taxa (or other units)}
 
 \item{tax.names}{A vector with a list of names of taxa (or other units
 used as variables)}
@@ -21,7 +21,8 @@ used as variables)}
 species (or other variables) to be plotted}
 
 \item{barwidth}{A numerical value (default = 250 / toplimit) defining bar width
-(or more precisely the thicknes of graphics::lines used to represent bars)}
+(more precisely, the thickness of \code{\link[graphics]{lines}} used to
+represent bars)}
 
 \item{col1}{A character string (default = 'black') defining the color of bars
 for taxa (or other variables) shared by live and dead data}
@@ -54,24 +55,31 @@ A single plot.
 }
 \description{
 LDPlot function generates a comparative live-dead plot of the most frequent taxa
-(or other units/variables describing samples) to highlight conguences and discordances
-in relative abundance and rank order of most abundant taxa/variables.
+(or other variables) to highlight live-dead congruences and live-dead discordances
+in relative abundance and rank order of the most abundant taxa/variables.
 }
 \details{
-LDPlot function is designed to produce a plot with two barplots comparing
-relative abundances of the most common taxa in live and dead datasets. This plot
-is suitable for single live-dead comparisons only (single samples,
-sets of samples or datasets).
-
-NOTE: This function utilizes graphics::plot function, including some of its common
-graphic arguments.
+LDPlot function produces a plot comparing barplots of the top "n"
+most common taxa observed in live and dead datasets
+(e.g., Kowalewski et al. 2003). These L-D comparisons can apply to
+single sites or data pooled across multiple sites. Because taxa/variable
+names can vary in length and because the number of plotted taxa/variables
+can span a wide range of values, plot margins and cex paramaters may need
+adjustments.
 }
 \examples{
 
-temp.par <- par(mar=c(3,5,2,5))
+temp.par <- par(mar=c(3,6,1,6))
 LDPlot(live=colSums(FidData$live), dead=colSums(FidData$dead),
-       tax.names=colnames(FidData$live), toplimit=15, col1 = 'green',
-       col2 = 'red4', arr.col = 'black', arr.lty = 3)
+tax.names=colnames(FidData$live), toplimit=15, barwidth = 21,
+col1 = 'green2', col2 = 'red4', arr.col = 'green2', arr.lty = 1)
 par(temp.par)
 
+}
+\references{
+Kowalewski, M.,	Carroll, M., Casazza, L., Gupta, N., Hannisdal, B.,
+Hendy, A., Krause, R.A., Jr., Labarbera, M., Lazo, D.G., Messina, C., Puchalski, S.,
+Rothfus, T.A., Sälgeback, J., Stempien, J., Terry, R.C., Tomašových, A., (2003),
+Quantitative fidelity of brachiopod-mollusk assemblages from modern subtidal
+environments of San Juan Islands, USA. Journal of Taphonomy 1: 43-65.
 }
