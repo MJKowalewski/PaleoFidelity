@@ -4,41 +4,52 @@
 \alias{AlphaPlot}
 \title{A Bivariate Plot of Live-Dead Offsets in Alpha Diversity and Evenness}
 \usage{
-AlphaPlot(x, col = "gray", col.bar = "gray", bgpt = "white",
-  cf.bars = TRUE, cex = 0.8, xlab = bquote(Delta[" S"]),
-  ylab = bquote(Delta[" PIE"]), xmax = NULL, ymax = NULL,
-  legend.cex = 1, pch = 21, colmean = "black", col.gp = NULL,
-  addlegend = TRUE, transp_mean = 1, transp = 1)
+AlphaPlot(
+  x,
+  pch = 21,
+  col = "black",
+  bgpt = "white",
+  transp = 1,
+  cex = 0.8,
+  cf.bars = TRUE,
+  cf.col = "black",
+  cf.lwd = 1,
+  colmean = "black",
+  col.gp = NULL,
+  mean.lwd = 2,
+  transp_mean = 1,
+  xlab = bquote(Delta[" S"]),
+  ylab = bquote(Delta[" PIE"]),
+  axes = TRUE,
+  xmax = NULL,
+  ymax = NULL,
+  legend.cex = 1,
+  addlegend = TRUE
+)
 }
 \arguments{
 \item{x}{An object (a list) returned by FidelityDiv function}
 
-\item{col}{A character string or number defining color of symbols for individual sites
-(default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
+\item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
 
-\item{col.bar}{A character string or a number defining color of confidence bars for individual
-sites (default = 'gray'). This argument applies only if a grouping factor 'gp' is not provided.}
+\item{col}{A character string or number defining color of symbols for individual sites
+(default = 'black'). This argument applies only if a grouping factor 'gp' is not provided.}
 
 \item{bgpt}{A character string or number defining background color of symbols for individual
 sites (default = 'white').}
 
-\item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted.}
+\item{transp}{Numerical (default=1): defines transparency of symbols and associated
+confidence intervals. Allowed values range from 0 (transparent) to 1 (opaque).}
 
 \item{cex}{A numerical value (default=0.8) defining expansion factor for symbols.}
 
-\item{xlab}{A character string defining x axis label (default=bquote(Delta['S']).
-Use xlab='' to supress the label}
+\item{cf.bars}{Logical (default=TRUE) to indicate if confidence bars should be plotted.}
 
-\item{ylab}{A character string defining y axis label (default=bquote(Delta['PIE']).
-Use xlab='' to supress the label}
+\item{cf.col}{A character string or a number defining color of confidence bars for individual
+sites (default = 'black'). This argument applies only if a grouping factor 'gp' is not provided.}
 
-\item{xmax}{A positive numerical value defining x axis range (-xmax, xmax)}
-
-\item{ymax}{A positive numerical value defining y axis range (-ymax, ymax)}
-
-\item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
-
-\item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
+\item{cf.lwd}{A numerical value defining line width for confidence bars
+(default = 1).}
 
 \item{colmean}{A character string or number defining color of bars representing
 mean estimates for all sites (default = 'black')}
@@ -47,15 +58,28 @@ mean estimates for all sites (default = 'black')}
 for symbols and bars for sites (applicable when 'gp' factor is provided). The number of colors
 must match number of levels in a grouping factor}
 
-\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided}
+\item{mean.lwd}{A numerical value defining line width for confidence bars for group means
+(default = 2).}
 
 \item{transp_mean}{Numerical (default=1): defines transparency of means and associated
-confidence interavls. Allowed values range from 0 (transparent = invisible)
+confidence intervals. Allowed values range from 0 (transparent = invisible)
 to 1 (opaque)}
 
-\item{transp}{Numerical (default=1): defines transparency of individual datapoints
-and associated confidence interavls. Allowed values range from 0
-(transparent = invisible) to 1 (opaque)}
+\item{xlab}{A character string defining x axis label (default=bquote(Delta['S']).
+Use xlab='' to suppress the label}
+
+\item{ylab}{A character string defining y axis label (default=bquote(Delta['PIE']).
+Use xlab='' to suppress the label}
+
+\item{axes}{Logical (default = TRUE): plot or suppress x and y axes}
+
+\item{xmax}{A positive numerical value defining x axis range (-xmax, xmax)}
+
+\item{ymax}{A positive numerical value defining y axis range (-ymax, ymax)}
+
+\item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
+
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided}
 }
 \value{
 A bivariate plot.
@@ -65,18 +89,18 @@ AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DEL
 and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 }
 \details{
-AlphaPlot function uses the object produced by FidelityDiv function to produce a crossplot
-visualizing live-dead differences in alpha diversity and evenness. Confidence bars around
-DELTA S and DELTA PIE estimates are also plotted. If a grouping factor is provided, symbols
-and bars are color-coded by levels and group means are plotted in addition to grand mean
-for all sites.
+AlphaPlot function uses the object produced by FidelityDiv function to produce
+a cross-plot visualizing live-dead differences in alpha diversity (DELTA S) and
+evenness (DELTA PIE), including confidence bars for each site. If a grouping factor
+is provided, symbols and bars are color-coded by levels and group means are plotted
+in addition to grand mean for all sites.
 }
 \examples{
 
-my.fid1 <- FidelityDiv(FidData$live, FidData$dead, n.filters=30)
+my.fid1 <- FidelityDiv(FidData$live, FidData$dead, iter=100, n.filters=50)
 AlphaPlot(my.fid1)
-my.fid2 <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat,
-                       n.filters=50, iter=100, CI=0.95)
+my.fid2 <- FidelityDiv(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
+                       n.filters=20, iter=100, CI=0.95)
 AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
 
 }

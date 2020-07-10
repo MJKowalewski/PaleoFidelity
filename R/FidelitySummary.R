@@ -49,7 +49,7 @@
 #' @examples
 #' data(FidData)
 #' FidelitySummary(live=FidData$live, dead=FidData$dead, report=TRUE)
-#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=30)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=50)
 #'
 #' @export
 #' @importFrom stats sd

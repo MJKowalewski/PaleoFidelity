@@ -4,16 +4,27 @@
 \alias{FidelityDiv}
 \title{Live-Dead differences in alpha diversity and evenness}
 \usage{
-FidelityDiv(live, dead, gp = NULL, tax = NULL, report = FALSE,
-  n.filters = 0, t.filters = 1, iter = 100, CI = 0.5,
-  CImean = 0.99, outdata = FALSE, messages = F)
+FidelityDiv(
+  live,
+  dead,
+  gp = NULL,
+  tax = NULL,
+  report = FALSE,
+  n.filters = 0,
+  t.filters = 1,
+  iter = 100,
+  CI = 0.5,
+  CImean = 0.99,
+  outdata = FALSE,
+  messages = F
+)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-Dimensions of 'live' and 'dead' matrices must match exactely.}
+Dimensions of 'live' and 'dead' matrices must match exactly.}
 
 \item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-Dimensions of 'live' and 'dead' matrices must match exactely.}
+Dimensions of 'live' and 'dead' matrices must match exactly.}
 
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
@@ -23,14 +34,15 @@ must equal number of columns of 'live' and 'dead' matrices.}
 
 \item{report}{Logical (default=FALSE) to print compliance report from function FidelitySummary}
 
-\item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
+\item{n.filters}{An integer used to filter out small samples (default = 0, all samples kept)}
 
-\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)}
+\item{t.filters}{An integer used to filter out rare taxa (default = 1, taxa >= 1 occurrence kept)
+Note that removing rare taxa (t.filters > 1) is not advisable when measuring evenness or standardized richness.}
 
 \item{iter}{An integer defining number of resampling iteration (default iter=100)}
 
 \item{CI}{A numerical value (default = 0.5) defining confidence bars for individual sites.
-Note: 0.5 - plots bars represnting inter-quartile ranges, 0.95 - plots 95% confidence bars, etc.
+Note: 0.5 - plots bars representing inter-quartile ranges, 0.95 - plots 95% confidence bars, etc.
 Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.}
 
 \item{CImean}{A numerical value (default = 0.99) defining confidence bars for means of all sites
@@ -62,26 +74,27 @@ A list containing the following components:
 }
 \description{
 FidelityDiv provides estimates of differences in alpha diversity and alpha evenness
-between pairs of live and dead samples from single sites using community abundance
-data. For datasets including multiple site, the function returns means of differences.
-If 'gp' factor is provided to aggregate sets of sites, means for groups are returned.
+between pairs of live and dead samples from single sites (or data pooled across
+multiple sites) using community abundance data. For datasets including multiple site,
+the function returns means of differences. If 'gp' factor is provided to aggregate sets
+of sites, means for groups are returned.
 }
 \details{
 FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of
-sympatric live and dead samples using a bivariate approch described in Olszewski and
-Kidwell (2007). The estimates of offsets in alpha diversityand evenness are returned
+sympatric live and dead samples using a bivariate approach described in Olszewski and
+Kidwell (2007). The estimates of offsets in alpha diversity and evenness are returned
 as two separate objects.
 
-(1) x - Live-dead offsets in alpha diversity for individual sites. The difference is measured
-as the difference between natural logarithms of sample-standardized species richness of
-sympatric dead and live samples:
+(1) x - Live-dead offsets in alpha diversity for individual sites. The difference is
+measured as the difference between natural logarithms of sample-standardized
+species richness of sympatric dead and live samples:
 
 DELTA S = ln(S[dead]) - log(S[live])
 
 A negative value indicates that the sample-standardized alpha diversity of a live sample
-exceeds alpha diversity of the sympatric dead sample and a postive value indicates that a dead
+exceeds alpha diversity of the sympatric dead sample and a positive value indicates that a dead
 sample is more diverse than live sample. Confidence intervals and p-values for
-Null H: Delta S = 0 are reported. A vegan function \code{\link[vegan]{rrarefy}}
+Null Hypothesis: Delta S = 0 are reported. A vegan function "rrarefy"
 is used to perform sample standardization
 
 (2) y - Live-dead offsets in evenness for individual sites. The difference is measured as the
@@ -90,12 +103,13 @@ difference between sample-standardized estimates of Hurlbert's PIE for live and 
 DELTA[PIE] = PIE[DEAD] - PIE[LIVE]
 
 A negative value indicates that evenness of live samples exceeds evenness of the sympatric
-dead sample and a postive value indicates that a dead sample is more diverse than live sample.
-Confidence intervals and p values for Null H: Delta PIE = 0 are reported.
+dead sample and a positive value indicates that a dead sample is more even than live sample.
+Confidence intervals and p values for Null Hypothesis: Delta PIE = 0 are reported.
 }
 \examples{
 
-my.fid <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=100, CI=0.95)
+my.fid <- FidelityDiv(FidData$live[6:9,], FidData$dead[6:9,],
+FidData$habitat[6:9], n.filters=20, iter=100, CI=0.95)
 my.fid$x # site-level estimates of Delta S with 95\% CIs and p values
 my.fid$p.gps # p values for means of groups
 AlphaPlot(my.fid, col.gp=c('forestgreen', 'coral1'), bgpt='beige')

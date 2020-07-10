@@ -1,25 +1,26 @@
 #' Live-Dead differences in alpha diversity and evenness
 #'
 #' FidelityDiv provides estimates of differences in alpha diversity and alpha evenness
-#' between pairs of live and dead samples from single sites using community abundance
-#' data. For datasets including multiple site, the function returns means of differences.
-#' If 'gp' factor is provided to aggregate sets of sites, means for groups are returned.
+#' between pairs of live and dead samples from single sites (or data pooled across
+#' multiple sites) using community abundance data. For datasets including multiple site,
+#' the function returns means of differences. If 'gp' factor is provided to aggregate sets
+#' of sites, means for groups are returned.
 #'
 #' @details FidelityDiv assesses live-dead offsets in evenness/diversity between pairs of
-#' sympatric live and dead samples using a bivariate approch described in Olszewski and
-#' Kidwell (2007). The estimates of offsets in alpha diversityand evenness are returned
+#' sympatric live and dead samples using a bivariate approach described in Olszewski and
+#' Kidwell (2007). The estimates of offsets in alpha diversity and evenness are returned
 #' as two separate objects.
 #'
-#' (1) x - Live-dead offsets in alpha diversity for individual sites. The difference is measured
-#' as the difference between natural logarithms of sample-standardized species richness of
-#' sympatric dead and live samples:
+#' (1) x - Live-dead offsets in alpha diversity for individual sites. The difference is
+#' measured as the difference between natural logarithms of sample-standardized
+#' species richness of sympatric dead and live samples:
 #'
 #' DELTA S = ln(S[dead]) - log(S[live])
 #'
 #' A negative value indicates that the sample-standardized alpha diversity of a live sample
-#' exceeds alpha diversity of the sympatric dead sample and a postive value indicates that a dead
+#' exceeds alpha diversity of the sympatric dead sample and a positive value indicates that a dead
 #' sample is more diverse than live sample. Confidence intervals and p-values for
-#' Null H: Delta S = 0 are reported. A vegan function \code{\link[vegan]{rrarefy}}
+#' Null Hypothesis: Delta S = 0 are reported. A vegan function "rrarefy"
 #' is used to perform sample standardization
 #'
 #' (2) y - Live-dead offsets in evenness for individual sites. The difference is measured as the
@@ -28,14 +29,14 @@
 #' DELTA[PIE] = PIE[DEAD] - PIE[LIVE]
 #'
 #' A negative value indicates that evenness of live samples exceeds evenness of the sympatric
-#' dead sample and a postive value indicates that a dead sample is more diverse than live sample.
-#' Confidence intervals and p values for Null H: Delta PIE = 0 are reported.
+#' dead sample and a positive value indicates that a dead sample is more even than live sample.
+#' Confidence intervals and p values for Null Hypothesis: Delta PIE = 0 are reported.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions of 'live' and 'dead' matrices must match exactly.
 #'
 #' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions of 'live' and 'dead' matrices must match exactly.
 #'
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
@@ -45,14 +46,15 @@
 #'
 #' @param report Logical (default=FALSE) to print compliance report from function FidelitySummary
 #'
-#' @param n.filters An integer used to filter out small samples (default n.filters=0, all samples kept)
+#' @param n.filters An integer used to filter out small samples (default = 0, all samples kept)
 #'
-#' @param t.filters An integer used to filter out rare taxa (default t.filters=1, taxa >= 1 occurrence kept)
+#' @param t.filters An integer used to filter out rare taxa (default = 1, taxa >= 1 occurrence kept)
+#' Note that removing rare taxa (t.filters > 1) is not advisable when measuring evenness or standardized richness.
 #'
 #' @param iter An integer defining number of resampling iteration (default iter=100)
 #'
 #' @param CI A numerical value (default = 0.5) defining confidence bars for individual sites.
-#'  Note: 0.5 - plots bars represnting inter-quartile ranges, 0.95 - plots 95% confidence bars, etc.
+#'  Note: 0.5 - plots bars representing inter-quartile ranges, 0.95 - plots 95% confidence bars, etc.
 #'  Confidence bars are estimated as percentiles of subsampled estimates of Delta S and Delta PIE.
 #'
 #' @param CImean A numerical value (default = 0.99) defining confidence bars for means of all sites
@@ -84,7 +86,8 @@
 #'
 #' @examples
 #'
-#' my.fid <- FidelityDiv(FidData$live, FidData$dead, FidData$habitat, n.filters=50, iter=100, CI=0.95)
+#' my.fid <- FidelityDiv(FidData$live[6:9,], FidData$dead[6:9,],
+#' FidData$habitat[6:9], n.filters=20, iter=100, CI=0.95)
 #' my.fid$x # site-level estimates of Delta S with 95% CIs and p values
 #' my.fid$p.gps # p values for means of groups
 #' AlphaPlot(my.fid, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
@@ -104,11 +107,9 @@ FidelityDiv <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0
 
   if (messages) out <- FidelitySummary(live, dead, gp, tax, report=report, output=TRUE,
                          n.filters=n.filters, t.filters=t.filters) # check/filter data
-
   if (!messages) out <- suppressMessages(FidelitySummary(live, dead, gp, tax, report=report,
                                                         output=TRUE, n.filters=n.filters,
                                                         t.filters=t.filters)) # check/filter data
-
   if (length(out) == 2) {live <- out$live;  dead <- out$dead}
   if (length(out) == 3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
   if (length(out) == 4) {live <- out$live;  dead <- out$dead; gp <- out$gp; tax <- out$tax}
@@ -138,12 +139,13 @@ FidelityDiv <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0
    DP <- cbind(n.std=min.sam, est=rowMeans(rbind(out1[,2,])),
               t(apply(rbind(out1[,2,]), 1, stats::quantile, prob=c((1 - CI) / 2, 1 - (1 - CI) / 2))),
               p=p.DP)
-   outDS3 <- NULL
-   outDP3 <- NULL
-   p.GP <- NULL
 
 # 3.Means for all data and by groups (if 'gp' factor is provided)
   # All data
+   outDS3 <- NULL
+   outDP3 <- NULL
+   p.GP <- NULL
+if (nrow(live) > 1) {
   allS <- colMeans(rbind(out1[,1,]))
   allP <- colMeans(rbind(out1[,2,]))
   meanDS <- c(mean(allS), stats::quantile(allS, prob=c((1-CImean)/2, 1 - (1-CImean)/2)))
@@ -168,15 +170,19 @@ FidelityDiv <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0
    p.gp.DP <- 2 * apply(cbind(gpDP1, gpDP2), 1, min) / iter
    if (sum(p.gp.DS == 0) > 0) p.gp.DS[p.gp.DS == 0] <- 1 / iter
    if (sum(p.gp.DP == 0) > 0) p.gp.DP[p.gp.DP == 0] <- 1 / iter
-p.GP <- NULL
-if (length(gp) > 0) outDS3 <- outDS2
-if (length(gp) > 0) outDP3 <- outDP2
-if (length(gp) > 0)  p.GP <- cbind(p.Delta.S=p.gp.DS, p.Delta.PIE=p.gp.DP)
-outDS3 <- data.frame(outDS3, group=levels(gp), measure='Delta S')
-outDP3 <- data.frame(outDP3, group=levels(gp), measure='Delta PIE')
-rownames(outDP3) <- NULL
-rownames(outDS3) <- NULL
+   if (length(gp) > 0) outDS3 <- outDS2
+   if (length(gp) > 0) outDP3 <- outDP2
+   if (length(gp) > 0)  p.GP <- cbind(p.Delta.S=p.gp.DS, p.Delta.PIE=p.gp.DP)
+   outDS3 <- data.frame(outDS3, group=levels(gp), measure='Delta S')
+   colnames(outDS3)[3:4] <- c(paste(1 - CImean, '%', sep=''), paste(CImean, '%', sep=''))
+   outDP3 <- data.frame(outDP3, group=levels(gp), measure='Delta PIE')
+   colnames(outDP3)[3:4] <- c(paste(1 - CImean, '%', sep=''), paste(CImean, '%', sep=''))
+   rownames(outDP3) <- NULL
+   rownames(outDS3) <- NULL
+ }
 }
+
+if (nrow(live) == 1)  meanDS <- meanDP <- outDS3 <- outDP3 <- Delta.S.p <- Delta.PIE.p <- p.GP <- NA
 
 if (outdata) out1 <- list(live=live, dead=dead, gp=gp, tax=tax, out=out1, x=DS, y=DP, xmean=meanDS, ymean=meanDP,
                           xgp=outDS3, ygp=outDP3, p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)

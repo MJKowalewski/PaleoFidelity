@@ -4,8 +4,16 @@
 \alias{FidelitySummary}
 \title{Data filtering and compliance assessment}
 \usage{
-FidelitySummary(live, dead, gp = NULL, tax = NULL, report = FALSE,
-  n.filters = 0, t.filters = 1, output = FALSE)
+FidelitySummary(
+  live,
+  dead,
+  gp = NULL,
+  tax = NULL,
+  report = FALSE,
+  n.filters = 0,
+  t.filters = 1,
+  output = FALSE
+)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
@@ -60,6 +68,6 @@ NOTE: FidelitySummary function will provide an initial compliance evaluation. Th
 \examples{
 data(FidData)
 FidelitySummary(live=FidData$live, dead=FidData$dead, report=TRUE)
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=30)
+FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE, n.filters=50)
 
 }

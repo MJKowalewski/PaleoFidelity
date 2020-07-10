@@ -4,20 +4,21 @@
 #' a similarity measure (y axis) for all live-dead pairwise comparisons.
 #'
 #' @details SJPlot function is designed to use the output of FidelityEst function to produce
-#' a fidelity plot. Specifically, if default arguments for fidelity measures ('Spearman' and 'Chao')
-#' are used in \code{\link{FidelityEst}} function, a Spearman vs. Jaccard-Chao fidelity plot
-#' (as in Kidwell, 2007) is produced. If a grouping factor is provided, symbols are color-coded by
-#' levels and group means are plotted. Bivariate distributions produced by resampling models can also
+#' a fidelity plot. Specifically, if default arguments for fidelity measures
+#' ('Spearman' and 'Chao') are used in \code{\link{FidelityEst}} function,
+#' a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
+#' If a grouping factor is provided, symbols are color-coded by levels and group means
+#' are plotted. Bivariate distributions produced by resampling models can also
 #' be included.
 #'
-#' NOTE: This function utilizes \code{\link[graphics]{plot}} function, including some of its common
-#' graphic arguments. It allows for quick exploratory plots and should be readily
-#' editable to derive more customized plots.
+#' NOTE: This function utilizes \code{\link[graphics]{plot.default}} function,
+#' including some of its common graphic arguments. It allows for quick exploratory plots
+#' and should be readily editable to derive more customized plots.
 #'
 #' @param x An object (a list) returned by FidelityEst function.
 #'
 #' @param bubble Logical (default=TRUE): to produce a bubble plot with symbols scaled by N-min
-#' (the number of obeservations in the smaller of the two (live vs. dead) compared samples).
+#' (the number of observations in the smaller of the two (live vs. dead) compared samples).
 #'
 #' @param xlim A vector with two numerical values representing x axis limits (default = c(-1, 1)).
 #'
@@ -46,7 +47,7 @@
 #' @param pch2 An integer or a single character (default = 21) specifying symbol type
 #' for grand or group means.
 #'
-#' @param PF Logical (deafault=FALSE): to add scatterplot of resampled fidelity estimates
+#' @param PF Logical (default=FALSE): to add scatterplot of resampled fidelity estimates
 #'  for the null model postulating perfect fidelity.
 #'
 #' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.
@@ -57,7 +58,7 @@
 #'
 #' @param ssF Logical (default=FALSE): plots sample-standardized fidelity estimates
 #'
-#' @param unadjF Logical (default=FALSE): plots unadjusted fidellity estimates
+#' @param unadjF Logical (default=FALSE): plots unadjusted fidelity estimates
 #'
 #' @param addInfo Logical (default=TRUE): provides parameter values used in the analysis
 #'

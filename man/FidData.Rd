@@ -15,7 +15,7 @@ the coast of North Carolina, USA.
  \item{live}{matrix with 44 rows (localities) and 202 columns (species) with counts of live specimens}
  \item{dead}{matrix with 44 rows (localities) and 202 columns (species) with counts of dead specimens}
  \item{habitat}{a 2-level factor describing two main habitats}
- \item{fossiltype}{a 2-level factor categorizing species in terms their fossilization potential}
+ \item{fossiltype}{a 2-level factor categorizing species in terms of their fossilization potential}
  }
 }
 \details{

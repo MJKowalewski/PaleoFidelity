@@ -4,17 +4,29 @@
 \alias{FidelityEst}
 \title{Compositional measures of live-dead fidelity}
 \usage{
-FidelityEst(live, dead, gp = NULL, cor.measure = "spearman",
-  sim.measure = "bray", n.filters = 0, t.filters = 1,
-  report = FALSE, iter = 100, iter2 = 100, min.sam = 30,
-  CI = 0.95, rm.zero = FALSE, tfsd = "none")
+FidelityEst(
+  live,
+  dead,
+  gp = NULL,
+  cor.measure = "spearman",
+  sim.measure = "chao",
+  n.filters = 0,
+  t.filters = 0,
+  report = FALSE,
+  iter = 100,
+  iter2 = 100,
+  min.sam = 30,
+  CI = 0.95,
+  rm.zero = FALSE,
+  tfsd = "none"
+)
 }
 \arguments{
 \item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactely.}
+Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactly.}
 
 \item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exactely.}
+Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exactly.}
 
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
@@ -23,12 +35,12 @@ equal number of rows of 'live' and 'dead' matrices.}
 (passed on to \code{\link[stats]{cor}} function) used to estimate live-dead correlations.}
 
 \item{sim.measure}{A character string (default='chao') defining similarity measure (passed
-on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any measure
-acceptable by vegdist can be used.}
+on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any appropriate
+measure provided by vegdist can be used.}
 
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
 
-\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1,
+\item{t.filters}{An integer used to filter out rare taxa (default t.filters=0,
 all taxa with at least one occurrence kept)}
 
 \item{report}{Logical (default report = FALSE) (suppresses notes, warnings and data summary)}
@@ -103,8 +115,8 @@ are also provided.
 \details{
 FidelityEst assesses compositional fidelity using
 measures of correlation/associations/similarity.
-(1) x - a measure of correlation/association: spearman (default), kendall, or pearson;
-(2) y - an abundance-based index of similarity such as bray (default) or jaccard-chao.
+(1) x - a measure of correlation/association: Spearman (default), Kendall, or Pearson;
+(2) y - an abundance-based index of similarity such as Bray or Jaccard-Chao (default).
 
 Because many of those fidelity measures are sensitive to undersampling or
 unbalanced sampling, FidelityEst function attempts to correct sampling bias by
@@ -118,9 +130,9 @@ fidelity (e.g., Spearman rho = 1). The offset between the expected observed
 PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
 fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
 produces a distribution of PF values and resulting adjusted fidelity measures,
-from which confidence intervals and signifiance tests can be derived. A second corrective
+from which confidence intervals and significance tests can be derived. A second corrective
 strategy provided here is sampling standardization where all samples are subsampled to a
-commone denominator given by the smalles sample.
+common denominator given by the smallest sample.
 }
 \examples{
 

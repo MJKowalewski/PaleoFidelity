@@ -5,12 +5,13 @@
 #' \alias{FidData}
 #' \title{FidData: An example of a live-dead dataset}
 #' \description{
-#' An example of live-dead dataset based on marine macrobenthic invertebrate assemblages.
+#' An example of live-dead dataset based on marine macro-benthic invertebrate assemblages.
 #' }
 #' \details{
 #' A live-dead dataset including live and dead specimen counts from 44 sampling station off
-#' the coast of North Carolina, USA. Data include counts of live and dead macrobenthic invertebrates
-#' and represents a subset of a larger dataset described in Tyler and Kowalewski (2018).
+#' the coast of North Carolina, USA. Data include counts of live and dead macro-benthic
+#' invertebrates and represents a subset of a larger dataset described
+#' in Tyler and Kowalewski (2018).
 #' }
 #' \usage{PaleoFidelity}
 #'
@@ -19,7 +20,7 @@
 #'   \item{live}{matrix with 44 rows (localities) and 202 columns (species) with counts of live specimens}
 #'   \item{dead}{matrix with 44 rows (localities) and 202 columns (species) with counts of dead specimens}
 #'   \item{habitat}{a 2-level factor describing two main habitats}
-#'   \item{fossiltype}{a 2-level factor describing categorizing species in terms their fossilization potential}
+#'   \item{fossiltype}{a 2-level factor describing categorizing species in terms of their fossilization potential}
 #'   ...
 #' }
 #' @references Tyler, C.L., and Kowalewski, M., 2018, Regional surveys of macrobenthic shelf

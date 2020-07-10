@@ -4,10 +4,25 @@
 \alias{LDPlot}
 \title{A Comparative Live-Dead Barplot}
 \usage{
-LDPlot(live, dead, tax.names, toplimit = 10, barwidth = 150/toplimit,
-  col1 = "black", col2 = "gray", arr.col = "red", arr.lty = 1,
-  cex.axis = 0.7, tck = -0.02, cex.lab = 0.8, cex.names = 0.95,
-  cex.label = 1)
+LDPlot(
+  live,
+  dead,
+  tax.names,
+  toplimit = 10,
+  barwidth = 150/toplimit,
+  col1 = "black",
+  col2 = "gray",
+  arr.col = "red",
+  arr.lty = 1,
+  arr.lwd = 1,
+  cex.axis = 0.7,
+  tck = -0.02,
+  cex.lab = 0.8,
+  cex.names = 0.95,
+  cex.label = 1,
+  cex.stat = 0.9,
+  cor.measure = "spearman"
+)
 }
 \arguments{
 \item{live}{A vector of integers with counts of live specimens by taxa (or other units)}
@@ -18,7 +33,7 @@ LDPlot(live, dead, tax.names, toplimit = 10, barwidth = 150/toplimit,
 used as variables)}
 
 \item{toplimit}{A numerical value (default = 10) defining the number of top
-species (or other variables) to be plotted}
+species (or other units) to be plotted}
 
 \item{barwidth}{A numerical value (default = 250 / toplimit) defining bar width
 (more precisely, the thickness of \code{\link[graphics]{lines}} used to
@@ -35,6 +50,9 @@ for taxa (or other variables) unique to either live or dead data}
 \item{arr.lty}{An integer or character string specifying type of line used for
 arrows (default = 1) (this value is passed on to the graphical parameter 'lty')}
 
+\item{arr.lwd}{A numerical value  specifying the width of arrow lines (default = 1)
+(this value is passed on to the graphical parameter 'lwd')}
+
 \item{cex.axis}{A numerical value (default = 0.7).The magnification to be used for
 x axis annotation relative to the current setting of cex.}
 
@@ -49,6 +67,16 @@ for names of taxa/variables corresponding to individual bars on the barplot}
 
 \item{cex.label}{A numerical value (defult = 1) defining font size for 'Live'
 and 'Dead' titles placed above the barplots}
+
+\item{cex.stat}{A numerical value (default = 0.9) defining font size
+for correlation coefficient estimate}
+
+\item{cor.measure}{A character string (default='spearman') defining correlation measure
+(passed on to \code{\link[stats]{cor}} function) used to estimate
+live-dead correlations (possible values are 'pearson', 'spearman', 'kendall', 'all').
+When 'all' is selected, all three correlation measures are printed on the plot.
+Note that the computed statistics include all taxa regardless of how many taxa are
+plotted on the chart as defined by 'toplimit' parameter.}
 }
 \value{
 A single plot.
@@ -64,8 +92,8 @@ most common taxa observed in live and dead datasets
 (e.g., Kowalewski et al. 2003). These L-D comparisons can apply to
 single sites or data pooled across multiple sites. Because taxa/variable
 names can vary in length and because the number of plotted taxa/variables
-can span a wide range of values, plot margins and cex paramaters may need
-adjustments.
+can span a wide range of values, plot margin widths and cex expansion
+parameter may need adjustments.
 }
 \examples{
 

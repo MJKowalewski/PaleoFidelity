@@ -3,13 +3,11 @@
 \docType{package}
 \name{PaleoFidelity}
 \alias{PaleoFidelity}
-\alias{PaleoFidelity-package}
 \title{PaleoFidelity: Measuring paleontological fidelity (live-dead community agreement)}
 \description{
 PaleoFidelity package provides common measures of paleontological fidelity
 used to assess live-dead community agreement. These measures encompass
-multiple aspects of fidelity, including faunal composition, alpha diversity,
-and beta diversity.
+multiple aspects of fidelity, including faunal composition and alpha diversity.
 }
 \details{
 Plot functions to visualize fidelity patterns are also provided.
