@@ -188,5 +188,6 @@ if (outdata) out1 <- list(live=live, dead=dead, gp=gp, tax=tax, out=out1, x=DS, 
                           xgp=outDS3, ygp=outDP3, p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)
 if (!outdata) out1 <- list(gp=gp, tax=tax, x=DS, y=DP, xmean=meanDS, ymean=meanDP, xgp=outDS3, ygp=outDP3,
                            p.values=cbind(Delta.S.p, Delta.PIE.p), p.gps=p.GP)
+  class(out1) <- append(class(out1),"FidelityDiv")
   return(out1)
 }

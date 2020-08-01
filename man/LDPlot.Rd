@@ -12,7 +12,7 @@ LDPlot(
   barwidth = 150/toplimit,
   col1 = "black",
   col2 = "gray",
-  arr.col = "red",
+  arr.col = "black",
   arr.lty = 1,
   arr.lwd = 1,
   cex.axis = 0.7,
@@ -21,16 +21,16 @@ LDPlot(
   cex.names = 0.95,
   cex.label = 1,
   cex.stat = 0.9,
+  font.names = 3,
   cor.measure = "spearman"
 )
 }
 \arguments{
-\item{live}{A vector of integers with counts of live specimens by taxa (or other units)}
+\item{live}{A vector of integers with counts of live specimens by species (or other units)}
 
-\item{dead}{A vector of integers with counts of dead specimens by taxa (or other units)}
+\item{dead}{A vector of integers with counts of dead specimens by species (or other units)}
 
-\item{tax.names}{A vector with a list of names of taxa (or other units
-used as variables)}
+\item{tax.names}{A vector with a list of names of species (or other units used as variables)}
 
 \item{toplimit}{A numerical value (default = 10) defining the number of top
 species (or other units) to be plotted}
@@ -40,12 +40,12 @@ species (or other units) to be plotted}
 represent bars)}
 
 \item{col1}{A character string (default = 'black') defining the color of bars
-for taxa (or other variables) shared by live and dead data}
+for species/variables shared by live and dead data}
 
 \item{col2}{A character string (default = 'gray') defining the color of bars
-for taxa (or other variables) unique to either live or dead data}
+for species/variables unique to either live or dead data}
 
-\item{arr.col}{A character string (default = 'red') defining the color of arrows}
+\item{arr.col}{A character string (default = 'black') defining the color of arrows}
 
 \item{arr.lty}{An integer or character string specifying type of line used for
 arrows (default = 1) (this value is passed on to the graphical parameter 'lty')}
@@ -63,13 +63,15 @@ for x axis}
 x-axis label}
 
 \item{cex.names}{A numerical value (default = 0.95) defining font size
-for names of taxa/variables corresponding to individual bars on the barplot}
+for names of species/variables corresponding to individual bars on the barplot}
 
 \item{cex.label}{A numerical value (defult = 1) defining font size for 'Live'
 and 'Dead' titles placed above the barplots}
 
 \item{cex.stat}{A numerical value (default = 0.9) defining font size
 for correlation coefficient estimate}
+
+\item{font.names}{A numerical value (default = 3 = italic) defining font style}
 
 \item{cor.measure}{A character string (default='spearman') defining correlation measure
 (passed on to \code{\link[stats]{cor}} function) used to estimate
@@ -82,18 +84,18 @@ plotted on the chart as defined by 'toplimit' parameter.}
 A single plot.
 }
 \description{
-LDPlot function generates a comparative live-dead plot of the most frequent taxa
-(or other variables) to highlight live-dead congruences and live-dead discordances
-in relative abundance and rank order of the most abundant taxa/variables.
+LDPlot function generates a comparative live-dead plot to visualize
+congruence or discordance in relative abundance and rank order of the most
+common species, genera, functional groups or other enumerated variables.
 }
 \details{
-LDPlot function produces a plot comparing barplots of the top "n"
-most common taxa observed in live and dead datasets
-(e.g., Kowalewski et al. 2003). These L-D comparisons can apply to
-single sites or data pooled across multiple sites. Because taxa/variable
-names can vary in length and because the number of plotted taxa/variables
-can span a wide range of values, plot margin widths and cex expansion
-parameter may need adjustments.
+LDPlot function produces a plot that compares barplots for live and
+dead datasets for the top "n" most common species/variables (e.g.,
+Kowalewski et al. 2003). These L-D comparisons can apply to single sites
+or data pooled across multiple sites. Because names of species/variables
+can vary in length and because the number of plotted variables can span
+a wide range of values, margin widths for plots and cex parameter
+may need to be customized on a case by case basis.
 }
 \examples{
 

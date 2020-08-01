@@ -2,7 +2,7 @@
 % Please edit documentation in R/SJPlot.R
 \name{SJPlot}
 \alias{SJPlot}
-\title{A Bivariate Fidelity Plot}
+\title{A Fidelity Plot}
 \usage{
 SJPlot(
   x,
@@ -19,25 +19,28 @@ SJPlot(
   gpcol = NULL,
   pch2 = "+",
   PF = TRUE,
-  addlegend = TRUE,
   CI = TRUE,
   adjF = TRUE,
   ssF = FALSE,
   unadjF = FALSE,
-  addInfo = TRUE,
+  addlegend = TRUE,
+  addinfo = TRUE,
+  addbubble = TRUE,
+  info.y = 0.5,
+  bubble.y = -0.15,
   xlab = NULL,
   ylab = NULL
 )
 }
 \arguments{
-\item{x}{An object (a list) returned by FidelityEst function.}
+\item{x}{An object of the class 'FidelityEst' returned by \code{\link{FidelityEst}} function.}
 
 \item{bubble}{Logical (default=TRUE): to produce a bubble plot with symbols scaled by N-min
 (the number of observations in the smaller of the two (live vs. dead) compared samples).}
 
-\item{xlim}{A vector with two numerical values representing x axis limits (default = c(-1, 1)).}
+\item{xlim}{A vector with two numerical values defining x axis limits (default = c(-1, 1)).}
 
-\item{ylim}{A vector with two numerical values representing y axis limits (default = c(0, 1)).}
+\item{ylim}{A vector with two numerical values defining y axis limits (default = c(0, 1)).}
 
 \item{trans}{A numerical value (default = 0.3) defining transparency of background fill for symbols.}
 
@@ -48,24 +51,23 @@ across all samples or sample groups.}
 
 \item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
 
-\item{axes}{Logical (deafault = TRUE): to determine if axes should be plotted}
+\item{axes}{Logical (default = TRUE): to determine if axes should be plotted}
 
 \item{pch}{An integer or a single character (default = 21) specifying symbol type.}
 
 \item{col}{A character string (default = 'black') defining symbol color, applicable when 'gp' factor
 was provided in FidelityEst function.}
 
-\item{gpcol}{Color names (default = 1:#levels) defining colors for sample groups, applicable
-when 'gp' factor was provided in FidelityEst function. If custom colors are provided, the number
-of colors must match number of levels in a 'gp' factor.}
+\item{gpcol}{Color names (default=1:length(levels(x$gp))) defining colors for sample groups,
+applicable when 'gp' factor was provided in \code{\link{FidelityEst}} function.
+If custom colors are provided, the number of colors must match number of levels
+in a 'gp' factor.}
 
-\item{pch2}{An integer or a single character (default = 21) specifying symbol type
-for grand or group means.}
+\item{pch2}{An integer or a single character (default=21) specifying symbol type
+for grand mean or group means.}
 
-\item{PF}{Logical (default=FALSE): to add scatterplot of resampled fidelity estimates
-for the null model postulating perfect fidelity.}
-
-\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
+\item{PF}{Logical (default=FALSE): to add a scatter plot of resampled fidelity
+estimates for the null model postulating perfect fidelity.}
 
 \item{CI}{Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates}
 
@@ -75,7 +77,21 @@ for the null model postulating perfect fidelity.}
 
 \item{unadjF}{Logical (default=FALSE): plots unadjusted fidelity estimates}
 
-\item{addInfo}{Logical (default=TRUE): provides parameter values used in the analysis}
+\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
+
+\item{addinfo}{Logical (default=TRUE): prints parameter values above the plot}
+
+\item{addbubble}{Logical (default=TRUE): prints legend relating bubble sizes to
+N-min, which denotes the number of specimens in the smaller of the two compared
+samples (usually, 'live' sample is the smaller of the two)}
+
+\item{info.y}{Numeric (default = 0.5): specifies how far above the plot should
+"addinfo" legend (see above) be plotted. This is "line" parameter value
+in \code{\link[graphics]{mtext}} function)}
+
+\item{bubble.y}{Numeric (default = - 0.15): specifies how far above the plot should
+"addbubble" legend (see above) be plotted. This is "inset" parameter value
+in \code{\link[graphics]{legend}} function)}
 
 \item{xlab}{Character string that provides x-axis label. The default value is inherited
 from FidelityEst object based on a correlation measure used there.}
@@ -87,21 +103,23 @@ from FidelityEst object based on a similarity measure used there.}
 A single bivariate plot.
 }
 \description{
-SJPlot function generates a bivariate plot of a correlation measure (x axis) versus
-a similarity measure (y axis) for all live-dead pairwise comparisons.
+SJPlot function produces a bivariate plot of a correlation measure (x axis)
+versus similarity measure (y axis) to depict live-dead fidelity at one or more
+sites.
 }
 \details{
-SJPlot function is designed to use the output of FidelityEst function to produce
-a fidelity plot. Specifically, if default arguments for fidelity measures
-('Spearman' and 'Chao') are used in \code{\link{FidelityEst}} function,
-a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
-If a grouping factor is provided, symbols are color-coded by levels and group means
-are plotted. Bivariate distributions produced by resampling models can also
-be included.
+SJPlot function uses the object of the class 'FidelityEst', produced by
+\code{\link{FidelityEst}} function, to generate a live-dead fidelity plot.
+Specifically, if default arguments for fidelity measures are used
+in \code{\link{FidelityEst}} function, a Spearman vs. Jaccard-Chao fidelity plot
+(as in Kidwell, 2007) is produced. If a grouping factor is provided, symbols are
+color-coded by levels and group means are plotted. Bivariate distributions
+produced by resampling models can also be included.
 
 NOTE: This function utilizes \code{\link[graphics]{plot.default}} function,
-including some of its common graphic arguments. It allows for quick exploratory plots
-and should be readily editable to derive more customized plots.
+including some of its common graphic arguments. It allows to explore visually
+various alternative estimates of fidelity and is readily editable to derive
+more customized plots.
 }
 \examples{
 

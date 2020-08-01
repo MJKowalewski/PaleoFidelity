@@ -3,13 +3,14 @@
 #' AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
 #' and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 #'
-#' @details AlphaPlot function uses the object produced by FidelityDiv function to produce
-#' a cross-plot visualizing live-dead differences in alpha diversity (DELTA S) and
-#' evenness (DELTA PIE), including confidence bars for each site. If a grouping factor
-#' is provided, symbols and bars are color-coded by levels and group means are plotted
+#' @details AlphaPlot function uses the object of the FidelityDiv produced
+#' by  \code{\link{FidelityDiv}} function to produce a cross-plot visualizing
+#' live-dead differences in alpha diversity (DELTA S) and evenness (DELTA PIE),
+#' including confidence bars for each site. If a grouping factor is provided,
+#' symbols and bars are color-coded by levels and group means are plotted
 #' in addition to grand mean for all sites.
 #'
-#' @param x An object (a list) returned by FidelityDiv function
+#' @param x An object of the class 'FidelityDiv' returned by  \code{\link{FidelityDiv}} function
 #'
 #' @param pch An integer defining symbol type (default=21). Filled symbols (21-25) should be used.
 #'
@@ -81,6 +82,8 @@ AlphaPlot <- function(x, pch = 21, col = 'black', bgpt = 'white', transp = 1, ce
                       col.gp = NULL, mean.lwd = 2, transp_mean = 1, xlab = bquote(Delta[' S']),
                       ylab = bquote(Delta[' PIE']), axes = TRUE, xmax = NULL, ymax = NULL,
                       legend.cex=1, addlegend=TRUE) {
+
+  if (!('FidelityDiv' %in% class(x))) stop('object of the class "FidelityDiv" is required')
   if (length(xmax) == 0) xmax <- 1.05 * max(c(abs(x$x[,3]), abs(x$x[,4])))
   if (length(ymax) == 0) ymax <- 1.05 * max(c(abs(x$x[,3]), abs(x$x[,4])))
   graphics::plot(x$x[,2], x$y[,2], xlim=c(-xmax, xmax), ylim=c(-ymax, ymax), type='n', las=1,

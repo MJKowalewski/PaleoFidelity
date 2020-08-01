@@ -1,23 +1,22 @@
 #' A Comparative Live-Dead Barplot
 #'
-#' LDPlot function generates a comparative live-dead plot of the most frequent taxa
-#' (or other variables) to highlight live-dead congruences and live-dead discordances
-#' in relative abundance and rank order of the most abundant taxa/variables.
+#' LDPlot function generates a comparative live-dead plot to visualize
+#' congruence or discordance in relative abundance and rank order of the most
+#' common species, genera, functional groups or other enumerated variables.
 #'
-#' @details LDPlot function produces a plot comparing barplots of the top "n"
-#' most common taxa observed in live and dead datasets
-#' (e.g., Kowalewski et al. 2003). These L-D comparisons can apply to
-#' single sites or data pooled across multiple sites. Because taxa/variable
-#' names can vary in length and because the number of plotted taxa/variables
-#' can span a wide range of values, plot margin widths and cex expansion
-#' parameter may need adjustments.
+#' @details LDPlot function produces a plot that compares barplots for live and
+#' dead datasets for the top "n" most common species/variables (e.g.,
+#' Kowalewski et al. 2003). These L-D comparisons can apply to single sites
+#' or data pooled across multiple sites. Because names of species/variables
+#' can vary in length and because the number of plotted variables can span
+#' a wide range of values, margin widths for plots and cex parameter
+#' may need to be customized on a case by case basis.
 #'
-#' @param live A vector of integers with counts of live specimens by taxa (or other units)
+#' @param live A vector of integers with counts of live specimens by species (or other units)
 #'
-#' @param dead A vector of integers with counts of dead specimens by taxa (or other units)
+#' @param dead A vector of integers with counts of dead specimens by species (or other units)
 #'
-#' @param tax.names A vector with a list of names of taxa (or other units
-#' used as variables)
+#' @param tax.names A vector with a list of names of species (or other units used as variables)
 #'
 #' @param toplimit A numerical value (default = 10) defining the number of top
 #' species (or other units) to be plotted
@@ -27,12 +26,12 @@
 #' represent bars)
 #'
 #' @param col1 A character string (default = 'black') defining the color of bars
-#' for taxa (or other variables) shared by live and dead data
+#' for species/variables shared by live and dead data
 #'
 #' @param col2 A character string (default = 'gray') defining the color of bars
-#' for taxa (or other variables) unique to either live or dead data
+#' for species/variables unique to either live or dead data
 #'
-#' @param arr.col A character string (default = 'red') defining the color of arrows
+#' @param arr.col A character string (default = 'black') defining the color of arrows
 #'
 #' @param arr.lty An integer or character string specifying type of line used for
 #' arrows (default = 1) (this value is passed on to the graphical parameter 'lty')
@@ -50,13 +49,15 @@
 #' x-axis label
 #'
 #' @param cex.names A numerical value (default = 0.95) defining font size
-#' for names of taxa/variables corresponding to individual bars on the barplot
+#' for names of species/variables corresponding to individual bars on the barplot
 #'
 #' @param cex.label A numerical value (defult = 1) defining font size for 'Live'
 #' and 'Dead' titles placed above the barplots
 #'
 #' @param cex.stat A numerical value (default = 0.9) defining font size
 #' for correlation coefficient estimate
+#'
+#' @param font.names A numerical value (default = 3 = italic) defining font style
 #'
 #' @param cor.measure A character string (default='spearman') defining correlation measure
 #'  (passed on to \code{\link[stats]{cor}} function) used to estimate
@@ -87,12 +88,11 @@
 
 
 LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplimit,
-                   col1 = 'black', col2 = 'gray', arr.col = 'red', arr.lty=1,
+                   col1 = 'black', col2 = 'gray', arr.col = 'black', arr.lty=1,
                    arr.lwd = 1, cex.axis = 0.7, tck = -0.02, cex.lab = 0.8,
-                   cex.names = 0.95, cex.label = 1, cex.stat = 0.9,
+                   cex.names = 0.95, cex.label = 1, cex.stat = 0.9, font.names = 3,
                    cor.measure = 'spearman') {
 
-# info on common errors
   if (!is.vector(live)) stop('object "live" must be a vector')
   if (!is.vector(dead)) stop('object "dead" must be a vector')
   if (!is.numeric(live)) stop('object "live" must be numeric')
@@ -100,13 +100,13 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplim
   if (length(live) != length(dead))
     stop('objects "live" and "dead" are of different length')
   if (length(live) != length(tax.names))
-    stop('object "tax.names" differs in length from "live" and "dead" objects')
+    stop('object "tax.names" differs in length from objects "live" and "dead"')
   if (sum((live + dead) > 0) < toplimit)
     stop(paste('toplimit = ', toplimit, 'exceeds the total number of non-zero
                taxa/variables =', sum((live + dead) > 0), 'set toplimit <=',
                sum((live + dead) > 0)))
 
-# preprocess info on top n taxa
+# info on top n live and dead units
   toplive <- (live[order(live, decreasing = T)] / sum(live)) [1:toplimit]
   toplivenames <- tax.names[order(live, decreasing=T)][1:toplimit]
   topdead <- (dead[order(dead, decreasing = T)] / sum(dead)) [1:toplimit]
@@ -129,7 +129,7 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplim
     }
 
 # customize info for x axis
-  max.x <- ceiling(10*max(c(toplive, topdead)))/10
+  max.x <- ceiling(5*max(c(toplive, topdead)))/5
   xlim2 <- 2 * max.x * 1.25
   if (max.x <= 0.5) {
     my.x.at <- c(seq(0, max.x, 0.1), seq(xlim2-max.x, xlim2, 0.1))
@@ -154,9 +154,9 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplim
                                            lwd = barwidth, lend = 3, col = col1)
   }
   graphics::axis(2, labels = toplivenames, at = 1:toplimit, lwd = 0, las = 1,
-                 padj = 0.5, hadj = 1, font = 3, cex.axis = cex.names)
+                 padj = 0.5, hadj = 1, font = font.names, cex.axis = cex.names)
   graphics::axis(4, labels = topdeadnames, at = 1:toplimit, lwd = 0, las = 1,
-                 padj = 0.5, hadj = 0, font = 3, cex.axis = cex.names)
+                 padj = 0.5, hadj = 0, font = font.names, cex.axis = cex.names)
   graphics::axis(1, labels = my.x.lab, padj = -1.5, tck = tck, at = my.x.at,
                  cex.axis = cex.axis)
   graphics::lines(c(0.45 * xlim2, 0.55 * xlim2), c(toplimit, toplimit), lwd = 50,

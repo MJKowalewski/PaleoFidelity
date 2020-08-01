@@ -22,13 +22,15 @@ FidelityEst(
 )
 }
 \arguments{
-\item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-Dimensions and rownames and colnames of 'live' and 'dead' matrices must match exactly.}
+\item{live}{A matrix with counts of live-collected specimens (rows=sites, columns=species
+or other variable). Dimensions and rownames and colnames of 'live' and 'dead' matrices
+must match exactly.}
 
-\item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-Dimensions of rownames and colnames of 'live' and 'dead' matrices must match exactly.}
+\item{dead}{A matrix with counts of dead-collected specimens (rows=sites, columns=species
+or other variables). Dimensions of rownames and colnames of 'live' and 'dead' matrices
+must match exactly.}
 
-\item{gp}{An optional univariate factor defining groups of sites. The length of gp must
+\item{gp}{An optional univariate factor defining groups of sites. The length of 'gp' must
 equal number of rows of 'live' and 'dead' matrices.}
 
 \item{cor.measure}{A character string (default='spearman') defining correlation measure
@@ -38,7 +40,8 @@ equal number of rows of 'live' and 'dead' matrices.}
 on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any appropriate
 measure provided by vegdist can be used.}
 
-\item{n.filters}{An integer used to filter out small samples (default n.filters=0, all samples kept)}
+\item{n.filters}{An integer used to filter out small samples (default n.filters=0,
+all samples kept)}
 
 \item{t.filters}{An integer used to filter out rare taxa (default t.filters=0,
 all taxa with at least one occurrence kept)}
@@ -108,31 +111,34 @@ A list containing the following components:
 \description{
 FidelityEst estimates compositional fidelity by comparing two matching matrices (live
 and dead) with community abundance data. The function returns fidelity measures for
-indiviudal sites, mean measures across sites, and means for groups of sites
-(if 'gp' factor is provided). Sample-standardized estimates and bias-corrected estimates
-are also provided.
+individual sites, mean measures across sites, and means for groups of sites
+(if grouping factor 'gp' is provided). Optionally, the function return sample-standardized
+and bias-corrected fidelity estimates.
 }
 \details{
 FidelityEst assesses compositional fidelity using
 measures of correlation/associations/similarity.
+
 (1) x - a measure of correlation/association: Spearman (default), Kendall, or Pearson;
 (2) y - an abundance-based index of similarity such as Bray or Jaccard-Chao (default).
 
-Because many of those fidelity measures are sensitive to undersampling or
-unbalanced sampling, FidelityEst function attempts to correct sampling bias by
-assessing data-specific biases in correlation/similarity measures.The bias is estimated
+Because fidelity measures are sensitive to undersampling or unbalanced sampling,
+FidelityEst function attempts to correct sampling bias by (1) estimating data-specific
+biases or (2) standardizing sampling coverage. In the first approach, the bias is estimated
 using a resampling protocol under the perfect fidelity (PF) model, in which
-pooled (live + dead) counts are randomly partitioned into replicate pairs of samples
+pooled data (live + dead) are randomly partitioned into replicate pairs of samples
 (using sample sizes of original samples), thus creating sample pairs derived from
-a single underlying rank abundance distribution of species (i.e., perfect fidelity).
+single underlying rank abundance species distributions (i.e., the perfect fidelity).
 For an unbiased estimator, the resampled fidelity measures should indicate perfect
 fidelity (e.g., Spearman rho = 1). The offset between the expected observed
 PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
 fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
 produces a distribution of PF values and resulting adjusted fidelity measures,
-from which confidence intervals and significance tests can be derived. A second corrective
-strategy provided here is sampling standardization where all samples are subsampled to a
-common denominator given by the smallest sample.
+from which confidence intervals and significance tests can be derived.
+In the second approach, fidelity measures are computed for sample standardized data,
+where all samples are subsampled to a sample size given by the smallest sample.
+Replicate resampling produces a distribution of sample-standardized fidelity estimates
+used to generate confidence intervals and means for standardized fidelity estimates.
 }
 \examples{
 

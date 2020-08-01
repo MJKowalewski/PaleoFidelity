@@ -28,7 +28,7 @@ AlphaPlot(
 )
 }
 \arguments{
-\item{x}{An object (a list) returned by FidelityDiv function}
+\item{x}{An object of the class 'FidelityDiv' returned by  \code{\link{FidelityDiv}} function}
 
 \item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
 
@@ -89,10 +89,11 @@ AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DEL
 and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 }
 \details{
-AlphaPlot function uses the object produced by FidelityDiv function to produce
-a cross-plot visualizing live-dead differences in alpha diversity (DELTA S) and
-evenness (DELTA PIE), including confidence bars for each site. If a grouping factor
-is provided, symbols and bars are color-coded by levels and group means are plotted
+AlphaPlot function uses the object of the FidelityDiv produced
+by  \code{\link{FidelityDiv}} function to produce a cross-plot visualizing
+live-dead differences in alpha diversity (DELTA S) and evenness (DELTA PIE),
+including confidence bars for each site. If a grouping factor is provided,
+symbols and bars are color-coded by levels and group means are plotted
 in addition to grand mean for all sites.
 }
 \examples{
