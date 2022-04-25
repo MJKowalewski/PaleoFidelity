@@ -15,15 +15,17 @@
 #' }
 #' \usage{PaleoFidelity}
 #'
-#' @format A list with four objects:
+#' \format A list with four objects:
 #' \describe{
 #'   \item{live}{matrix with 44 rows (localities) and 202 columns (species) with counts of live specimens}
 #'   \item{dead}{matrix with 44 rows (localities) and 202 columns (species) with counts of dead specimens}
 #'   \item{habitat}{a 2-level factor describing two main habitats}
 #'   \item{fossiltype}{a 2-level factor describing categorizing species in terms of their fossilization potential}
-#'   ...
 #' }
 #' @references Tyler, C.L., and Kowalewski, M., 2018, Regional surveys of macrobenthic shelf
 #'  invertebrate communities in Onslow Bay, North Carolina, USA. Scientific Data 5, 180054.
+#'
 #' @source \url{https://www.nature.com/articles/sdata201854}
+#'
 #' \keyword{datasets}
+#'
