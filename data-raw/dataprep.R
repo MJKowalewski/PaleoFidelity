@@ -26,5 +26,6 @@ Fp <- as.factor(Fp)
 colnames(live) <- paste('species',1:ncol(live))
 colnames(dead) <- paste('species',1:ncol(live))
 FidData <- list(live=as.matrix(live), dead=as.matrix(dead), habitat=Habitat, fossiltype=Fp)
-devtools::use_data(FidData)
+#devtools::use_data(FidData)
+usethis::use_data(FidData, overwrite=T)
 

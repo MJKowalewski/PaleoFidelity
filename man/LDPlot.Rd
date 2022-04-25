@@ -22,22 +22,23 @@ LDPlot(
   cex.label = 1,
   cex.stat = 0.9,
   font.names = 3,
-  cor.measure = "spearman"
+  cor.measure = "spearman",
+  report = F,
+  iter = 100
 )
 }
 \arguments{
-\item{live}{A vector of integers with counts of live specimens by species (or other units)}
+\item{live}{A vector of integers with counts of live specimens by species/other units}
 
-\item{dead}{A vector of integers with counts of dead specimens by species (or other units)}
+\item{dead}{A vector of integers with counts of dead specimens by species/other units}
 
-\item{tax.names}{A vector with a list of names of species (or other units used as variables)}
+\item{tax.names}{A vector with a list of names of species/other units}
 
 \item{toplimit}{A numerical value (default = 10) defining the number of top
 species (or other units) to be plotted}
 
 \item{barwidth}{A numerical value (default = 250 / toplimit) defining bar width
-(more precisely, the thickness of \code{\link[graphics]{lines}} used to
-represent bars)}
+(the thickness of \code{\link[graphics]{lines}} used to represent bars)}
 
 \item{col1}{A character string (default = 'black') defining the color of bars
 for species/variables shared by live and dead data}
@@ -48,54 +49,60 @@ for species/variables unique to either live or dead data}
 \item{arr.col}{A character string (default = 'black') defining the color of arrows}
 
 \item{arr.lty}{An integer or character string specifying type of line used for
-arrows (default = 1) (this value is passed on to the graphical parameter 'lty')}
+arrows (default = 1)}
 
-\item{arr.lwd}{A numerical value  specifying the width of arrow lines (default = 1)
-(this value is passed on to the graphical parameter 'lwd')}
+\item{arr.lwd}{A numerical value  specifying the width of arrow lines (default = 1)}
 
-\item{cex.axis}{A numerical value (default = 0.7).The magnification to be used for
-x axis annotation relative to the current setting of cex.}
+\item{cex.axis}{A numerical value (default = 0.7) defining font size of tick mark labels}
 
-\item{tck}{A numerical value (default  = -0.02) defining length of tick marks
-for x axis}
+\item{tck}{A numerical value (default  = -0.02) defining length of tick marks for x axis}
 
-\item{cex.lab}{A numerical value (default = 0.8) defining font size for
-x-axis label}
+\item{cex.lab}{A numerical value (default = 0.8) defining font size for x-axis label}
 
 \item{cex.names}{A numerical value (default = 0.95) defining font size
-for names of species/variables corresponding to individual bars on the barplot}
+for names of species/other units}
 
-\item{cex.label}{A numerical value (defult = 1) defining font size for 'Live'
-and 'Dead' titles placed above the barplots}
+\item{cex.label}{A numerical value (default = 1) defining font size for 'Live'
+and 'Dead' titles}
 
 \item{cex.stat}{A numerical value (default = 0.9) defining font size
 for correlation coefficient estimate}
 
-\item{font.names}{A numerical value (default = 3 = italic) defining font style}
+\item{font.names}{A numerical value (default = 3) defining font style}
 
 \item{cor.measure}{A character string (default='spearman') defining correlation measure
 (passed on to \code{\link[stats]{cor}} function) used to estimate
-live-dead correlations (possible values are 'pearson', 'spearman', 'kendall', 'all').
-When 'all' is selected, all three correlation measures are printed on the plot.
-Note that the computed statistics include all taxa regardless of how many taxa are
-plotted on the chart as defined by 'toplimit' parameter.}
+live-dead correlations. Possible values are 'pearson', 'spearman', 'kendall', 'all'.
+Reported coefficients include all taxa regardless of how many taxa are
+included on the plot}
+
+\item{report}{Logical (default = FALSE) to print a summary output}
+
+\item{iter}{Numerical (default = 100) number of iterations
+for randomization which simulates perfect fidelity by resampling
+pooled live+dead species counts. Applicable only when the parameter
+"report" is set to TRUE}
 }
 \value{
 A single plot.
 }
 \description{
-LDPlot function generates a comparative live-dead plot to visualize
-congruence or discordance in relative abundance and rank order of the most
-common species, genera, functional groups or other enumerated variables.
+LDPlot function generates a comparative live-dead plot
+to visualize congruence in relative abundance
+and rank order of the most common live and dead species, genera,
+functional groups or other enumerated variables.
 }
 \details{
-LDPlot function produces a plot that compares barplots for live and
-dead datasets for the top "n" most common species/variables (e.g.,
-Kowalewski et al. 2003). These L-D comparisons can apply to single sites
-or data pooled across multiple sites. Because names of species/variables
-can vary in length and because the number of plotted variables can span
-a wide range of values, margin widths for plots and cex parameter
-may need to be customized on a case by case basis.
+LDPlot function produces a dual barplot that
+compares rank abundance of one live sample with one dead sample
+for the top "n" most common species, genera, or other units (e.g.,
+Kowalewski et al. 2003). The L-D comparison can apply to single samples
+or pooled data. Because names of species/other units
+can vary in length and the number of plotted variables can span
+a wide range of values, margin widths and cex parameter may need
+to be customized. When species/other units are tied in rank,
+they are plotted in an arbitrary order. A warning is returned when more
+than 50% of species/variables are tied.
 }
 \examples{
 

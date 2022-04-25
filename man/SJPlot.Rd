@@ -12,20 +12,28 @@ SJPlot(
   trans = 0.3,
   cex = 1,
   cex.mean = 2,
-  legend.cex = 0.8,
+  cex.model = 1,
+  cex.model.mean = 1,
+  cex.bubble = 2,
+  cex.legend = 0.8,
   axes = T,
   pch = 21,
   col = "black",
+  col.model = "gray",
+  col.mean = "white",
+  col.model.mean = "white",
   gpcol = NULL,
-  pch2 = "+",
-  PF = TRUE,
+  pch2 = 21,
+  pch3 = ".",
+  pch4 = 21,
+  PF = FALSE,
   CI = TRUE,
   adjF = TRUE,
   ssF = FALSE,
   unadjF = FALSE,
-  addlegend = TRUE,
-  addinfo = TRUE,
-  addbubble = TRUE,
+  addlegend = FALSE,
+  addinfo = FALSE,
+  addbubble = FALSE,
   info.y = 0.5,
   bubble.y = -0.15,
   xlab = NULL,
@@ -49,14 +57,28 @@ SJPlot(
 \item{cex.mean}{A numerical value (default = 2) defining symbol size for means
 across all samples or sample groups.}
 
-\item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
+\item{cex.model}{A numerical value (default = 1) defining symbol size for
+individual model estimates.}
+
+\item{cex.model.mean}{A numerical value (default = 1) defining symbol size for
+mean sample model estimates.}
+
+\item{cex.bubble}{A numerical value (default = 2) defining scaling factor for bubbles.}
+
+\item{cex.legend}{A numerical value (default = 1) defining text size for legend.}
 
 \item{axes}{Logical (default = TRUE): to determine if axes should be plotted}
 
 \item{pch}{An integer or a single character (default = 21) specifying symbol type.}
 
-\item{col}{A character string (default = 'black') defining symbol color, applicable when 'gp' factor
-was provided in FidelityEst function.}
+\item{col}{A character string (default = 'black') defining symbol color.}
+
+\item{col.model}{A character string (default = 'gray') defining symbol color for model points.}
+
+\item{col.mean}{A character string (default = 'black') defining symbol color for the mean.}
+
+\item{col.model.mean}{A character string (default = 'white') defining symbol color
+for model sample means.}
 
 \item{gpcol}{Color names (default=1:length(levels(x$gp))) defining colors for sample groups,
 applicable when 'gp' factor was provided in \code{\link{FidelityEst}} function.
@@ -66,8 +88,14 @@ in a 'gp' factor.}
 \item{pch2}{An integer or a single character (default=21) specifying symbol type
 for grand mean or group means.}
 
-\item{PF}{Logical (default=FALSE): to add a scatter plot of resampled fidelity
-estimates for the null model postulating perfect fidelity.}
+\item{pch3}{An integer or a single character (default='.') specifying symbol type
+for simulated sample values.}
+
+\item{pch4}{An integer or a single character (default=21) specifying symbol type
+for simulated mean sample values.}
+
+\item{PF}{Logical (default=FALSE): adds a scatter plot of resampled fidelity
+estimates for the null model of perfect fidelity.}
 
 \item{CI}{Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates}
 
@@ -75,13 +103,13 @@ estimates for the null model postulating perfect fidelity.}
 
 \item{ssF}{Logical (default=FALSE): plots sample-standardized fidelity estimates}
 
-\item{unadjF}{Logical (default=FALSE): plots unadjusted fidelity estimates}
+\item{unadjF}{Logical (default=FALSE): plots non-adjusted fidelity estimates}
 
-\item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided.}
+\item{addlegend}{Logical (default=FALSE): adds legend to the plot, if 'gp' factor is provided.}
 
-\item{addinfo}{Logical (default=TRUE): prints parameter values above the plot}
+\item{addinfo}{Logical (default=FALSE): prints parameter values above the plot}
 
-\item{addbubble}{Logical (default=TRUE): prints legend relating bubble sizes to
+\item{addbubble}{Logical (default=FALSE): prints legend relating bubble sizes to
 N-min, which denotes the number of specimens in the smaller of the two compared
 samples (usually, 'live' sample is the smaller of the two)}
 
@@ -104,22 +132,20 @@ A single bivariate plot.
 }
 \description{
 SJPlot function produces a bivariate plot of a correlation measure (x axis)
-versus similarity measure (y axis) to depict live-dead fidelity at one or more
+and similarity measure (y axis) to depict live-dead fidelity at one or more
 sites.
 }
 \details{
 SJPlot function uses the object of the class 'FidelityEst', produced by
 \code{\link{FidelityEst}} function, to generate a live-dead fidelity plot.
-Specifically, if default arguments for fidelity measures are used
-in \code{\link{FidelityEst}} function, a Spearman vs. Jaccard-Chao fidelity plot
-(as in Kidwell, 2007) is produced. If a grouping factor is provided, symbols are
-color-coded by levels and group means are plotted. Bivariate distributions
-produced by resampling models can also be included.
+If default arguments for fidelity measures are used in \code{\link{FidelityEst}} function,
+a Spearman vs. Jaccard-Chao fidelity plot (as in Kidwell, 2007) is produced.
+If a grouping factor is provided, symbols are color-coded by levels and group means
+are plotted. Bivariate distributions produced by a resampling model can be included.
 
 NOTE: This function utilizes \code{\link[graphics]{plot.default}} function,
-including some of its common graphic arguments. It allows to explore visually
-various alternative estimates of fidelity and is readily editable to derive
-more customized plots.
+including some of its arguments. It allows to explore visually various alternative
+estimates of fidelity.
 }
 \examples{
 

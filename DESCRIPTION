@@ -6,13 +6,13 @@ Depends:
     R (>= 3.5.0)
 Imports:
     vegan (>= 2.5-2)
-Date: 2018-11-30
+Date: 2020-08-01
 Author: Michal Kowalewski
 Maintainer: Michal Kowalewski <kowalewski@ufl.edu>
 Description: PaleoFidelity assembles a series of custom functions designed to assess live-dead agreement
     (paleontological fidelity) between live assemblages (ecological community data) and sympatric death assemblages.
     The functions allow to assess fidelity in terms of rank and relative abundance agreement,
-    alpha diversity, evenness, and beta diversity. Multi-level sample standardization is available.
+    alpha diversity and alpha evenness. Multi-level sample standardization is available.
     PaleoFidelity also includes customized plotting functions for data visualization.
 License: CC0
 URL: https://github.com/mjkowalewski/PaleoFidelity

@@ -18,11 +18,11 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The package "PaleoFidelity" carries out paleontological fidelity analysis (live-dead comparisons) for compositional data (e.g., specimen counts of taxa tallied separately for live and dead components of each sample). The package can be used for a single site (one live-dead comparison) or sets of sites. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups (habitats, regions, etc.). An additional grouping factor that splits variables/columns (e.g., species) into subsets can be used to assess how fidelity varies across variable groups (e.g., phyla, functional categories, or taphonomic groups).
+The package "PaleoFidelity" carries out paleontological fidelity analysis (live-dead comparisons) for compositional data (e.g., specimen counts of taxa) tallied separately for live and dead components of each sample. The package can be used for a single site (one live-dead comparison) or sets of sites. A grouping factor can be provided to split sites into two or more subsets and carry out comparative analyses across groups (habitats, regions, etc.). An additional grouping factor that splits variables/columns (e.g., species) into subsets can be used to assess how fidelity varies across variable groups (e.g., phyla, functional categories, or taphonomic groups).
 
 Currently, the following functions (discussed in more detail below) are provided:
 
-1. __FidelitySummary__ function performs data assement prior to any other fidelity analysis.
+1. __FidelitySummary__ function performs data assessment prior to any other fidelity analysis.
 2. __FidelityEst__ function performs compositional fidelity analysis based on correlation/similarity measures adjusted for sampling coverage.
 3. __FidelityDiv__ function performs alpha diversity and evenness analysis (live-dead offsets in standardized diversity and evenness).
 4. __SJPlot__ plots a fidelity cross-plot of correlation and similarity measures of fidelity 
@@ -50,32 +50,31 @@ str(FidData) # check the structure of the example dataset
 
 FidData dataset is assembled as a single list with 4 items, but datasets can be stored as separate objects. Live and dead datasets must be formatted as matrices and their dimensions must match exactly. The two categorical variables that can be included need to be univariate factors.
 
-For a single live-dead analysis, format 'live' and 'dead specimen counts as one-row matrices (e.g., rbind(live), rbind(dead)). The same applies when extracting one sample pair from a larger matrix. For example:  rbind(live[7,]) and rbind(dead[7,]).  
+For a single live-dead analysis, format 'live' and 'dead' specimen counts as one-row matrices (e.g., rbind(live), rbind(dead)). The same applies when extracting one sample pair from a larger matrix. For example:  rbind(live[7,]) and rbind(dead[7,]).  
 
 ## FidelitySummary Function
 
-A function _FidelitySummary_ assesses data for format compliance and numerical adequacy for carrying out a meaningful fidelity analysis. The function allows to filter rare taxa and small samples. A report reporting the summary of filtered dataset can be requested. This function is called by other PaleoFidelity functions and the data filters should be set in those functions before the analysis is carried out.  _FidelitySummary_ does not produce any analytical outcomes.
+A function _FidelitySummary_ assesses data for format compliance and numerical adequacy for carrying out a meaningful fidelity analysis. The function allows to filter rare taxa and small samples. A report reporting the summary of filtered dataset can be requested. This function is called by other PaleoFidelity functions and the data filters should be set in those functions before the analysis is carried out.  _FidelitySummary_ does not produce any analytic outcomes.
 
-When the function is applied to the example dataset in its default form (but with report=TRUE), a report, notes, and one warning are printed.
+When the function is applied in its default form (but with report=TRUE), a report, notes, and one warning are printed.
 
 ```{r fidelity summary function}
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, report = TRUE)
 ```
 
-The report indicates that there are 44 samples and 202 taxa with at least one observation and nothing was removed from the data (otherwise, the number of rows and columns removed would have been reported). The report also notes that the grouping factor included 2 levels with more than one sample making it possible to conduct by-group analyses. A warning indicates that some samples are small (n < 30) and the smallest sample sizes are listed in the report as 17 for live and 20 for dead, respectively.
+The report indicates that there are 44 samples and 202 taxa with at least one observation and nothing was removed from the data. The report also notes that the grouping factor included 2 levels with more than one sample making it possible to conduct by-group analyses. A warning indicates that some samples are small (n < 30) and the smallest sample sizes are 17 for live and 20 for dead, respectively.
 
-The function allow users to explore the consequence of applying the filters. For example, let's remove all samples with n < 30. 
+The function allows for exploring the effects of applying different filters. For example, let's remove all samples with n < 30. 
 
 ```{r fidelity summary function part 2}
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
-                report=TRUE, n.filters=30)
+FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat,
+                report = TRUE, n.filters = 30)
 ```
 
-No taxa were lost (i.e., the removed sites did not contain unique species), 6 sites were removed (the number of sites was reduced from 44 to 38), and the grouping factor still includes more than 1 site per level. Thus, the n.filter=30 did not reduce data dimensionality at all and all factor groups (levels) still retained at least two observations/sites. How about n.filters=100?
+No taxa were lost (i.e., the removed sites did not contain unique species), 6 sites were removed (the number of sites was reduced from 44 to 38), and the grouping factor still includes more than 1 site per level. Thus, the n.filter = 30 did not reduce data dimensionality at all and all factor groups (levels) still retained at least two observations/sites. How about n.filters = 100?
 
 ```{r fidelity summary function part 3}
-FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
-                report=TRUE, n.filters=100)
+FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, report = TRUE, n.filters = 100)
 ```
 
 Now, 12 taxa were lost and only 21 sites were retained. Perhaps n.filters=100 is an unreasonably high n.filter for this dataset?
@@ -88,46 +87,49 @@ A function _FidelityEst_ estimates compositional fidelity measures by comparing 
 1. $x - a measure of correlation/association: Spearman, Kendall, or Pearson.
 2. $y - an abundance-based measure of similarity such as Bray-Curtis or Jaccard-Chao.
 
-Because many of those fidelity measures tend to be sensitive to unbalanced sampling, _FidelityEst_ function attempts to correct sampling bias by assessing data-specific biases in correlation/similarity measures. The bias is estimated using a resampling protocol under the perfect fidelity (PF) model, in which pooled (live + dead) counts are randomly partitioned into replicate pairs of samples (using sample sizes of original samples), thus creating sample pairs derived from a single underlying rank abundance distribution of species (i.e., perfect fidelity). For an unbiased estimator, the resampled fidelity measures should indicate perfect fidelity (e.g., Spearman rho = 1). The offset between the expected value of 1 and the observed value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted fidelity measure for a given live-dead coparison is then given by Adjusted = Observed + (1 - PF). Replicate resampling produces a distribution of PF values and resulting adjusted fidelity measures, from which confidence intervals and signifiance tests can be derived.
+Because fidelity measures are sensitive to under-sampling or unbalanced sampling,
+_FidelityEst_ function attempts to correct sampling bias by (1) estimating data-specific biases and (2) standardizing sampling coverage.
 
-When the data include multiple sites that can be grouped into subsets, _FidelityEst_ will report mean fidelity estimates for total data and each group. Two measures are reported: a correlation measure (default=Spearman) and a similarity measure (default=Bray). Note also that correlation can be computed with double zeroes included or excluded. In the example below, double zeroes were kept (rm.zero=F), which is the recommended approach.
+In the first approach, the bias is estimated using a resampling protocol under the perfect fidelity (PF) model, in which pooled data (live + dead) are randomly partitioned into replicate pairs of samples (using sample sizes of original samples), thus creating sample pairs derived from single underlying rank abundance species distributions (i.e., the perfect fidelity). For an unbiased estimator, the resampled fidelity measures should indicate perfect fidelity (e.g., Spearman rho = 1). The offset between the expected observed PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling produces a distribution of PF values and resulting adjusted fidelity measures, from which confidence intervals and significance tests can be derived.
 
-The function returns a list and uncorrected measures of correlation and similarity for each live-dead sample pair (stored as $x and $y, respectively).
+In the second approach, fidelity measures are computed for sample standardized data, where all samples are subsampled to a sample size given by the smallest sample. Replicate resampling produces a distribution of sample-standardized fidelity estimates used to generate confidence intervals and means for standardized fidelity estimates.
+
+When the data include multiple sites that can be grouped into subsets, _FidelityEst_ will report mean fidelity estimates for total data and each group. Two measures are reported: a correlation measure (default=Spearman) and a similarity measure (default=Chao). Note also that correlation can be computed with double zeroes included or excluded. In the example below, double zeroes were kept, which is the recommended (default) approach.
+
+_FidelityEst_ function returns a _FidelityEst_ class object that can be used to plot a Fidelity Plot (_SJPlot_ function). The object is a list and its structure is illustrated below. 
 
 ```{r fidelity estimates}
-out1 <- FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, rm.zero=F, iter=999)
-out1$x
-out1$y
+out1 <- FidelityEst(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, n.filters = 30, iter=499)
+str(out1)
 ```
 
-The function returns also the adjusted fidelity measures ($xc, $yc) corrected for sampling coverage bias. The bias correction is based on a resampling model simulating 'Perfect Fidelity' in which departures from perfect fidelity are due solely to sampling a perfectly congruent live-dead system. In addition, mean values for all samples and sample groups are also reported (if factor 'gp' is provided).
+_FidelityEst_ function returns also the adjusted fidelity measures ($xc, $yc) with a correction  based on a resampling model simulating 'Perfect Fidelity', in which departures from perfect fidelity are due solely to sampling a perfectly congruent live-dead system. In addition, mean values for all samples and sample groups are also reported (if factor 'gp' is provided).
 
 ```{r fidelity estimates outputs}
 out1$xc # adjusted correlation measure summary
 out1$yc # adjusted similarity measure summary
 ```
 
+_FidelityEst_ function returns also sample-standardized fidelity measures ($xs, $ys) corrected for sampling coverage bias. The bias correction is based on subsampling all live-dead sample pairs to the common minimum sampe size given by the smallest live and dead samples. In addition, mean values for all samples and sample groups are also reported (if factor 'gp' is provided).
 
-
-```{r fidelity estimates part 2}
-out1$x.stats
-out1$y.stats
+```{r fidelity estimates outputs: sample-standardized}
+out1$xs # sample-standardized correlation measure summary
+out1$ys # sample-standardized similarity measure summary
 ```
 
-To explore data visually use _SJPlot_ function. In its default form, this function produces a bubble plot with points scaled by the sample size of the smaller of the two (live or dead) compared samples. For the default setting only adjusted values are plotted for each sample pair.
+To explore data visually use _SJPlot_ function.
 
 ## SJPlot Function
-
 ```{r classic fidelity plot, fig.width=7.5, fig.height=4}
 par(mar=c(4, 4, 0.5, 0.5))
-SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), legend.cex=0.8)
+SJPlot(out1, gpcol = c('aquamarine3', 'coral3'), cex.legend=0.8)
 ```
 
 Set bubble=FALSE to plot unscaled symbols. Set unadjF=T to plot uncorrected estimates (adjF=F suppresses plotting adjusted measures and CI=F suppresses confidence intervals).
 
 ```{r classic fidelity plot 2, fig.width=7.5, fig.height=4}
 par(mar=c(4, 4, 0.5, 0.5))
-SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F, unadj=T, legend.cex=0.8)
+SJPlot(out1, gpcol=c('aquamarine3', 'coral3'), bubble=F, unadj=T, cex.legend=0.8)
 ```
 
 ## FidelityDiv Function

@@ -11,10 +11,10 @@ FidelityEst(
   cor.measure = "spearman",
   sim.measure = "chao",
   n.filters = 0,
-  t.filters = 0,
+  t.filters = 1,
   report = FALSE,
-  iter = 100,
-  iter2 = 100,
+  iter = 10,
+  iter2 = 10,
   min.sam = 30,
   CI = 0.95,
   rm.zero = FALSE,
@@ -43,26 +43,27 @@ measure provided by vegdist can be used.}
 \item{n.filters}{An integer used to filter out small samples (default n.filters=0,
 all samples kept)}
 
-\item{t.filters}{An integer used to filter out rare taxa (default t.filters=0,
+\item{t.filters}{An integer used to filter out rare taxa (default t.filters=1,
 all taxa with at least one occurrence kept)}
 
 \item{report}{Logical (default report = FALSE) (suppresses notes, warnings and data summary)}
 
 \item{iter}{An integer defining number of resampling iteration
-for perfect fidelity model (default iter = 100)}
+for perfect fidelity model (default iter = 10)}
 
 \item{iter2}{An integer defining number of resampling iteration for subsampling
-standardization (default iter2 = 100)}
+standardization (default iter2 = 10)}
 
-\item{min.sam}{An integer defining number of specimens for sample standardization (default = 30).
-This number must be smaller than the smallest sample in the datasest.}
+\item{min.sam}{An integer defining number of specimens for
+sample standardization (default = 30).}
 
 \item{CI}{A numerical value (default = 0.95) defining confidence limits for
 adjusted and sample-standardized estimates of fidelity based on percentiles of
 resampled estimates (perfect fidelity model estimates or sample-standardized
 fidelity estimates) of correlation and similarity measures.}
 
-\item{rm.zero}{Logical (default rm.zero = FALSE) (removes double 0's when computing correlation measure)}
+\item{rm.zero}{Logical (default rm.zero = FALSE) removes double 0's when
+computing correlation measure}
 
 \item{tfsd}{A character string (default='none') specifying data standardization
 or transformations (applicable only for some similarity measure).The following options are
@@ -109,20 +110,21 @@ A list containing the following components:
   \item{values}{A list with values of parameters used in the analysis}
 }
 \description{
-FidelityEst estimates compositional fidelity by comparing two matching matrices (live
-and dead) with community abundance data. The function returns fidelity measures for
-individual sites, mean measures across sites, and means for groups of sites
-(if grouping factor 'gp' is provided). Optionally, the function return sample-standardized
+FidelityEst estimates compositional fidelity by comparing
+two matching (live and dead) matrices with community abundance data.
+The function returns fidelity measures for individual sites,
+mean measures across sites, and means for groups of sites.
+The function also returns sample-standardized
 and bias-corrected fidelity estimates.
 }
 \details{
 FidelityEst assesses compositional fidelity using
 measures of correlation/associations/similarity.
 
-(1) x - a measure of correlation/association: Spearman (default), Kendall, or Pearson;
-(2) y - an abundance-based index of similarity such as Bray or Jaccard-Chao (default).
+(1) x - a measure of correlation/association: Spearman, Kendall, or Pearson
+(2) y - an abundance-based index of similarity such as Bray or Jaccard-Chao
 
-Because fidelity measures are sensitive to undersampling or unbalanced sampling,
+Because fidelity measures are sensitive to under-sampling or unbalanced sampling,
 FidelityEst function attempts to correct sampling bias by (1) estimating data-specific
 biases or (2) standardizing sampling coverage. In the first approach, the bias is estimated
 using a resampling protocol under the perfect fidelity (PF) model, in which
@@ -132,8 +134,8 @@ single underlying rank abundance species distributions (i.e., the perfect fideli
 For an unbiased estimator, the resampled fidelity measures should indicate perfect
 fidelity (e.g., Spearman rho = 1). The offset between the expected observed
 PF value (1 - PF) provides a data-specific estimate of sampling bias. The adjusted
-fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate resampling
-produces a distribution of PF values and resulting adjusted fidelity measures,
+fidelity measure is then given by Adjusted = Observed + (1 - PF). Replicate samples
+produce a distribution of PF values and resulting adjusted fidelity measures,
 from which confidence intervals and significance tests can be derived.
 In the second approach, fidelity measures are computed for sample standardized data,
 where all samples are subsampled to a sample size given by the smallest sample.

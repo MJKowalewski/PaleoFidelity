@@ -1,8 +1,8 @@
 # PaleoFidelity
 
 An R package designed for paleontological fidelity analysis.
-The source code is currently in early stages of development.
+The source code is currently a beta version 1.0.0.
 
-Last updated: December 18, 2019
+Last updated: April 24, 2022
 
 Questions/Comments: kowalewski@ufl.edu
