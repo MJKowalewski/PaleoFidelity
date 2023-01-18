@@ -357,12 +357,12 @@ FidelityEst <- function (live, dead, gp = NULL, cor.measure = "spearman",
     yc.stat <- as.matrix(yc.stat)
     xc.sum <- cbind(corrected[, 1], t(cor.adj.sam.CI),
                          perfidest[, 1])
-    names(xc.sum) <- c(paste(cor.measure, ".ADJ", sep = ""),
+    colnames(xc.sum) <- c(paste(cor.measure, ".ADJ", sep = ""),
                        paste(LCL), paste(UCL), paste(cor.measure, ".PF",
                                                      sep = ""))
     yc.sum <- cbind(corrected[, 2], t(sim.adj.sam.CI),
                          perfidest[, 2])
-    names(yc.sum) <- c(paste(sim.measure, ".ADJ", sep = ""),
+    colnames(yc.sum) <- c(paste(sim.measure, ".ADJ", sep = ""),
                        paste(LCL), paste(UCL), paste(sim.measure, ".PF",
                                                      sep = ""))
     if (nrow(live) == 1) {

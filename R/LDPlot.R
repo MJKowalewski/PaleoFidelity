@@ -235,6 +235,10 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplim
     }
     p.vals <- c(sum(r.out[,1] <= cors[1]), sum(r.out[,2] <= cors[2]),
       sum(r.out[,3] <= cors[3]))/iter
+    if (sum(p.vals == 0) > 0) {
+      p.vals <- as.character(p.vals)
+      p.vals[p.vals == "0"] <- paste("<", 1/iter)
+      }
     report.out <- list(summary = sum.basics, sample.info = sample.sizes,
                      cor.coeff = cors, expected.coeff=apply(r.out, 2, mean),
                      p.values=p.vals, randomized.r=r.out)
