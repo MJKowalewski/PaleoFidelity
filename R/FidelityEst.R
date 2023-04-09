@@ -57,8 +57,8 @@
 #'
 #' @param report Logical (default report = FALSE) (suppresses notes, warnings and data summary)
 #'
-#' @param iter An integer defining number of resampling iteration
-#' for perfect fidelity model (default iter = 10)
+#' @param iter An integer defining number of replicate samples
+#' for perfect fidelity resampling model (default iter = 10)
 #'
 #' @param iter2 An integer defining number of resampling iteration for subsampling
 #' standardization (default iter2 = 10)
@@ -122,7 +122,7 @@
 #' data(FidData)
 #' out1 <- FidelityEst(live = FidData$live[6:9,], dead = FidData$dead[6:9,],
 #'                     gp = FidData$habitat[6:9], cor.measure='spearman',
-#'                     sim.measure='bray', n.filters=20, iter=99, rm.zero=FALSE, tfsd='total4')
+#'                     sim.measure='bray', n.filters=30, iter=99, rm.zero=FALSE, tfsd='none')
 #' SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 #'
 #' @export
@@ -382,11 +382,11 @@ FidelityEst <- function (live, dead, gp = NULL, cor.measure = "spearman",
   out1 <- list(x = fid.sam[,1], y = fid.sam[,2], xc = xc.sum,
                yc = yc.sum, xs = SSCOR, ys = SSSIM, x.stats = raw.x,
                y.stats = raw.y, xc.stats = xc.stat, yc.stats = yc.stat,
-               xs.stats = xs.stat, ys.stats = ys.stat, x.pf.dist = pf.output[,
-                                                                             , 1], y.pf.dist = pf.output[, , 2], xc.dist = cor.m.adj,
+               xs.stats = xs.stat, ys.stats = ys.stat, x.pf.dist = pf.output[, , 1],
+               y.pf.dist = pf.output[, , 2], xc.dist = cor.m.adj,
                yc.dist = sim.m.adj, xs.dist = ss.cor.rep, ys.dist = ss.sim.rep,
-               live = live, dead = dead, gp = gp, values = list(measures = c(cor.measure,
-                                                                             sim.measure), data.transf = tfsd, remove.double.zeros = rm.zero,
+               live = live, dead = dead, gp = gp, values = list(measures = c(cor.measure, sim.measure),
+                                                                data.transf = tfsd, remove.double.zeros = rm.zero,
                                                                 PFiter = iter, SSIter = iter2, min.sam = min.sam))
   class(out1) <- append(class(out1), "FidelityEst")
   return(out1)

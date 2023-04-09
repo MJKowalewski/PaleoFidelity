@@ -71,7 +71,8 @@
 #' pooled live+dead species counts. Applicable only when the parameter
 #' "report" is set to TRUE
 #'
-#' @return A single plot.
+#' @return A single plot. In addition, a summary output is produced when
+#' the parameter report is set to 'TRUE'
 #'
 #' @examples
 #'
@@ -92,7 +93,7 @@
 #' environments of San Juan Islands, USA. Journal of Taphonomy 1: 43-65.
 
 
-LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 150 / toplimit,
+LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplimit,
                    col1 = 'black', col2 = 'gray', arr.col = 'black', arr.lty=1,
                    arr.lwd = 1, cex.axis = 0.7, tck = -0.02, cex.lab = 0.8,
                    cex.names = 0.95, cex.label = 1, cex.stat = 0.9, font.names = 3,

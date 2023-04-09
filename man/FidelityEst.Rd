@@ -48,8 +48,8 @@ all taxa with at least one occurrence kept)}
 
 \item{report}{Logical (default report = FALSE) (suppresses notes, warnings and data summary)}
 
-\item{iter}{An integer defining number of resampling iteration
-for perfect fidelity model (default iter = 10)}
+\item{iter}{An integer defining number of replicate samples
+for perfect fidelity resampling model (default iter = 10)}
 
 \item{iter2}{An integer defining number of resampling iteration for subsampling
 standardization (default iter2 = 10)}
@@ -147,7 +147,7 @@ used to generate confidence intervals and means for standardized fidelity estima
 data(FidData)
 out1 <- FidelityEst(live = FidData$live[6:9,], dead = FidData$dead[6:9,],
                     gp = FidData$habitat[6:9], cor.measure='spearman',
-                    sim.measure='bray', n.filters=20, iter=99, rm.zero=FALSE, tfsd='total4')
+                    sim.measure='bray', n.filters=30, iter=99, rm.zero=FALSE, tfsd='none')
 SJPlot(out1, gpcol=c('forestgreen', 'coral3'))
 
 }

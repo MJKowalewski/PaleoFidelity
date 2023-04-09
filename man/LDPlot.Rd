@@ -9,7 +9,7 @@ LDPlot(
   dead,
   tax.names,
   toplimit = 10,
-  barwidth = 150/toplimit,
+  barwidth = 250/toplimit,
   col1 = "black",
   col2 = "gray",
   arr.col = "black",
@@ -84,7 +84,8 @@ pooled live+dead species counts. Applicable only when the parameter
 "report" is set to TRUE}
 }
 \value{
-A single plot.
+A single plot. In addition, a summary output is produced when
+the parameter report is set to 'TRUE'
 }
 \description{
 LDPlot function generates a comparative live-dead plot
