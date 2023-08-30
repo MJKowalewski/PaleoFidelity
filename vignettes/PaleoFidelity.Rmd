@@ -18,24 +18,26 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The package "PaleoFidelity" carries out paleontological fidelity analyses focused on live-dead comparisons. Designed for compositional/enumeration data (e.g., specimen counts of taxa), the package can be used for a single site or sets of sites. A grouping factor can be provided to carry out comparative analyses of sites grouped by habitat, region, etc. An additional grouping factor that splits variables (e.g., species) into subsets can be used to assess how fidelity varies across variable sets (e.g., phyla, functional groups, or taphonomic categories).
+The package "PaleoFidelity" carries out paleontological fidelity analyses focused on live-dead comparisons. Designed for compositional/enumeration data (e.g., specimen counts of taxa), the package can be used for a single site or sets of sites. A grouping factor can be provided to carry out comparative analyses of sites grouped by a factor (e.g., habitat, region, time interval).
 
 Currently, the following functions are provided:
 
 1. __FidelitySummary__ performs data assessment prior to any other analysis.
 
-2. __FidelityEst__ performs compositional fidelity analysis based on correlation/similarity measures.
+2. __LDPlot__ plots a comparative live-dead plot for the _n_ most common taxa and provides a short numerical summary of live-dead fidelity
 
-3. __FidelityDiv__ performs alpha diversity/evenness analysis (live-dead offsets in standardized diversity/evenness).
+3. __FidelityEst__ performs compositional fidelity analysis based on correlation/similarity measures.
 
-4. __SJPlot__ plots a fidelity cross-plot of correlation and similarity measures 
+5. __FidelityDiv__ performs alpha diversity/evenness analysis (live-dead offsets in standardized diversity/evenness).
 
-5. __AlphaPlot__ plots a fidelity cross-plot of live-dead offsets in alpha diversity and evenness
+5. __SJPlot__ plots a fidelity cross-plot of correlation and similarity measures 
 
-6. __LDPlot__ plots a comparative live-dead plot for the _n_ most common taxa
+6. __AlphaPlot__ plots a fidelity cross-plot of live-dead offsets in alpha diversity and evenness
+
+ 
 
 ## Installing PaleoFidelity Package
-The most updated beta version of the package is available at github. To install and upload run the following R script (requires 'devtools'):
+The most updated beta version of the package is available at github. To install:
 ```{r installing PaleoFidelity package, eval = FALSE}
 install.packages('devtools')
 library(devtools)
@@ -51,36 +53,37 @@ library(PaleoFidelity)
 str(FidData) # check the structure of the dataset
 ```
 
-FidData dataset is a single list with 4 items, but datasets can be stored as separate objects. Live and dead datasets must be formatted as matrices and their dimensions must match. The two factor variables need to be univariate.
+FidData dataset is a single list with 4 items, but datasets can be stored as separate objects. Live and dead datasets must be formatted as matrices and their dimensions must match. The grouping factor variable should be univariate.
 
-For a single sample live-dead analysis, format 'live' and 'dead' specimen counts as one-row matrices. The same applies when subsetting one live-dead sample from a matrix (e.g., rbind(live[7,]) and rbind(dead[7,]).  
+For a single sample live-dead analysis, format 'live' and 'dead' specimen counts as one-row matrices. The same applies when subsetting one live-dead sample from a matrix (e.g., rbind(FidData$live[7,])
+and rbind(FidData$dead[7,]).  
 
 ## FidelitySummary Function
-A function _FidelitySummary_ assesses data for format compliance and numerical adequacy. The function allows to filter rare taxa and small samples. A report summarizing the filtered dataset can be requested. This function is called by other PaleoFidelity functions and the data filters should be set in those functions before the analysis is carried out. When the function is applied in its default form to FidData (but with report=TRUE), a report, notes, and one warning are printed.
+A function _FidelitySummary_ assesses data for format compliance and numerical adequacy. The function allows to filter rare taxa and small samples. A report summarizing the filtered dataset can be requested. This function is called by other PaleoFidelity functions and the data filters should be set in those functions before the analysis is carried out. When the function is applied in its default form to FidData (but with report=TRUE), a report, notes, and warnings are printed.
 
 ```{r fidelity summary function}
 FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, report = TRUE)
 ```
 
-The report summarizes sample and variable data and alerts the users if any data were removed. Also, in this specific example, the report  confirmed that the grouping factor included 2 levels with more than one sample allowing for by-group analyses and produced a warning about small samples with _n_ < 30.
+The report summarizes sample and variable data and alerts the users if any data were removed. In this  example, the report  confirmed that the grouping factor included 2 levels with more than one sample allowing for by-group analyses and produced a warning about small samples with _n_ < 30.
 
-The _FidelitySummary_ function allows for exploring the effects of applying different filters (e.g., removing samples _n_ < 30)
+The _FidelitySummary_ function allows for exploring the effects of applying different filters (e.g., removing samples _n_ < 30).
 
 ```{r fidelity summary function part 2}
 FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat,
                 report = TRUE, n.filters = 30)
 ```
 
-Note that 6 sites were lost but the factor levels still included more than 1 site per level. Also, no taxa were lost (i.e., the removed sites did not contain unique species) so data dimensionality was not reduced. How about n.filters = 100?
+With n.filters set to 30, a total of 6 sites were lost but the factor levels still included more than 1 site per level. Also, no taxa were lost (i.e., the removed sites did not contain unique species) so data dimensionality was not reduced.
 
 ```{r fidelity summary function part 3}
 FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, report = TRUE, n.filters = 100)
 ```
 
-Given that 12 taxa were lost and only 21 sites were retained, 100 may be an unreasonably high filter for this dataset. Once optimal filters are identified, they can be used in other fidelity functions.
+With n.filters set to 100, 12 taxa were lost and only 21 sites were retained. Thus, 100 may be an unreasonably high filter for this dataset. Once optimal filters are identified, they can be used in other fidelity functions.
 
 ## LDPlot Function
-A function _LDPlot_ is  designed to analyze and visualize a single live-dead comparison. The function returns a plot that compares the top _n_ species/variables in terms of rank abundance. Unlike other _PaleoFidelity_ functions, this function accepts vectors. It also provides an option to output a report with summary statistics and expected values under the null model of perfect fidelity.
+A function _LDPlot_ is  designed to analyze and visualize a single live-dead comparison. The function returns a plot that compares the top _n_ species/variables in terms of rank abundance. This function accepts vectors. It also provides an option to output a report with summary statistics and expected values under the null model of perfect fidelity.
 
 ```{r live-dead plot, fig.width=7, fig.height=6}
 par(mar=c(3, 7, 0.5, 7))
@@ -108,7 +111,7 @@ arrows(rep1$cor.coeff[2], 100, rep1$cor.coeff[2], 10,
        length=0.1, lwd=2)
 ```
 
-In this example, the expected distribution of spearman rho values approaches rho = 1, which means that the effect of sampling bias is minimal. Inadequate sampling cannot explain the low values of the observed rho values.
+In this example, the expected distribution of spearman rho values approaches rho = 1, which means that the effect of sampling bias is minimal. Inadequate sampling cannot explain the low observed rho value.
 
 ## FidelityEst Function
 A function _FidelityEst_ returns compositional fidelity estimates by comparing live and dead datasets. The function returns  fidelity estimates for individual sites and for groups of sites if 'gp' factor is provided. The function produces two types of compositional fidelity estimates:

@@ -6,7 +6,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     vegan (>= 2.5-2)
-Date: 2023-04-28
+Date: 2023-08-30
 Author: Michal Kowalewski
 Maintainer: Michal Kowalewski <kowalewski@ufl.edu>
 Description: PaleoFidelity assembles a series of custom functions designed to assess live-dead agreement

@@ -6,7 +6,7 @@
 \usage{
 SJPlot(
   x,
-  bubble = TRUE,
+  bubble = FALSE,
   xlim = c(-1, 1),
   ylim = c(0, 1),
   trans = 0.3,
@@ -19,18 +19,18 @@ SJPlot(
   axes = T,
   pch = 21,
   col = "black",
-  col.model = "gray",
+  col.model = "green",
   col.mean = "white",
-  col.model.mean = "white",
+  col.model.mean = "green4",
   gpcol = NULL,
   pch2 = 21,
   pch3 = ".",
   pch4 = 21,
   PF = FALSE,
   CI = TRUE,
-  adjF = TRUE,
+  adjF = FALSE,
   ssF = FALSE,
-  unadjF = FALSE,
+  unadjF = TRUE,
   addlegend = FALSE,
   addinfo = FALSE,
   addbubble = FALSE,
@@ -43,7 +43,7 @@ SJPlot(
 \arguments{
 \item{x}{An object of the class 'FidelityEst' returned by \code{\link{FidelityEst}} function.}
 
-\item{bubble}{Logical (default=TRUE): to produce a bubble plot with symbols scaled by N-min
+\item{bubble}{Logical (default=FALSE): to produce a bubble plot with symbols scaled by N-min
 (the number of observations in the smaller of the two (live vs. dead) compared samples).}
 
 \item{xlim}{A vector with two numerical values defining x axis limits (default = c(-1, 1)).}
@@ -99,11 +99,11 @@ estimates for the null model of perfect fidelity.}
 
 \item{CI}{Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates}
 
-\item{adjF}{Logical (default=TRUE): plots adjusted fidelity estimates}
+\item{adjF}{Logical (default=FALSE): plots adjusted fidelity estimates}
 
 \item{ssF}{Logical (default=FALSE): plots sample-standardized fidelity estimates}
 
-\item{unadjF}{Logical (default=FALSE): plots non-adjusted fidelity estimates}
+\item{unadjF}{Logical (default=TRUE): plots non-adjusted fidelity estimates}
 
 \item{addlegend}{Logical (default=FALSE): adds legend to the plot, if 'gp' factor is provided.}
 

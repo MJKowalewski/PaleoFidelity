@@ -17,7 +17,7 @@
 #'
 #' @param x An object of the class 'FidelityEst' returned by \code{\link{FidelityEst}} function.
 #'
-#' @param bubble Logical (default=TRUE): to produce a bubble plot with symbols scaled by N-min
+#' @param bubble Logical (default=FALSE): to produce a bubble plot with symbols scaled by N-min
 #' (the number of observations in the smaller of the two (live vs. dead) compared samples).
 #'
 #' @param xlim A vector with two numerical values defining x axis limits (default = c(-1, 1)).
@@ -30,13 +30,13 @@
 #'
 #' @param cex.mean A numerical value (default = 2) defining symbol size for means
 #' across all samples or sample groups.
-#' 
+#'
 #' @param cex.model A numerical value (default = 1) defining symbol size for
 #' individual model estimates.
-#' 
+#'
 #' @param cex.model.mean A numerical value (default = 1) defining symbol size for
 #' mean sample model estimates.
-#' 
+#'
 #' @param cex.bubble A numerical value (default = 2) defining scaling factor for bubbles.
 #'
 #' @param cex.legend A numerical value (default = 1) defining text size for legend.
@@ -46,9 +46,9 @@
 #' @param pch An integer or a single character (default = 21) specifying symbol type.
 #'
 #' @param col A character string (default = 'black') defining symbol color.
-#'  
+#'
 #' @param col.mean A character string (default = 'black') defining symbol color for the mean.
-#' 
+#'
 #' @param col.model A character string (default = 'gray') defining symbol color for model points.
 #'
 #' @param col.model.mean A character string (default = 'white') defining symbol color
@@ -67,17 +67,17 @@
 #'
 #' @param pch4 An integer or a single character (default=21) specifying symbol type
 #' for simulated mean sample values.
-#' 
+#'
 #' @param PF Logical (default=FALSE): adds a scatter plot of resampled fidelity
 #'  estimates for the null model of perfect fidelity.
 #'
 #' @param CI Logical (default=TRUE): adds confidence intervals to corrected fidelity estimates
 #'
-#' @param adjF Logical (default=TRUE): plots adjusted fidelity estimates
+#' @param adjF Logical (default=FALSE): plots adjusted fidelity estimates
 #'
 #' @param ssF Logical (default=FALSE): plots sample-standardized fidelity estimates
 #'
-#' @param unadjF Logical (default=FALSE): plots non-adjusted fidelity estimates
+#' @param unadjF Logical (default=TRUE): plots non-adjusted fidelity estimates
 #'
 #' @param addlegend Logical (default=FALSE): adds legend to the plot, if 'gp' factor is provided.
 #'
@@ -116,12 +116,12 @@
 #' as evidence for anthropogenic ecological change. Proc Natl Acad Sci USA 104(45): 17701–17706.
 
 
-SJPlot <- function(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1), trans = 0.3,
+SJPlot <- function(x, bubble = FALSE, xlim = c(-1, 1), ylim = c(0, 1), trans = 0.3,
                    cex = 1, cex.mean = 2, cex.model = 1, cex.model.mean = 1, cex.bubble = 2, cex.legend = 0.8, axes = T,
-                   pch = 21, col = 'black', col.model='gray', col.mean='white',
-                   col.model.mean = 'white', gpcol = NULL, pch2 = 21, pch3 = '.',
-                   pch4 = 21, PF = FALSE, CI = TRUE, adjF = TRUE,
-                   ssF = FALSE, unadjF = FALSE, addlegend = FALSE, addinfo = FALSE,
+                   pch = 21, col = 'black', col.model='green', col.mean='white',
+                   col.model.mean = 'green4', gpcol = NULL, pch2 = 21, pch3 = '.',
+                   pch4 = 21, PF = FALSE, CI = TRUE, adjF = FALSE,
+                   ssF = FALSE, unadjF = TRUE, addlegend = FALSE, addinfo = FALSE,
                    addbubble = FALSE, info.y = 0.5, bubble.y = -0.15,
                    xlab = NULL, ylab = NULL)
 {
@@ -159,7 +159,7 @@ SJPlot <- function(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1), trans = 0.
                        bg=col.model.mean, cex=cex.model.mean)
      }
   }
-  
+
   if (bubble & length(unlist(x$x)) > 1) {
     cexR <- apply(cbind(rowSums(x$live), rowSums(x$dead)), 1, min)
     if (max(cexR) - min(cexR) == 0) cex=cex
@@ -183,14 +183,14 @@ SJPlot <- function(x, bubble = TRUE, xlim = c(-1, 1), ylim = c(0, 1), trans = 0.
     if (adjF) graphics::points(x$xc[,1], x$yc[,1], pch=pch, col=gpcol[x$gp], cex=cex,
                                bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
     if (adjF & length(unlist(x$x)) > 1) graphics::points(x$xc.stats[-1,1], x$yc.stats[-1,1],
-                                        pch=21, col=gpcol, bg=col.mean, cex=cex.mean)
-    if (ssF) graphics::points(x$xs[,1], x$ys[,1], pch=23, col=gpcol[x$gp], cex=cex,
+                                        pch=pch2, col=gpcol, bg=col.mean, cex=cex.mean)
+    if (ssF) graphics::points(x$xs[,1], x$ys[,1], pch=pch, col=gpcol[x$gp], cex=cex,
                                  bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
     if (ssF) graphics::points(x$xs.stats[-1,1], x$ys.stats[-1,1],
-                                        pch=21, col=gpcol, bg=col.mean, cex=cex.mean)
+                                        pch=pch2, col=gpcol, bg=col.mean, cex=cex.mean)
     if (unadjF) graphics::points(unlist(x$x), unlist(x$y), pch=pch, col=gpcol[x$gp], cex=cex,
                                  bg=grDevices::adjustcolor(gpcol, trans)[x$gp])
-    if (unadjF) graphics::points(x$x.stats[-1,1], x$y.stats[-1,1], pch=pch,
+    if (unadjF) graphics::points(x$x.stats[-1,1], x$y.stats[-1,1], pch=pch2,
                               col=gpcol, bg=col.mean, cex=cex.mean)
     if (addlegend) {
       graphics::legend('topleft', pch=pch, col=gpcol, cex=cex.legend,

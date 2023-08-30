@@ -24,7 +24,8 @@ AlphaPlot(
   xmax = NULL,
   ymax = NULL,
   legend.cex = 1,
-  addlegend = TRUE
+  addlegend = TRUE,
+  ...
 )
 }
 \arguments{
@@ -39,7 +40,8 @@ AlphaPlot(
 sites (default = 'white').}
 
 \item{transp}{Numerical (default=1): defines transparency of symbols and associated
-confidence intervals. Allowed values range from 0 (transparent) to 1 (opaque).}
+confidence intervals. Allowed values range from 0 (transparent) to 1 (opaque).
+Note: transp=0 will suppress plotting of symbols and bars.}
 
 \item{cex}{A numerical value (default=0.8) defining expansion factor for symbols.}
 
@@ -63,15 +65,14 @@ must match number of levels in a grouping factor}
 
 \item{transp_mean}{Numerical (default=1): defines transparency of means and associated
 confidence intervals. Allowed values range from 0 (transparent = invisible)
-to 1 (opaque)}
+to 1 (opaque). Note: transp=1 will suppress plotting of symbols and bars for group means.}
 
 \item{xlab}{A character string defining x axis label (default=bquote(Delta['S']).
 Use xlab='' to suppress the label}
 
-\item{ylab}{A character string defining y axis label (default=bquote(Delta['PIE']).
-Use xlab='' to suppress the label}
+\item{ylab}{A character string defining y axis label (default=bquote(Delta['PIE']).}
 
-\item{axes}{Logical (default = TRUE): plot or suppress x and y axes}
+\item{axes}{Logical (default = TRUE): plots or suppresses axes}
 
 \item{xmax}{A positive numerical value defining x axis range (-xmax, xmax)}
 
@@ -80,6 +81,8 @@ Use xlab='' to suppress the label}
 \item{legend.cex}{A numerical value (default = 1) defining text size for legend.}
 
 \item{addlegend}{Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided}
+
+\item{...}{Other graphic arguments applicable to function \code{\link[graphics]{plot.default}}}
 }
 \value{
 A bivariate plot.
@@ -94,7 +97,8 @@ by  \code{\link{FidelityDiv}} function to produce a cross-plot visualizing
 live-dead differences in alpha diversity (DELTA S) and evenness (DELTA PIE),
 including confidence bars for each site. If a grouping factor is provided,
 symbols and bars are color-coded by levels and group means are plotted
-in addition to grand mean for all sites.
+in addition to grand mean for all sites. Other graphic arguments
+applicable to function \code{\link[graphics]{plot.default}} can be specified.
 }
 \examples{
 
@@ -102,6 +106,6 @@ my.fid1 <- FidelityDiv(FidData$live, FidData$dead, iter=100, n.filters=50)
 AlphaPlot(my.fid1)
 my.fid2 <- FidelityDiv(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
                        n.filters=20, iter=100, CI=0.95)
-AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
+AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige', mean.lwd=5, transp_mean=0.5)
 
 }

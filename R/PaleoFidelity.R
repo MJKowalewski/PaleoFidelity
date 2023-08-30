@@ -18,10 +18,11 @@
 #'
 #' # Check if data are compliant and generate basic data summary
 #' data(FidData)
-#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, report=TRUE)
+#' FidelitySummary(live=FidData$live, dead=FidData$dead, gp=FidData$habitat,
+#' n.filters=30, report=TRUE)
 #'
 #' # Returns estimates of compositional fidelity
-#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, iter=49)
+#' FidelityEst(live=FidData$live, dead=FidData$dead, gp=FidData$habitat, n.filters=30, iter=49)
 #'
 #'
 #' @importFrom vegan vegdist rrarefy

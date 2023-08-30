@@ -1,11 +1,10 @@
 #' Compositional measures of live-dead fidelity
 #'
-#' FidelityEst estimates compositional fidelity by comparing
-#' two matching (live and dead) matrices with community abundance data.
-#' The function returns fidelity measures for individual sites,
-#' mean measures across sites, and means for groups of sites.
-#' The function also returns sample-standardized
-#' and bias-corrected fidelity estimates.
+#' FidelityEst estimates compositional fidelity by comparing two matching
+#' (live and dead) matrices with community abundance data. The function returns
+#' fidelity measures for individual sites, mean measures across sites, and means
+#' for groups of sites. The function also returns sample-standardized, bias-corrected
+#' and 'perfect fidelity' estimates.
 #'
 #' @details FidelityEst assesses compositional fidelity using
 #' measures of correlation/associations/similarity.
@@ -13,8 +12,8 @@
 #' (1) x - a measure of correlation/association: Spearman, Kendall, or Pearson
 #' (2) y - an abundance-based index of similarity such as Bray or Jaccard-Chao
 #'
-#' Because fidelity measures are sensitive to under-sampling or unbalanced sampling,
-#' FidelityEst function attempts to correct sampling bias by (1) estimating data-specific
+#' Because fidelity measures are sensitive to under-sampling and unbalanced sampling,
+#' FidelityEst function attempts to correct for sampling biases by (1) estimating data-specific
 #' biases or (2) standardizing sampling coverage. In the first approach, the bias is estimated
 #' using a resampling protocol under the perfect fidelity (PF) model, in which
 #' pooled data (live + dead) are randomly partitioned into replicate pairs of samples
@@ -32,11 +31,11 @@
 #' used to generate confidence intervals and means for standardized fidelity estimates.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=species
-#' or other variable). Dimensions and rownames and colnames of 'live' and 'dead' matrices
+#' or other variable). Dimensions and 'rownames' and 'colnames' of 'live' and 'dead' matrices
 #' must match exactly.
 #'
 #' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=species
-#' or other variables). Dimensions of rownames and colnames of 'live' and 'dead' matrices
+#' or other variables). Dimensions and 'rownames' and 'colnames' of 'live' and 'dead' matrices
 #' must match exactly.
 #'
 #' @param gp An optional univariate factor defining groups of sites. The length of 'gp' must
@@ -46,33 +45,32 @@
 #' (passed on to \code{\link[stats]{cor}} function) used to estimate live-dead correlations.
 #'
 #' @param sim.measure A character string (default='chao') defining similarity measure (passed
-#' on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity. Any appropriate
-#' measure provided by vegdist can be used.
+#' on to \code{\link[vegan]{vegdist}}) used to estimate live-dead similarity.
 #'
 #' @param n.filters An integer used to filter out small samples (default n.filters=0,
-#' all samples kept)
+#' all samples kept).
 #'
 #' @param t.filters An integer used to filter out rare taxa (default t.filters=1,
-#' all taxa with at least one occurrence kept)
+#' all taxa with at least one occurrence kept).
 #'
-#' @param report Logical (default report = FALSE) (suppresses notes, warnings and data summary)
+#' @param report Logical (default report = FALSE) (suppresses notes, warnings and data summary).
 #'
 #' @param iter An integer defining number of replicate samples
-#' for perfect fidelity resampling model (default iter = 10)
+#' for perfect fidelity resampling model (default iter = 10).
 #'
 #' @param iter2 An integer defining number of resampling iteration for subsampling
-#' standardization (default iter2 = 10)
+#' standardization (default iter2 = 10).
 #'
 #' @param min.sam An integer defining number of specimens for
 #' sample standardization (default = 30).
 #'
 #' @param CI A numerical value (default = 0.95) defining confidence limits for
 #' adjusted and sample-standardized estimates of fidelity based on percentiles of
-#' resampled estimates (perfect fidelity model estimates or sample-standardized
-#' fidelity estimates) of correlation and similarity measures.
+#' resampled estimates of sample-standardized, bias-corrected, or 'perfect fidelity'
+#' measures of correlation/similarity.
 #'
 #' @param rm.zero Logical (default rm.zero = FALSE) removes double 0's when
-#' computing correlation measure
+#' computing correlation measure.
 #'
 #' @param tfsd A character string (default='none') specifying data standardization
 #' or transformations (applicable only for some similarity measure).The following options are

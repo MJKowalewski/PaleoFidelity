@@ -6,26 +6,21 @@
 #'
 #' @details This function is implemented in other PaleoFidelity functions. However,
 #' prior to any fidelity analysis, it is recommended  to check for errors/warnings and
-#' generate a basic summary of datasets (set logical argument report=TRUE), and
-#' explore how data filtering (arguments "n.filters" and "t.filters") affect data dimensionality
+#' generate a basic summary of datasets (report=TRUE), and explore how
+#' filtering ("n.filters" and "t.filters") affect data dimensionality
 #'
-#' NOTE: FidelitySummary function will provide an initial compliance evaluation. The function
-#'  allows the user to detect small samples and assess if removing those samples is advisable
-#'  in terms of data dimensionality. If removal of small samples is desirable for subsequent
-#'  analyses, the desired numerical values of "n.filters" and "t.filters" need to be specified
-#'  in other PaleoFidelity functions.
+#' NOTE: FidelitySummary function provides an initial compliance evaluation and allows for
+#' assessing if removing those samples is advisable. Once determined, the desired numerical
+#' values of "n.filters" and "t.filters" need to be specified in other PaleoFidelity functions.
 #'
 #' @param live A matrix with counts of live-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions of 'live' and 'dead' matrices must match exactly.
 #'
 #' @param dead A matrix with counts of dead-collected specimens (rows=sites, columns=taxa).
-#'  Dimensions of 'live' and 'dead' matrices must match exactely.
+#'  Dimensions of 'live' and 'dead' matrices must match exactly.
 #'
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
-#'
-#' @param tax An optional univariate factor defining groups of species. The length of tax must
-#'  equal number of columns of 'live' and 'dead' matrices.
 #'
 #' @param report Logical (default=FALSE), set report=TRUE to print notes,
 #' warnings, and data summary
@@ -55,10 +50,10 @@
 #' @importFrom stats sd
 #' @importFrom vegan vegdist
 
-FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filters=0, t.filters=1,
+FidelitySummary <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.filters=1,
                             output=FALSE) {
 
-# PART 1: Initial complience checks
+# PART 1: Initial compliance checks
   if (sum(is.matrix(live), is.matrix(dead)) != 2)
     stop('"live" and/or "dead" object is not a matrix')
   if (sum(c(is.na(live), is.na(dead))) > 0)
@@ -102,20 +97,6 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
   if (length(gp) == 0  & report == TRUE)
     message('NOTE: gp factor has not been provided (by-group analyses and tests not possible)')
 
-  if (length(tax) > 0)
-  {
-    if (length(tax) != ncol(live))
-      stop('the length of "tax" factor must equal the number of columns in live and dead')
-    if (!is.factor(tax))
-      stop('"tax" must be a factor')
-    if (sum(table(tax) == 0) > 0  & report == TRUE)
-    {
-      warning('empty levels detected and will be dropped')
-      tax <- droplevels(tax)
-    }
-    if (sum(table(tax) > 1) < 2  & report == TRUE)
-      warning('"tax" factor should include n > 1 observations for at least two levels')
-  }
 
   # PART III: Apply n.filters and t.filters (or not)
   if (n.filters == 0 & report == TRUE)
@@ -172,20 +153,13 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
     if (sum(table(gp) > 1) < 2 & report == TRUE)
       warning('gp factor should include n > 1 observations for at least two levels')
   }
-  # check 2: check again if "tax" factor still compliant
-  if (length(tax) > 0)
-  {
-    if (sum(table(tax) > 1) < 2  & report == TRUE)
-      warning('"tax" factor should include n > 1 observations for at least two levels')
-  }
+
 
   # PART V: Generate report (if requested)
   if(report)
   {
     ifelse(length(gp) == 0, num.groups <- 0, num.groups <- length(levels(gp)))
     ifelse(length(gp) == 0, num.use.groups <- 0, num.use.groups <- sum(table(gp)>1))
-    ifelse(length(tax) == 0, num.tax.groups <- 0, num.tax.groups <- length(levels(tax)))
-    ifelse(length(tax) == 0, num.use.tax.groups <- 0, num.use.tax.groups <- sum(table(tax)>1))
     report <- rbind('number of live samples' = nrow(live),
                'number of dead samples' = nrow(dead),
                'number of live taxa' = sum(colSums(live) > 0),
@@ -197,19 +171,13 @@ FidelitySummary <- function(live, dead, gp=NULL, tax=NULL, report=FALSE, n.filte
                'smallest sample (dead)' = min(rowSums(dead)),
                'number of levels in "gp" factor' = num.groups,
                 'number of observations in "gp" factor' = length(gp),
-               'number of levels with n > 1' = num.use.groups,
-               'number of levels in "tax" factor' = num.tax.groups,
-               'number of observations in "tax" factor' = length(tax),
-                'number of levels with n > 1' = num.use.tax.groups)
+               'number of levels with n > 1' = num.use.groups)
     colnames(report) <- 'outcomes'
   print(report)
   }
 
  if(output) {
-  if (length(gp) == 0 & length(tax) == 0) return(list(live=live, dead=dead))
-  if (length(gp) > 0 & length(tax) == 0) return(list(live=live, dead=dead, gp=gp))
-  if (length(gp) == 0 & length(tax) > 0) return(list(live=live, dead=dead, tax=tax))
-  if (length(gp) > 0 & length(tax) > 0) return(list(live=live, dead=dead, gp=gp, tax=tax))
+  if (length(gp) == 0) return(list(live=live, dead=dead))
+  if (length(gp) > 0) return(list(live=live, dead=dead, gp=gp))
  }
 }
-

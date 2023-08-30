@@ -8,7 +8,8 @@
 #' live-dead differences in alpha diversity (DELTA S) and evenness (DELTA PIE),
 #' including confidence bars for each site. If a grouping factor is provided,
 #' symbols and bars are color-coded by levels and group means are plotted
-#' in addition to grand mean for all sites.
+#' in addition to grand mean for all sites. Other graphic arguments
+#' applicable to function \code{\link[graphics]{plot.default}} can be specified.
 #'
 #' @param x An object of the class 'FidelityDiv' returned by  \code{\link{FidelityDiv}} function
 #'
@@ -22,6 +23,7 @@
 #'
 #' @param transp Numerical (default=1): defines transparency of symbols and associated
 #'  confidence intervals. Allowed values range from 0 (transparent) to 1 (opaque).
+#'  Note: transp=0 will suppress plotting of symbols and bars.
 #'
 #' @param cex A numerical value (default=0.8) defining expansion factor for symbols.
 #'
@@ -45,15 +47,14 @@
 #'
 #' @param transp_mean Numerical (default=1): defines transparency of means and associated
 #' confidence intervals. Allowed values range from 0 (transparent = invisible)
-#' to 1 (opaque)
+#' to 1 (opaque). Note: transp=1 will suppress plotting of symbols and bars for group means.
 #'
 #' @param xlab A character string defining x axis label (default=bquote(Delta['S']).
 #' Use xlab='' to suppress the label
 #'
 #' @param ylab A character string defining y axis label (default=bquote(Delta['PIE']).
-#' Use xlab='' to suppress the label
 #'
-#' @param axes Logical (default = TRUE): plot or suppress x and y axes
+#' @param axes Logical (default = TRUE): plots or suppresses axes
 #'
 #' @param xmax A positive numerical value defining x axis range (-xmax, xmax)
 #'
@@ -63,6 +64,7 @@
 #'
 #' @param addlegend Logical (default=TRUE): adds legend to the plot, if 'gp' factor is provided
 #'
+#' @param ... Other graphic arguments applicable to function \code{\link[graphics]{plot.default}}
 #'
 #' @return A bivariate plot.
 #'
@@ -73,7 +75,7 @@
 #' AlphaPlot(my.fid1)
 #' my.fid2 <- FidelityDiv(FidData$live[6:9,], FidData$dead[6:9,], FidData$habitat[6:9],
 #'                        n.filters=20, iter=100, CI=0.95)
-#' AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
+#' AlphaPlot(my.fid2, col.gp=c('forestgreen', 'coral1'), bgpt='beige', mean.lwd=5, transp_mean=0.5)
 #'
 #' @export
 
@@ -81,13 +83,13 @@ AlphaPlot <- function(x, pch = 21, col = 'black', bgpt = 'white', transp = 1, ce
                       cf.bars = TRUE, cf.col = 'black', cf.lwd = 1, colmean='black',
                       col.gp = NULL, mean.lwd = 2, transp_mean = 1, xlab = bquote(Delta[' S']),
                       ylab = bquote(Delta[' PIE']), axes = TRUE, xmax = NULL, ymax = NULL,
-                      legend.cex=1, addlegend=TRUE) {
+                      legend.cex=1, addlegend=TRUE, ...) {
 
   if (!('FidelityDiv' %in% class(x))) stop('object of the class "FidelityDiv" is required')
   if (length(xmax) == 0) xmax <- 1.05 * max(c(abs(x$x[,3]), abs(x$x[,4])))
   if (length(ymax) == 0) ymax <- 1.05 * max(c(abs(x$x[,3]), abs(x$x[,4])))
   graphics::plot(x$x[,2], x$y[,2], xlim=c(-xmax, xmax), ylim=c(-ymax, ymax), type='n', las=1,
-       xlab=xlab, ylab=ylab, cex.lab=1.5, axes = axes)
+       xlab=xlab, ylab=ylab, cex.lab=1.5, axes = axes, ...)
   graphics::abline(h=0, v=0, lwd=1, col='gray')
   if (length(x$gp)==0) {
     if (cf.bars) {
