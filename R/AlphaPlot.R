@@ -3,8 +3,8 @@
 #' AlphaPlot function generates a bivariate plot of offsets in alpha diversity (DELTA S; x-axis)
 #' and evenness (DELTA PIE; y-axis) for within-site pairwise comparisons of live and dead samples.
 #'
-#' @details AlphaPlot function uses the object of the FidelityDiv produced
-#' by  \code{\link{FidelityDiv}} function to produce a cross-plot visualizing
+#' @details AlphaPlot function uses the object of the class FidelityDiv
+#' by \code{\link{FidelityDiv}} function to produce a cross-plot visualizing
 #' live-dead differences in alpha diversity (DELTA S) and evenness (DELTA PIE),
 #' including confidence bars for each site. If a grouping factor is provided,
 #' symbols and bars are color-coded by levels and group means are plotted
@@ -50,7 +50,6 @@
 #' to 1 (opaque). Note: transp=1 will suppress plotting of symbols and bars for group means.
 #'
 #' @param xlab A character string defining x axis label (default=bquote(Delta['S']).
-#' Use xlab='' to suppress the label
 #'
 #' @param ylab A character string defining y axis label (default=bquote(Delta['PIE']).
 #'

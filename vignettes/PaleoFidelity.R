@@ -32,7 +32,7 @@ rep1 <- LDPlot(live = colSums(FidData$live),
        cor.measure = 'spearman', report = TRUE, iter = 1000)
 
 ## ----LD comparison------------------------------------------------------------
-rep1[1:5]
+rep1[1:7]
 
 ## ----live-dead model, fig.width=7, fig.height=3.5-----------------------------
 par(mar=c(4, 4, 0.5, 0.5))
@@ -61,7 +61,7 @@ SJPlot(out1, gpcol = c('aquamarine3', 'coral3'), cex.legend = 0.8)
 
 ## ----classic fidelity plot 2, fig.width=7.5, fig.height=4---------------------
 par(mar = c(4, 4, 0.5, 0.5))
-SJPlot(out1, gpcol = c('aquamarine3', 'coral3'), bubble = F, unadj = T, adjF = F, cex.legend = 0.8)
+SJPlot(out1, gpcol = c('aquamarine3', 'coral3'), bubble = TRUE, unadj = FALSE, adjF = TRUE, cex.legend = 0.8)
 
 ## ----alpha diversity----------------------------------------------------------
 out3 <- FidelityDiv(FidData$live, FidData$dead, iter=1000)

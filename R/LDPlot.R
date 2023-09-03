@@ -11,7 +11,7 @@
 #' Kowalewski et al. 2003). The L-D comparison can apply to single samples
 #' or pooled data. Because names of species/other units
 #' can vary in length and the number of plotted variables can span
-#' a wide range of values, margin widths and cex parameter may need
+#' a wide range of values, margin widths and cex argument may need
 #' to be customized. When species/other units are tied in rank,
 #' they are plotted in an arbitrary order. A warning is returned when more
 #' than 50% of species/variables are tied.
@@ -68,30 +68,44 @@
 #'
 #' @param iter Numerical (default = 100) number of iterations
 #' for randomization which simulates perfect fidelity by resampling
-#' pooled live+dead species counts. Applicable only when the parameter
+#' pooled live+dead species counts. Applicable only when the argument
 #' "report" is set to TRUE
 #'
-#' @return A single plot. In addition, a summary output is produced when
-#' the parameter report is set to 'TRUE'
+#' @return A single plot. In addition, when the argument "report" is
+#' set to TRUE, a list with the following components is produced:
+#' \item{top.live}{a list of top live species, including proportions and presence/absence in dead data}
+#' \item{top.dead}{a list of top dead species, including proportions and presence/absence in live data}
+#' \item{summary}{summary of species/taxa numbers in live, data, and pooled data}
+#' \item{sample info}{samples sizes in live, data, and pooled data}
+#' \item{cor.coeff}{observed coefficients of correlation/association}
+#' \item{expected.coeff}{expected coefficients of correlation/association estimated via randomization under the null model that the compared live and dead samples came from the same underlying population (perfect fidelity)}
+#' \item{p.values}{p.values for perfect fidelity null model based on percentile estimates of the resampling distribution}
+#' \item{randomized.r}{coefficients of correlation/association produced by the randomization model}
 #'
 #' @examples
 #'
 #' temp.par <- par(mar=c(3,6,1,6))
-#' LDPlot(live=colSums(FidData$live), dead=colSums(FidData$dead),
+#' out1 <- LDPlot(live=colSums(FidData$live), dead=colSums(FidData$dead),
 #' tax.names=colnames(FidData$live), toplimit=15, barwidth = 21,
-#' col1 = 'green2', col2 = 'red4', arr.col = 'green2', arr.lty = 1)
+#' col1 = 'green1', col2 = 'red1', arr.col = 'green4', arr.lty = 1,
+#' report=TRUE, iter=100)
 #' par(temp.par)
+#' hist(out1$randomized.r[,2], main='', xlim=c(-1,1),
+#' xlab=bquote("spearman"~rho), ylab='number of replicate samples')
+#' arrows(out1$cor.coeff[2], 10, out1$cor.coeff[2], 0, length = 0.15, lwd=2)
+#' text(out1$cor.coeff[2], 12, bquote(rho ==.(round(out1$cor.coeff[2],3))))
 #'
 #' @export
 #'
 #' @importFrom stats cor
+#'
+#' @importFrom vegan rrarefy
 #'
 #' @references Kowalewski, M.,	Carroll, M., Casazza, L., Gupta, N., Hannisdal, B.,
 #' Hendy, A., Krause, R.A., Jr., Labarbera, M., Lazo, D.G., Messina, C., Puchalski, S.,
 #' Rothfus, T.A., Sälgeback, J., Stempien, J., Terry, R.C., Tomašových, A., (2003),
 #' Quantitative fidelity of brachiopod-mollusk assemblages from modern subtidal
 #' environments of San Juan Islands, USA. Journal of Taphonomy 1: 43-65.
-
 
 LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplimit,
                    col1 = 'black', col2 = 'gray', arr.col = 'black', arr.lty=1,
@@ -111,11 +125,11 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplim
     stop(paste('toplimit = ', toplimit, 'exceeds the total number of non-zero
                taxa/variables =', sum((live + dead) > 0), 'set toplimit <=',
                sum((live + dead) > 0)))
-  if (max(table(rank(live)))/length(live) > 0.5)
-    warning('more than 50% of "live" species/units have the same rank:
+  if (max(table(rank(sort(live, decreasing = T)[1:toplimit]))) / toplimit > 0.5)
+    warning('more than 50% of "top live" species/units have the same rank:
     all species with tied ranks will be ordered arbirtarily when plotted')
-  if (max(table(rank(dead)))/length(dead) > 0.5)
-    warning('more than 50% of "dead" species/units have the same rank:
+  if (max(table(rank(sort(dead, decreasing = T)[1:toplimit]))) / toplimit > 0.5)
+    warning('more than 50% of "top dead" species/units have the same rank:
     all species with tied ranks will be ordered arbirtarily when plotted')
 
   # info on top n live and dead units
@@ -174,8 +188,8 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplim
                                            lwd = barwidth, lend = 3, col = col2)
     if (dead.live[i] == 1) graphics::lines(c(xlim2 - topdead[i], xlim2), c(i, i),
                                            lwd = barwidth, lend = 3, col = col1)
-    if (dead.live.all[i] == 0) graphics::text(xlim2 - topdead[i]/2, i, '*', cex=1, font=2, xpd=NA)
-    if (live.dead.all[i] == 0) graphics::text(toplive[i]/2, i, '*', cex=1, font=2, xpd=NA)
+    if (dead.live.all[i] == 0) graphics::text(xlim2 - topdead[i]/2, i, '*', cex=2, font=2, xpd=NA)
+    if (live.dead.all[i] == 0) graphics::text(toplive[i]/2, i, '*', cex=2, font=2, xpd=NA)
   }
   graphics::axis(2, labels = toplivenames, at = 1:toplimit, lwd = 0, las = 1,
                  padj = 0.5, hadj = 1, font = font.names, cex.axis = cex.names)
@@ -220,18 +234,18 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplim
     sample.sizes <- c('total n' = sum(live) + sum(dead),
                       'total live' = sum(live),
                       'total dead' = sum(dead))
+    top.live.rep=data.frame(rank=1:toplimit, prop=toplive, "found.dead"=live.dead.all)
+    top.dead.rep=data.frame(rank=1:toplimit, prop=topdead, "found.live"=dead.live.all)
     cors <- c(pearson = stats::cor(live, dead, method='pearson'),
             spearman = stats::cor(live, dead, method='spearman'),
             kendall = stats::cor(live, dead, method='kendall'))
     r.out <- NULL
     for (i in 1:iter) {
-      pool.sample <- sample(rep(1:length(live), live + dead))
-      r.live <- factor(pool.sample[1:sum(live)], levels=1:length(live))
-      r.dead <- factor(pool.sample[(sum(live)+1):(sum(live)+sum(dead))],
-                       levels=1:length(live))
-      rpea <- cor(table(r.live), table(r.dead), method=c('pearson'))
-      rspe <- cor(table(r.live), table(r.dead), method=c('spearman'))
-      rken <- cor(table(r.live), table(r.dead), method=c('kendall'))
+      rlive <- as.vector(vegan::rrarefy(live+dead, sum(live)))
+      rdead <- as.vector(vegan::rrarefy(live+dead, sum(dead)))
+      rpea <- cor(rlive, rdead, method=c('pearson'))
+      rspe <- cor(rlive, rdead, method=c('spearman'))
+      rken <- cor(rlive, rdead, method=c('kendall'))
       r.out <- rbind(r.out, c(pearson=rpea, spearman=rspe, kendall=rken))
     }
     p.vals <- c(sum(r.out[,1] <= cors[1]), sum(r.out[,2] <= cors[2]),
@@ -240,9 +254,10 @@ LDPlot <- function(live, dead, tax.names, toplimit = 10, barwidth = 250 / toplim
       p.vals <- as.character(p.vals)
       p.vals[p.vals == "0"] <- paste("<", 1/iter)
       }
-    report.out <- list(summary = sum.basics, sample.info = sample.sizes,
-                     cor.coeff = cors, expected.coeff=apply(r.out, 2, mean),
-                     p.values=p.vals, randomized.r=r.out)
+    report.out <- list(top.live = top.live.rep, top.dead = top.dead.rep,
+                       summary = sum.basics, sample.info = sample.sizes,
+                       cor.coeff = cors, expected.coeff = apply(r.out, 2, mean),
+                       p.values = p.vals, randomized.r = r.out)
   return(report.out)
  }
 }

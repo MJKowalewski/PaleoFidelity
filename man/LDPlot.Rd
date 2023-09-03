@@ -80,12 +80,20 @@ included on the plot}
 
 \item{iter}{Numerical (default = 100) number of iterations
 for randomization which simulates perfect fidelity by resampling
-pooled live+dead species counts. Applicable only when the parameter
+pooled live+dead species counts. Applicable only when the argument
 "report" is set to TRUE}
 }
 \value{
-A single plot. In addition, a summary output is produced when
-the parameter report is set to 'TRUE'
+A single plot. In addition, when the argument "report" is
+set to TRUE, a list with the following components is produced:
+\item{top.live}{a list of top live species, including proportions and presence/absence in dead data}
+\item{top.dead}{a list of top dead species, including proportions and presence/absence in live data}
+\item{summary}{summary of species/taxa numbers in live, data, and pooled data}
+\item{sample info}{samples sizes in live, data, and pooled data}
+\item{cor.coeff}{observed coefficients of correlation/association}
+\item{expected.coeff}{expected coefficients of correlation/association estimated via randomization under the null model that the compared live and dead samples came from the same underlying population (perfect fidelity)}
+\item{p.values}{p.values for perfect fidelity null model based on percentile estimates of the resampling distribution}
+\item{randomized.r}{coefficients of correlation/association produced by the randomization model}
 }
 \description{
 LDPlot function generates a comparative live-dead plot
@@ -100,7 +108,7 @@ for the top "n" most common species, genera, or other units (e.g.,
 Kowalewski et al. 2003). The L-D comparison can apply to single samples
 or pooled data. Because names of species/other units
 can vary in length and the number of plotted variables can span
-a wide range of values, margin widths and cex parameter may need
+a wide range of values, margin widths and cex argument may need
 to be customized. When species/other units are tied in rank,
 they are plotted in an arbitrary order. A warning is returned when more
 than 50% of species/variables are tied.
@@ -108,10 +116,15 @@ than 50% of species/variables are tied.
 \examples{
 
 temp.par <- par(mar=c(3,6,1,6))
-LDPlot(live=colSums(FidData$live), dead=colSums(FidData$dead),
+out1 <- LDPlot(live=colSums(FidData$live), dead=colSums(FidData$dead),
 tax.names=colnames(FidData$live), toplimit=15, barwidth = 21,
-col1 = 'green2', col2 = 'red4', arr.col = 'green2', arr.lty = 1)
+col1 = 'green1', col2 = 'red1', arr.col = 'green4', arr.lty = 1,
+report=TRUE, iter=100)
 par(temp.par)
+hist(out1$randomized.r[,2], main='', xlim=c(-1,1),
+xlab=bquote("spearman"~rho), ylab='number of replicate samples')
+arrows(out1$cor.coeff[2], 10, out1$cor.coeff[2], 0, length = 0.15, lwd=2)
+text(out1$cor.coeff[2], 12, bquote(rho ==.(round(out1$cor.coeff[2],3))))
 
 }
 \references{
