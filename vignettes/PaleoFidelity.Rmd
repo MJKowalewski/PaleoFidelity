@@ -82,7 +82,7 @@ FidelitySummary(live = FidData$live, dead = FidData$dead, gp = FidData$habitat, 
 With n.filters set to 100, 12 taxa were lost and only 21 sites were retained. Thus, 100 may be an unreasonably high filter for this dataset. Once optimal filters are identified, they can be used in other fidelity functions.
 
 ## LDPlot Function
-A function _LDPlot_ is  designed to analyze and visualize a single live-dead comparison. The function returns a plot that compares the top _n_ species/variables in terms of rank abundance. This function accepts vectors. It also provides an option to output a report with summary statistics and expected values under the null model of perfect fidelity.
+A function _LDPlot_ is designed to analyze and visualize a single live-dead comparison. The function returns a plot that compares the top _n_ species/variables in terms of rank abundance. This function accepts vectors. It also provides an option to output a report with summary statistics and expected values under the null model of perfect fidelity.
 
 ```{r live-dead plot, fig.width=7, fig.height=6}
 par(mar=c(3, 7, 0.5, 7))

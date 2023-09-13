@@ -1,8 +1,15 @@
 # PaleoFidelity
 
 An R package designed for paleontological fidelity analysis.
-The source code is currently a beta version 1.0.1.
 
-Last updated: August 30, 2023
+URL: https://github.com/mjkowalewski/PaleoFidelity
+
+To install in R/RStudio run:
+library(devtools)
+devtools::install_github('mjkowalewski/PaleoFidelity', build_vignettes = TRUE)
+
+The source code version 1.0.0.
+
+Last updated: September 3, 2023
 
 Questions/Comments: kowalewski@ufl.edu
