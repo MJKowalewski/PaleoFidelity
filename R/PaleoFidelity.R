@@ -21,7 +21,7 @@
 #' The functions include sample standardizations, resampling models,
 #' and by-group analyses when grouping factors are provided. Plotting
 #' functions designed to visualize compositional and diversity fidelity
-#' are also included.
+#' are included.
 #'
 #' @author Michal Kowalewski \email{kowalewski@@ufl.edu}
 #' @name PaleoFidelity
