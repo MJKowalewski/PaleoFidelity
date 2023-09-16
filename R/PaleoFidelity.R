@@ -10,7 +10,7 @@
 #' and sympatric death assemblages (the incipient fossil
 #' record). The intellectual motivation for live-dead fidelity analyses
 #' is the assessments of the informative value of the fossil record
-#' (i.e., 'taphonomy') and the evaluation of recent human-induced ecosystem
+#' ('taphonomy') and the evaluation of recent human-induced ecosystem
 #' changes reflected in live-dead disagreements ('conservation
 #' paleobiology').
 #'
