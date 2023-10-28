@@ -115,11 +115,8 @@ FidelitySummary <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.fi
     if (removed > 0)
     {
       badsamples <-  unique(c(which(rowSums(live) < n.filters), which(rowSums(dead) < n.filters)))
-      if (nrow(live) - length(badsamples) == 1) single.sam.label <- rownames(live)[-badsamples]
-      live <- rbind(live[-badsamples, ])
-      if (nrow(live) - length(badsamples) == 1) rownames(live) <- single.sam.label
-      dead <- rbind(dead[-badsamples, ])
-      if (nrow(live) - length(badsamples) == 1) rownames(dead) <- single.sam.label
+      live <- rbind(live[-badsamples, , drop = F])
+      dead <- rbind(dead[-badsamples, , drop = F])
       rm.samples <- length(badsamples)
       if (length(gp) > 0)   gp <- gp[-badsamples]
     }
@@ -130,8 +127,8 @@ FidelitySummary <- function(live, dead, gp=NULL, report=FALSE, n.filters=0, t.fi
     {
       badtaxa <- which(colSums(live>0) + colSums(dead>0) < t.filters)
       if (length(badtaxa) > 0) {
-        live <- rbind(live[, -badtaxa])
-        dead <- rbind(dead[, -badtaxa])
+        live <- rbind(live[, -badtaxa, drop = F])
+        dead <- rbind(dead[, -badtaxa, drop = F])
         rm.taxa <- length(badtaxa)
       }
       else
