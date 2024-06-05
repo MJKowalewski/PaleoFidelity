@@ -46,7 +46,7 @@ library(PaleoFidelity)
 ```
 
 ## Example datasets
-A live-data dataset (FidData) is included. This is a large subset of a marine benthos survey conducted along the coast of North Carolina, USA (for more info see Tyler and Kowalewski 2017, 2018). 
+A live-data dataset (FidData) is included. This is a subset of a marine benthos survey data conducted along the coast of North Carolina, USA (for more info see Tyler and Kowalewski 2017, 2018). 
 
 ```{r data example}
 library(PaleoFidelity)

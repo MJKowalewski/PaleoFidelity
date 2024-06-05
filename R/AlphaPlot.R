@@ -15,6 +15,8 @@
 #'
 #' @param pch An integer defining symbol type (default=21). Filled symbols (21-25) should be used.
 #'
+#' @param pch.gp An integer defining symbol type for means (default=16).
+#'
 #' @param col A character string or number defining color of symbols for individual sites
 #'  (default = 'black'). This argument applies only if a grouping factor 'gp' is not provided.
 #'
@@ -78,7 +80,7 @@
 #'
 #' @export
 
-AlphaPlot <- function(x, pch = 21, col = 'black', bgpt = 'white', transp = 1, cex = 0.8,
+AlphaPlot <- function(x, pch = 21, pch.gp = 16, col = 'black', bgpt = 'white', transp = 1, cex = 0.8,
                       cf.bars = TRUE, cf.col = 'black', cf.lwd = 1, colmean='black',
                       col.gp = NULL, mean.lwd = 2, transp_mean = 1, xlab = bquote(Delta[' S']),
                       ylab = bquote(Delta[' PIE']), axes = TRUE, xmax = NULL, ymax = NULL,
@@ -118,21 +120,29 @@ AlphaPlot <- function(x, pch = 21, col = 'black', bgpt = 'white', transp = 1, ce
   }
 
 if (nrow(x$x) > 1) {
-
   if (length(x$xgp) == 0) {
+    if (cf.bars) {
    graphics::points(rep(x$xmean[1], 2), x$ymean[2:3], type='l',
                     col=grDevices::adjustcolor(colmean, transp_mean), lwd=mean.lwd, lend=3)
    graphics::points(x$xmean[2:3], rep(x$ymean[1], 2), type='l',
                     col=grDevices::adjustcolor(colmean, transp_mean), lwd=mean.lwd, lend=3)
+    }
+    graphics::points(x$xmean[1], x$ymean[1], pch=pch.gp,
+                     col=grDevices::adjustcolor(col, transp), bg=bgpt, cex=cex)
   }
 
   if (length(x$xgp)>0) {
+    if (cf.bars) {
    for(i in 1:nrow(x$xgp)) {
     graphics::points(rep(x$xgp[i,2], 2), x$ygp[i,3:4], type='l',
                     col=grDevices::adjustcolor(col.gp[i], transp_mean), lwd=mean.lwd, lend=3)
     graphics::points(x$xgp[i,3:4], rep(x$ygp[i,2], 2), type='l',
                     col=grDevices::adjustcolor(col.gp[i], transp_mean), lwd=mean.lwd, lend=3)
-   }
+     }
+    }
+    graphics::points(x$xgp[,2], x$ygp[,2], pch=pch.gp,
+                     col=grDevices::adjustcolor(col.gp, transp_mean),
+                     bg=bgpt, cex=cex)
   }
 
 }

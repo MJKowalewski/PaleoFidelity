@@ -12,7 +12,7 @@
 
 <meta name="author" content="Michal Kowalewski" />
 
-<meta name="date" content="2023-09-13" />
+<meta name="date" content="2024-06-04" />
 
 <title>PaleoFidelity</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">PaleoFidelity</h1>
 <h4 class="author">Michal Kowalewski</h4>
-<h4 class="date">2023-09-13</h4>
+<h4 class="date">2024-06-04</h4>
 
 
 
@@ -381,9 +381,9 @@ To install:</p>
 </div>
 <div id="example-datasets" class="section level2">
 <h2>Example datasets</h2>
-<p>A live-data dataset (FidData) is included. This is a large subset of
-a marine benthos survey conducted along the coast of North Carolina, USA
-(for more info see Tyler and Kowalewski 2017, 2018).</p>
+<p>A live-data dataset (FidData) is included. This is a subset of a
+marine benthos survey data conducted along the coast of North Carolina,
+USA (for more info see Tyler and Kowalewski 2017, 2018).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(PaleoFidelity)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">str</span>(FidData) <span class="co"># check the structure of the dataset</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; List of 4</span></span>
@@ -572,7 +572,7 @@ are reported as p &lt; 1 / number of iterations.</p>
 <span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a><span class="co">#&gt; $expected.coeff</span></span>
 <span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="co">#&gt;   pearson  spearman   kendall </span></span>
-<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt; 0.9998251 0.9424939 0.8563602 </span></span>
+<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt; 0.9998243 0.9424203 0.8562943 </span></span>
 <span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a><span class="co">#&gt; $p.values</span></span>
 <span id="cb7-70"><a href="#cb7-70" tabindex="-1"></a><span class="co">#&gt; [1] &quot;&lt; 0.001&quot; &quot;&lt; 0.001&quot; &quot;&lt; 0.001&quot;</span></span></code></pre></div>
@@ -590,7 +590,7 @@ against the observed value.</p>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="fu">bquote</span>(<span class="st">&#39;Spearman&#39;</span> <span class="sc">~</span> <span class="fu">italic</span>(rho)))</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">arrows</span>(rep1<span class="sc">$</span>cor.coeff[<span class="dv">2</span>], <span class="dv">100</span>, rep1<span class="sc">$</span>cor.coeff[<span class="dv">2</span>], <span class="dv">10</span>,</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>       <span class="at">length=</span><span class="fl">0.1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>In this example, the expected distribution of spearman rho values
 approaches rho = 1, which means that the effect of sampling bias is
 minimal. Inadequate sampling cannot explain the low observed rho
@@ -652,19 +652,19 @@ illustrated below.</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;  $ y        : Named num [1:38] 0 0.0291 0.2248 0.0897 0.1254 ...</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;  $ xc       : num [1:38, 1:4] 0.271 0.344 0.351 0.363 0.224 ...</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;  $ xc       : num [1:38, 1:4] 0.273 0.35 0.354 0.363 0.224 ...</span></span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;spearman.ADJ&quot; &quot;0.025&quot; &quot;0.975&quot; &quot;spearman.PF&quot;</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;  $ yc       : num [1:38, 1:4] 0.0348 0.0521 0.2488 0.1021 0.1311 ...</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;  $ yc       : num [1:38, 1:4] 0.0368 0.055 0.2486 0.1025 0.1315 ...</span></span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
 <span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;chao.ADJ&quot; &quot;0.025&quot; &quot;0.975&quot; &quot;chao.PF&quot;</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt;  $ xs       : num [1:38, 1:4] -0.0314 0.0283 0.0379 0.0475 0.1083 ...</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt;  $ xs       : num [1:38, 1:4] -0.0305 -0.0242 0.0644 0.0177 0.1139 ...</span></span>
 <span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
 <span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;spearman.SS&quot; &quot;0.025&quot; &quot;0.975&quot; &quot;n.std&quot;</span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt;  $ ys       : num [1:38, 1:4] 0 0.0313 0.0667 0.0368 0.0661 ...</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt;  $ ys       : num [1:38, 1:4] 0 0.0132 0.094 0.0202 0.0827 ...</span></span>
 <span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
 <span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;chao.SS&quot; &quot;0.025&quot; &quot;0.975&quot; &quot;n.std&quot;</span></span>
@@ -676,39 +676,39 @@ illustrated below.</p>
 <span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:3] &quot;all samples&quot; &quot;nearshore&quot; &quot;offshore&quot;</span></span>
 <span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : NULL</span></span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt;  $ xc.stats : num [1:3, 1:4] 0.352 0.334 0.386 0.172 0.171 ...</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt;  $ xc.stats : num [1:3, 1:4] 0.352 0.334 0.386 0.173 0.173 ...</span></span>
 <span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:3] &quot;all.samples&quot; &quot;nearshore&quot; &quot;offshore&quot;</span></span>
 <span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;mean&quot; &quot;0.025&quot; &quot;median&quot; &quot;0.975&quot;</span></span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt;  $ yc.stats : num [1:3, 1:4] 0.1535 0.1681 0.1254 0.0336 0.0358 ...</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt;  $ yc.stats : num [1:3, 1:4] 0.1535 0.1683 0.1252 0.0307 0.0356 ...</span></span>
 <span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:3] &quot;all.samples&quot; &quot;nearshore&quot; &quot;offshore&quot;</span></span>
 <span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;mean&quot; &quot;0.025&quot; &quot;median&quot; &quot;0.975&quot;</span></span>
-<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a><span class="co">#&gt;  $ xs.stats : num [1:3, 1:4] 0.0572 0.0711 0.0303 0.028 0.0354 ...</span></span>
+<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a><span class="co">#&gt;  $ xs.stats : num [1:3, 1:4] 0.06 0.0756 0.0298 0.0466 0.059 ...</span></span>
 <span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:3] &quot;all samples&quot; &quot;nearshore&quot; &quot;offshore&quot;</span></span>
 <span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;mean&quot; &quot;0.025&quot; &quot;median&quot; &quot;0.975&quot;</span></span>
-<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a><span class="co">#&gt;  $ ys.stats : num [1:3, 1:4] 0.0627 0.0645 0.0594 0.0489 0.0484 ...</span></span>
+<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a><span class="co">#&gt;  $ ys.stats : num [1:3, 1:4] 0.0633 0.0637 0.0625 0.0543 0.0523 ...</span></span>
 <span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:3] &quot;all samples&quot; &quot;nearshore&quot; &quot;offshore&quot;</span></span>
 <span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:4] &quot;mean&quot; &quot;0.025&quot; &quot;median&quot; &quot;0.975&quot;</span></span>
-<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a><span class="co">#&gt;  $ x.pf.dist: num [1:499, 1:38] 0.704 0.721 0.695 0.816 0.661 ...</span></span>
+<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a><span class="co">#&gt;  $ x.pf.dist: num [1:499, 1:38] 0.777 0.642 0.681 0.707 0.406 ...</span></span>
 <span id="cb9-51"><a href="#cb9-51" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-52"><a href="#cb9-52" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:499] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
 <span id="cb9-53"><a href="#cb9-53" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
-<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a><span class="co">#&gt;  $ y.pf.dist: num [1:499, 1:38] 0.995 1 1 1 1 ...</span></span>
+<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a><span class="co">#&gt;  $ y.pf.dist: num [1:499, 1:38] 1 0.854 0.986 1 0.727 ...</span></span>
 <span id="cb9-55"><a href="#cb9-55" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-56"><a href="#cb9-56" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:499] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
 <span id="cb9-57"><a href="#cb9-57" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
-<span id="cb9-58"><a href="#cb9-58" tabindex="-1"></a><span class="co">#&gt;  $ xc.dist  : num [1:499, 1:38] 0.259 0.241 0.268 0.146 0.302 ...</span></span>
+<span id="cb9-58"><a href="#cb9-58" tabindex="-1"></a><span class="co">#&gt;  $ xc.dist  : num [1:499, 1:38] 0.186 0.321 0.282 0.256 0.557 ...</span></span>
 <span id="cb9-59"><a href="#cb9-59" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-60"><a href="#cb9-60" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:499] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
 <span id="cb9-61"><a href="#cb9-61" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
-<span id="cb9-62"><a href="#cb9-62" tabindex="-1"></a><span class="co">#&gt;  $ yc.dist  : num [1:499, 1:38] 0.00532 0 0 0 0 ...</span></span>
+<span id="cb9-62"><a href="#cb9-62" tabindex="-1"></a><span class="co">#&gt;  $ yc.dist  : num [1:499, 1:38] 0 0.1458 0.0136 0 0.2728 ...</span></span>
 <span id="cb9-63"><a href="#cb9-63" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-64"><a href="#cb9-64" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:499] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
 <span id="cb9-65"><a href="#cb9-65" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
-<span id="cb9-66"><a href="#cb9-66" tabindex="-1"></a><span class="co">#&gt;  $ xs.dist  : num [1:10, 1:38] -0.0262 -0.0308 -0.0295 -0.0308 -0.0373 ...</span></span>
+<span id="cb9-66"><a href="#cb9-66" tabindex="-1"></a><span class="co">#&gt;  $ xs.dist  : num [1:10, 1:38] -0.0308 -0.0251 -0.0308 -0.0308 -0.0251 ...</span></span>
 <span id="cb9-67"><a href="#cb9-67" tabindex="-1"></a><span class="co">#&gt;   ..- attr(*, &quot;dimnames&quot;)=List of 2</span></span>
 <span id="cb9-68"><a href="#cb9-68" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : NULL</span></span>
 <span id="cb9-69"><a href="#cb9-69" tabindex="-1"></a><span class="co">#&gt;   .. ..$ : chr [1:38] &quot;locality 1&quot; &quot;locality 2&quot; &quot;locality 3&quot; &quot;locality 4&quot; ...</span></span>
@@ -739,85 +739,85 @@ illustrated below.</p>
 samples and sample groups are also reported (if factor ‘gp’ is
 provided).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>out1<span class="sc">$</span>xc <span class="co"># adjusted correlation measure summary</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;             spearman.ADJ     0.025     0.975 spearman.PF</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; locality 1     0.2705272 0.1057967 0.4463230   0.6998775</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; locality 2     0.3443510 0.2246367 0.4756505   0.6517445</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; locality 3     0.3512475 0.2951096 0.4094911   0.7545645</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; locality 4     0.3634370 0.3047225 0.4208772   0.6533471</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; locality 5     0.2238694 0.1649456 0.2973802   0.8193948</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; locality 6     0.3890690 0.2289202 0.5620755   0.6335587</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; locality 7     0.3782755 0.2652277 0.5101888   0.7153421</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; locality 8     0.3275489 0.2825849 0.3793185   0.7565952</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; locality 9     0.2526042 0.2007824 0.3109026   0.8171227</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; locality 16    0.1716223 0.1353129 0.2097411   0.8317119</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; locality 18    0.1700605 0.1034317 0.2414615   0.8346894</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; locality 19    0.4502816 0.3982679 0.5061252   0.7163053</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; locality 20    0.3451747 0.2556460 0.4370081   0.7512659</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; locality 23    0.1838273 0.1236157 0.2495292   0.7803591</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; locality 24    0.6051768 0.5302862 0.6751610   0.6498202</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; locality 25    0.2623427 0.1821174 0.3608605   0.7513648</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; locality 26    0.4881198 0.4021904 0.5868627   0.6382919</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; locality 27    0.6495061 0.5671036 0.7441563   0.5167935</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; locality 28    0.4511991 0.3804707 0.5333236   0.5288936</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; locality 29    0.4061123 0.3286082 0.4803673   0.7255887</span></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; locality 30    0.3342964 0.2493521 0.4261536   0.6958606</span></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co">#&gt; locality 31    0.3434249 0.2633327 0.4305079   0.6970346</span></span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co">#&gt; locality 32    0.3804405 0.3116616 0.4585467   0.7418726</span></span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="co">#&gt; locality 33    0.4171209 0.3328221 0.5065142   0.7805247</span></span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a><span class="co">#&gt; locality 38    0.3600247 0.2507933 0.4709197   0.5864710</span></span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="co">#&gt; locality 39    0.3163554 0.1712707 0.4706836   0.6745010</span></span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co">#&gt; locality 40    0.3277899 0.2204370 0.4420412   0.6559254</span></span>
-<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a><span class="co">#&gt; locality 41    0.2563031 0.1753688 0.3488306   0.7821566</span></span>
-<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a><span class="co">#&gt; locality 42    0.6481429 0.5814616 0.7227569   0.5596613</span></span>
-<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a><span class="co">#&gt; locality 43    0.2611486 0.2071707 0.3185992   0.8140567</span></span>
-<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a><span class="co">#&gt; locality 44    0.4349402 0.3804192 0.4894703   0.6595809</span></span>
-<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a><span class="co">#&gt; locality 45    0.1788923 0.1024860 0.2555351   0.8010969</span></span>
-<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a><span class="co">#&gt; locality 46    0.2508699 0.1960179 0.3160829   0.7917207</span></span>
-<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a><span class="co">#&gt; locality 47    0.4302540 0.3759287 0.4973904   0.6825686</span></span>
-<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co">#&gt; locality 48    0.2656898 0.1834563 0.3570275   0.7958164</span></span>
-<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="co">#&gt; locality 49    0.3313441 0.2821504 0.3877239   0.7010923</span></span>
-<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a><span class="co">#&gt; locality 51    0.3197669 0.2629055 0.3747909   0.6736305</span></span>
-<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a><span class="co">#&gt; locality 52    0.4317958 0.3610340 0.5058787   0.5896186</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;             spearman.ADJ      0.025     0.975 spearman.PF</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; locality 1     0.2729097 0.09520707 0.4701874   0.6939279</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; locality 2     0.3501409 0.24023010 0.4703371   0.6505782</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; locality 3     0.3537804 0.29820086 0.4144918   0.7509637</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; locality 4     0.3626978 0.30543618 0.4207511   0.6540499</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; locality 5     0.2235299 0.16090178 0.2974644   0.8213325</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; locality 6     0.3881538 0.24402000 0.5852552   0.6378029</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; locality 7     0.3738791 0.26551677 0.5053593   0.7177527</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; locality 8     0.3285801 0.28025126 0.3774625   0.7546779</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; locality 9     0.2534343 0.19933443 0.3149888   0.8167170</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; locality 16    0.1716994 0.13524642 0.2087413   0.8308462</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; locality 18    0.1732830 0.10931682 0.2445935   0.8322265</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; locality 19    0.4490941 0.40185987 0.5009268   0.7183734</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; locality 20    0.3406318 0.25310921 0.4365197   0.7592298</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; locality 23    0.1858507 0.11953926 0.2550874   0.7788473</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; locality 24    0.6069626 0.53744364 0.6828845   0.6504258</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; locality 25    0.2638349 0.17852321 0.3523472   0.7477728</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; locality 26    0.4936934 0.40096876 0.6002575   0.6305149</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; locality 27    0.6461041 0.56464473 0.7243510   0.5159489</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; locality 28    0.4502345 0.37610713 0.5362680   0.5304524</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; locality 29    0.4036563 0.33378981 0.4792668   0.7264812</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; locality 30    0.3331256 0.24890079 0.4197327   0.6964355</span></span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co">#&gt; locality 31    0.3413040 0.26310442 0.4335535   0.6967364</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co">#&gt; locality 32    0.3797062 0.31726301 0.4593899   0.7430543</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="co">#&gt; locality 33    0.4135670 0.32929891 0.4988201   0.7826395</span></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a><span class="co">#&gt; locality 38    0.3650277 0.25700193 0.4823266   0.5825585</span></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="co">#&gt; locality 39    0.3157475 0.18116149 0.4529855   0.6758500</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co">#&gt; locality 40    0.3289965 0.21932652 0.4456712   0.6527328</span></span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a><span class="co">#&gt; locality 41    0.2524699 0.16455512 0.3484311   0.7862284</span></span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a><span class="co">#&gt; locality 42    0.6484872 0.57640426 0.7182918   0.5627831</span></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a><span class="co">#&gt; locality 43    0.2614366 0.19921101 0.3301663   0.8163622</span></span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a><span class="co">#&gt; locality 44    0.4349317 0.37895245 0.4904094   0.6604317</span></span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a><span class="co">#&gt; locality 45    0.1775460 0.09810137 0.2615668   0.8012239</span></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a><span class="co">#&gt; locality 46    0.2520106 0.19570091 0.3256620   0.7881066</span></span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a><span class="co">#&gt; locality 47    0.4243426 0.36794453 0.4857454   0.6875036</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co">#&gt; locality 48    0.2676559 0.18626727 0.3588865   0.7933134</span></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="co">#&gt; locality 49    0.3317101 0.28377610 0.3869598   0.7008292</span></span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a><span class="co">#&gt; locality 51    0.3164294 0.26317584 0.3692353   0.6768328</span></span>
+<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a><span class="co">#&gt; locality 52    0.4273995 0.35782622 0.5172418   0.5942477</span></span>
 <span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>out1<span class="sc">$</span>yc <span class="co"># adjusted similarity measure summary</span></span>
 <span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a><span class="co">#&gt;               chao.ADJ       0.025      0.975   chao.PF</span></span>
-<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a><span class="co">#&gt; locality 1  0.03480831 0.000000000 0.19327820 1.0000000</span></span>
-<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a><span class="co">#&gt; locality 2  0.05213626 0.029073648 0.23013971 1.0000000</span></span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt; locality 3  0.24883875 0.224836749 0.35149968 1.0000000</span></span>
-<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a><span class="co">#&gt; locality 4  0.10206892 0.089712767 0.15290593 1.0000000</span></span>
-<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a><span class="co">#&gt; locality 5  0.13113309 0.125357911 0.16066083 1.0000000</span></span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt; locality 6  0.31657129 0.295209581 0.47989850 1.0000000</span></span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt; locality 7  0.10137742 0.056869929 0.28303261 1.0000000</span></span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt; locality 8  0.29395334 0.289003693 0.31751919 1.0000000</span></span>
-<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt; locality 9  0.11788831 0.109632006 0.15672092 1.0000000</span></span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt; locality 16 0.02187700 0.019780664 0.03187657 1.0000000</span></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt; locality 18 0.05767532 0.050379887 0.09722713 1.0000000</span></span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt; locality 19 0.52468462 0.512670434 0.57176242 1.0000000</span></span>
-<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt; locality 20 0.13258855 0.112359551 0.21668161 1.0000000</span></span>
-<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt; locality 23 0.10292006 0.090288132 0.16243879 1.0000000</span></span>
-<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt; locality 24 0.34262741 0.316892155 0.43284596 1.0000000</span></span>
-<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt; locality 25 0.10480844 0.085090176 0.20930585 1.0000000</span></span>
-<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt; locality 26 0.17969840 0.152203913 0.31514535 1.0000000</span></span>
-<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt; locality 27 0.27230001 0.206941739 0.48721272 1.0000000</span></span>
-<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; locality 28 0.13717279 0.086408760 0.34887230 1.0000000</span></span>
-<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; locality 29 0.04768108 0.036710190 0.09942202 1.0000000</span></span>
-<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; locality 30 0.06441233 0.042013857 0.18520836 1.0000000</span></span>
-<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; locality 31 0.12938161 0.112478230 0.21288429 1.0000000</span></span>
-<span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a><span class="co">#&gt; locality 32 0.21690506 0.193418628 0.32926439 1.0000000</span></span>
-<span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a><span class="co">#&gt; locality 33 0.24087742 0.231791305 0.29128764 1.0000000</span></span>
-<span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a><span class="co">#&gt; locality 38 0.04208577 0.006196154 0.19337763 1.0000000</span></span>
-<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; locality 39 0.03456149 0.014170187 0.14443148 1.0000000</span></span>
-<span id="cb10-69"><a href="#cb10-69" tabindex="-1"></a><span class="co">#&gt; locality 40 0.05916960 0.029328461 0.21759552 1.0000000</span></span>
-<span id="cb10-70"><a href="#cb10-70" tabindex="-1"></a><span class="co">#&gt; locality 41 0.09184776 0.073951320 0.17857086 1.0000000</span></span>
-<span id="cb10-71"><a href="#cb10-71" tabindex="-1"></a><span class="co">#&gt; locality 42 0.26938169 0.247806997 0.35402933 1.0000000</span></span>
-<span id="cb10-72"><a href="#cb10-72" tabindex="-1"></a><span class="co">#&gt; locality 43 0.07208125 0.060443386 0.12959148 1.0000000</span></span>
-<span id="cb10-73"><a href="#cb10-73" tabindex="-1"></a><span class="co">#&gt; locality 44 0.21968931 0.211513733 0.24897581 1.0000000</span></span>
-<span id="cb10-74"><a href="#cb10-74" tabindex="-1"></a><span class="co">#&gt; locality 45 0.06288339 0.055162397 0.09689109 1.0000000</span></span>
-<span id="cb10-75"><a href="#cb10-75" tabindex="-1"></a><span class="co">#&gt; locality 46 0.04513419 0.039385914 0.06997022 0.9999366</span></span>
-<span id="cb10-76"><a href="#cb10-76" tabindex="-1"></a><span class="co">#&gt; locality 47 0.24666533 0.230363070 0.30966367 1.0000000</span></span>
-<span id="cb10-77"><a href="#cb10-77" tabindex="-1"></a><span class="co">#&gt; locality 48 0.28237085 0.271554986 0.33361707 1.0000000</span></span>
-<span id="cb10-78"><a href="#cb10-78" tabindex="-1"></a><span class="co">#&gt; locality 49 0.20816087 0.196152278 0.24846069 0.9993356</span></span>
-<span id="cb10-79"><a href="#cb10-79" tabindex="-1"></a><span class="co">#&gt; locality 51 0.13850977 0.124048406 0.19255406 0.9999986</span></span>
-<span id="cb10-80"><a href="#cb10-80" tabindex="-1"></a><span class="co">#&gt; locality 52 0.08702059 0.039870364 0.26054667 0.9999349</span></span></code></pre></div>
+<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a><span class="co">#&gt; locality 1  0.03683900 0.000000000 0.19497641 1.0000000</span></span>
+<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a><span class="co">#&gt; locality 2  0.05502601 0.029073648 0.21572230 1.0000000</span></span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt; locality 3  0.24857483 0.224836749 0.33847127 0.9999817</span></span>
+<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a><span class="co">#&gt; locality 4  0.10253422 0.089712767 0.14947758 1.0000000</span></span>
+<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a><span class="co">#&gt; locality 5  0.13146322 0.125357911 0.16220536 1.0000000</span></span>
+<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt; locality 6  0.31830284 0.295209581 0.48735674 1.0000000</span></span>
+<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt; locality 7  0.09666775 0.056869929 0.29876294 1.0000000</span></span>
+<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt; locality 8  0.29423455 0.289003693 0.32011535 0.9999982</span></span>
+<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt; locality 9  0.11924933 0.109632006 0.17190868 0.9983226</span></span>
+<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt; locality 16 0.02192756 0.019780664 0.03164637 1.0000000</span></span>
+<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt; locality 18 0.05806891 0.050379887 0.09538412 1.0000000</span></span>
+<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt; locality 19 0.52334366 0.512670434 0.56407883 1.0000000</span></span>
+<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt; locality 20 0.13120147 0.112359551 0.21115706 1.0000000</span></span>
+<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt; locality 23 0.10418316 0.090288132 0.16944461 1.0000000</span></span>
+<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt; locality 24 0.34211592 0.316892155 0.43142335 1.0000000</span></span>
+<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt; locality 25 0.10279574 0.085090176 0.19172373 1.0000000</span></span>
+<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt; locality 26 0.18191212 0.152203913 0.30556698 1.0000000</span></span>
+<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt; locality 27 0.26651442 0.206941739 0.46821785 1.0000000</span></span>
+<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; locality 28 0.13663706 0.086408760 0.33461863 1.0000000</span></span>
+<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; locality 29 0.04782259 0.036710190 0.10024387 1.0000000</span></span>
+<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; locality 30 0.06691842 0.042013857 0.19372733 1.0000000</span></span>
+<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; locality 31 0.12968130 0.112478230 0.21162511 1.0000000</span></span>
+<span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a><span class="co">#&gt; locality 32 0.21608352 0.193418628 0.32544568 1.0000000</span></span>
+<span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a><span class="co">#&gt; locality 33 0.24068436 0.231791305 0.29021645 1.0000000</span></span>
+<span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a><span class="co">#&gt; locality 38 0.04379953 0.006196154 0.21383028 1.0000000</span></span>
+<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; locality 39 0.03141156 0.014170187 0.13987741 1.0000000</span></span>
+<span id="cb10-69"><a href="#cb10-69" tabindex="-1"></a><span class="co">#&gt; locality 40 0.05835778 0.029328461 0.22548687 1.0000000</span></span>
+<span id="cb10-70"><a href="#cb10-70" tabindex="-1"></a><span class="co">#&gt; locality 41 0.09159165 0.073951320 0.18031065 1.0000000</span></span>
+<span id="cb10-71"><a href="#cb10-71" tabindex="-1"></a><span class="co">#&gt; locality 42 0.27364976 0.247806997 0.35183416 1.0000000</span></span>
+<span id="cb10-72"><a href="#cb10-72" tabindex="-1"></a><span class="co">#&gt; locality 43 0.07273619 0.060443386 0.13298900 1.0000000</span></span>
+<span id="cb10-73"><a href="#cb10-73" tabindex="-1"></a><span class="co">#&gt; locality 44 0.22036001 0.211513733 0.25312261 1.0000000</span></span>
+<span id="cb10-74"><a href="#cb10-74" tabindex="-1"></a><span class="co">#&gt; locality 45 0.06288011 0.055162397 0.10277884 1.0000000</span></span>
+<span id="cb10-75"><a href="#cb10-75" tabindex="-1"></a><span class="co">#&gt; locality 46 0.04467533 0.039385914 0.07018556 1.0000000</span></span>
+<span id="cb10-76"><a href="#cb10-76" tabindex="-1"></a><span class="co">#&gt; locality 47 0.24494695 0.230363070 0.30401681 1.0000000</span></span>
+<span id="cb10-77"><a href="#cb10-77" tabindex="-1"></a><span class="co">#&gt; locality 48 0.28372484 0.271554986 0.33296808 1.0000000</span></span>
+<span id="cb10-78"><a href="#cb10-78" tabindex="-1"></a><span class="co">#&gt; locality 49 0.20883882 0.196152278 0.25058149 0.9983884</span></span>
+<span id="cb10-79"><a href="#cb10-79" tabindex="-1"></a><span class="co">#&gt; locality 51 0.13724402 0.124048406 0.18288435 1.0000000</span></span>
+<span id="cb10-80"><a href="#cb10-80" tabindex="-1"></a><span class="co">#&gt; locality 52 0.08660820 0.039870364 0.28372787 1.0000000</span></span></code></pre></div>
 <p><em>FidelityEst</em> function also returns sample-standardized
 fidelity measures ($xs, $ys) corrected for sampling coverage bias. The
 bias correction is based on subsampling all live-dead sample pairs to
@@ -825,85 +825,85 @@ the common minimum sample size given by the smallest live and dead
 samples. In addition, mean values for all samples and sample groups are
 also reported (if factor ‘gp’ is provided).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>out1<span class="sc">$</span>xs <span class="co"># sample-standardized correlation measure summary</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt;               spearman.SS       0.025       0.975 n.std</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; locality 1  -0.0314110553 -0.03725899 -0.02536650    30</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; locality 2   0.0283042784 -0.04618198  0.09240262    30</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; locality 3   0.0379286386 -0.06680211  0.10115648    30</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; locality 4   0.0474957653 -0.04516517  0.15070745    30</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; locality 5   0.1083428813  0.01405237  0.23076638    30</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; locality 6   0.0582766006  0.04152204  0.07628734    30</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; locality 7   0.1006670741  0.01907295  0.16499403    30</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; locality 8   0.1250549891 -0.02443688  0.25568809    30</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; locality 9   0.0122376015 -0.05616396  0.09612254    30</span></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; locality 16 -0.0004355437 -0.04491017  0.16312953    30</span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; locality 18  0.0317883627 -0.06335356  0.06764361    30</span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; locality 19  0.0931004196 -0.03681941  0.21591852    30</span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; locality 20  0.0349632740 -0.05361635  0.19991371    30</span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; locality 23  0.0515265935  0.01351545  0.11321288    30</span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; locality 24  0.2882321711  0.14042813  0.37256744    30</span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; locality 25  0.0734425547 -0.01981473  0.14508948    30</span></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; locality 26  0.1242408040  0.03656275  0.23074142    30</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; locality 27  0.1572496613  0.02379941  0.23455188    30</span></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; locality 28  0.0460896574 -0.05144322  0.15111468    30</span></span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt; locality 29  0.0307029489 -0.04410529  0.15790115    30</span></span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt; locality 30  0.0038800981 -0.06091457  0.06000999    30</span></span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">#&gt; locality 31  0.1055747996  0.04997859  0.16963414    30</span></span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co">#&gt; locality 32  0.1048772589  0.02321486  0.18826956    30</span></span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt; locality 33  0.2183614526  0.08062577  0.32724973    30</span></span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; locality 38 -0.0421489505 -0.05836998  0.02307347    30</span></span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="co">#&gt; locality 39  0.0110608829 -0.04816436  0.08032675    30</span></span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="co">#&gt; locality 40 -0.0454955991 -0.07932998  0.02035503    30</span></span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="co">#&gt; locality 41 -0.0159274267 -0.06574737  0.11502316    30</span></span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="co">#&gt; locality 42  0.0621823876 -0.05069515  0.16911245    30</span></span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt; locality 43  0.0197406786 -0.05607314  0.08238963    30</span></span>
-<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="co">#&gt; locality 44  0.0387662888 -0.05749495  0.20690711    30</span></span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt; locality 45  0.0539906850 -0.04747228  0.15129743    30</span></span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="co">#&gt; locality 46  0.0241663688 -0.04026664  0.17789357    30</span></span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a><span class="co">#&gt; locality 47 -0.0110396651 -0.05835772  0.08292935    30</span></span>
-<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#&gt; locality 48  0.0910880052  0.05062140  0.16781030    30</span></span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#&gt; locality 49  0.1314734432  0.06535450  0.19780134    30</span></span>
-<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="co">#&gt; locality 51  0.0051272879 -0.06721763  0.04685846    30</span></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt; locality 52 -0.0011135851 -0.06742663  0.08241654    30</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt;              spearman.SS         0.025        0.975 n.std</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; locality 1  -0.030540840 -0.0372564280 -0.025120000    30</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; locality 2  -0.024195788 -0.0695063410  0.023633576    30</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; locality 3   0.064365531 -0.0631480643  0.162427158    30</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; locality 4   0.017737008 -0.0567768851  0.075829502    30</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; locality 5   0.113890381  0.0338183087  0.184049765    30</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; locality 6   0.059789426  0.0380513550  0.075908839    30</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; locality 7   0.055700870 -0.0004670346  0.136885685    30</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; locality 8   0.154362314  0.0323883537  0.260371700    30</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; locality 9   0.020947046 -0.0637905748  0.145547568    30</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; locality 16 -0.030678929 -0.0379995438 -0.019187062    30</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; locality 18  0.063189290  0.0310579684  0.104631453    30</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; locality 19  0.085263020  0.0203201393  0.216307384    30</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; locality 20  0.055316846 -0.0503731519  0.179680740    30</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; locality 23  0.028561808 -0.0592417371  0.134164277    30</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; locality 24  0.232419662  0.1365296523  0.306877783    30</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; locality 25  0.034558640 -0.0685026147  0.132638833    30</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; locality 26  0.157160743  0.0452776620  0.267459368    30</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; locality 27  0.217099360  0.1429910878  0.302828343    30</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; locality 28  0.038197530 -0.0519831078  0.113205793    30</span></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt; locality 29 -0.006651574 -0.0553263677  0.128404422    30</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt; locality 30  0.007903493 -0.0698220745  0.121010662    30</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">#&gt; locality 31  0.130611552  0.0342441647  0.219789149    30</span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co">#&gt; locality 32  0.096931557  0.0232745711  0.168357942    30</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt; locality 33  0.173224914 -0.0245876344  0.336687529    30</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; locality 38 -0.042628795 -0.0586691034  0.009899495    30</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="co">#&gt; locality 39  0.020672356 -0.0492311816  0.082407280    30</span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="co">#&gt; locality 40 -0.035464508 -0.0771967822  0.019978632    30</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="co">#&gt; locality 41 -0.009105362 -0.0639467206  0.034293132    30</span></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="co">#&gt; locality 42  0.077806796 -0.0416375908  0.163233181    30</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt; locality 43  0.054296215 -0.0642943650  0.202336040    30</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="co">#&gt; locality 44  0.063609066 -0.0500113702  0.170708571    30</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt; locality 45  0.093102850 -0.0487290713  0.233603457    30</span></span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="co">#&gt; locality 46  0.013385010 -0.0417997117  0.168195337    30</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a><span class="co">#&gt; locality 47  0.027070472 -0.0639267368  0.208391700    30</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#&gt; locality 48  0.093010650 -0.0526893917  0.269380005    30</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#&gt; locality 49  0.135874762 -0.0308504814  0.257499100    30</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="co">#&gt; locality 51  0.038683426 -0.0519887234  0.124451727    30</span></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="co">#&gt; locality 52  0.033293707 -0.0434181266  0.130476785    30</span></span>
 <span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>out1<span class="sc">$</span>ys <span class="co"># sample-standardized similarity measure summary</span></span>
 <span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a><span class="co">#&gt;                 chao.SS       0.025      0.975 n.std</span></span>
 <span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a><span class="co">#&gt; locality 1  0.000000000 0.000000000 0.00000000    30</span></span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a><span class="co">#&gt; locality 2  0.031296144 0.005703503 0.06828852    30</span></span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a><span class="co">#&gt; locality 3  0.066699928 0.000000000 0.14560883    30</span></span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="co">#&gt; locality 4  0.036778143 0.005703503 0.07723732    30</span></span>
-<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a><span class="co">#&gt; locality 5  0.066139061 0.025567366 0.14672674    30</span></span>
-<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="co">#&gt; locality 6  0.291262078 0.274979141 0.31461416    30</span></span>
-<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="co">#&gt; locality 7  0.076068470 0.033564117 0.12281534    30</span></span>
-<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a><span class="co">#&gt; locality 8  0.065439684 0.005752657 0.11835673    30</span></span>
-<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a><span class="co">#&gt; locality 9  0.023060768 0.000000000 0.06024694    30</span></span>
-<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a><span class="co">#&gt; locality 16 0.005069781 0.000000000 0.02534890    30</span></span>
-<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a><span class="co">#&gt; locality 18 0.031024469 0.000000000 0.06060606    30</span></span>
-<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a><span class="co">#&gt; locality 19 0.107828095 0.005703503 0.30064646    30</span></span>
-<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a><span class="co">#&gt; locality 20 0.028902296 0.000000000 0.09743899    30</span></span>
-<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a><span class="co">#&gt; locality 23 0.085702840 0.059782609 0.12771757    30</span></span>
-<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a><span class="co">#&gt; locality 24 0.254527977 0.126184443 0.37668056    30</span></span>
-<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a><span class="co">#&gt; locality 25 0.076855003 0.025348903 0.12500197    30</span></span>
-<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a><span class="co">#&gt; locality 26 0.112977689 0.072266528 0.16097905    30</span></span>
-<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a><span class="co">#&gt; locality 27 0.156130194 0.074297361 0.24052187    30</span></span>
-<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a><span class="co">#&gt; locality 28 0.054475818 0.005703503 0.10639891    30</span></span>
-<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a><span class="co">#&gt; locality 29 0.020016543 0.000000000 0.06115837    30</span></span>
-<span id="cb11-63"><a href="#cb11-63" tabindex="-1"></a><span class="co">#&gt; locality 30 0.020147022 0.000000000 0.03089205    30</span></span>
-<span id="cb11-64"><a href="#cb11-64" tabindex="-1"></a><span class="co">#&gt; locality 31 0.095831725 0.032055036 0.16216353    30</span></span>
-<span id="cb11-65"><a href="#cb11-65" tabindex="-1"></a><span class="co">#&gt; locality 32 0.127638473 0.032276228 0.22456925    30</span></span>
-<span id="cb11-66"><a href="#cb11-66" tabindex="-1"></a><span class="co">#&gt; locality 33 0.122975456 0.071090451 0.20042462    30</span></span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a><span class="co">#&gt; locality 2  0.013222242 0.000000000 0.02797862    30</span></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a><span class="co">#&gt; locality 3  0.093958138 0.000000000 0.18557943    30</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="co">#&gt; locality 4  0.020167169 0.000000000 0.04234170    30</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a><span class="co">#&gt; locality 5  0.082718226 0.026109899 0.15655600    30</span></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="co">#&gt; locality 6  0.296094926 0.269691535 0.33813715    30</span></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="co">#&gt; locality 7  0.057236738 0.025398057 0.11096667    30</span></span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a><span class="co">#&gt; locality 8  0.083917048 0.026623617 0.18595085    30</span></span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a><span class="co">#&gt; locality 9  0.025591028 0.000000000 0.06846461    30</span></span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a><span class="co">#&gt; locality 16 0.000000000 0.000000000 0.00000000    30</span></span>
+<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a><span class="co">#&gt; locality 18 0.040441512 0.026421439 0.07923341    30</span></span>
+<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a><span class="co">#&gt; locality 19 0.066284239 0.025398057 0.18604453    30</span></span>
+<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a><span class="co">#&gt; locality 20 0.040109920 0.000000000 0.10998981    30</span></span>
+<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a><span class="co">#&gt; locality 23 0.064528340 0.000000000 0.10899247    30</span></span>
+<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a><span class="co">#&gt; locality 24 0.156409345 0.059359051 0.26882813    30</span></span>
+<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a><span class="co">#&gt; locality 25 0.049512946 0.000000000 0.10449393    30</span></span>
+<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a><span class="co">#&gt; locality 26 0.141220077 0.071231884 0.18812354    30</span></span>
+<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a><span class="co">#&gt; locality 27 0.202675316 0.133337012 0.29673403    30</span></span>
+<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a><span class="co">#&gt; locality 28 0.047362419 0.005703503 0.10067496    30</span></span>
+<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a><span class="co">#&gt; locality 29 0.008983959 0.000000000 0.05423744    30</span></span>
+<span id="cb11-63"><a href="#cb11-63" tabindex="-1"></a><span class="co">#&gt; locality 30 0.029673770 0.000000000 0.08543630    30</span></span>
+<span id="cb11-64"><a href="#cb11-64" tabindex="-1"></a><span class="co">#&gt; locality 31 0.090113313 0.049027281 0.14849290    30</span></span>
+<span id="cb11-65"><a href="#cb11-65" tabindex="-1"></a><span class="co">#&gt; locality 32 0.148726469 0.073630524 0.23465530    30</span></span>
+<span id="cb11-66"><a href="#cb11-66" tabindex="-1"></a><span class="co">#&gt; locality 33 0.110726794 0.009375000 0.18648444    30</span></span>
 <span id="cb11-67"><a href="#cb11-67" tabindex="-1"></a><span class="co">#&gt; locality 38 0.002534890 0.000000000 0.01964540    30</span></span>
-<span id="cb11-68"><a href="#cb11-68" tabindex="-1"></a><span class="co">#&gt; locality 39 0.016379369 0.000000000 0.03299841    30</span></span>
-<span id="cb11-69"><a href="#cb11-69" tabindex="-1"></a><span class="co">#&gt; locality 40 0.007604671 0.000000000 0.02534890    30</span></span>
-<span id="cb11-70"><a href="#cb11-70" tabindex="-1"></a><span class="co">#&gt; locality 41 0.014603559 0.000000000 0.05832923    30</span></span>
-<span id="cb11-71"><a href="#cb11-71" tabindex="-1"></a><span class="co">#&gt; locality 42 0.034462023 0.000000000 0.07064796    30</span></span>
-<span id="cb11-72"><a href="#cb11-72" tabindex="-1"></a><span class="co">#&gt; locality 43 0.023468716 0.000000000 0.03405662    30</span></span>
-<span id="cb11-73"><a href="#cb11-73" tabindex="-1"></a><span class="co">#&gt; locality 44 0.029987211 0.000000000 0.12623812    30</span></span>
-<span id="cb11-74"><a href="#cb11-74" tabindex="-1"></a><span class="co">#&gt; locality 45 0.042594896 0.000000000 0.12482430    30</span></span>
-<span id="cb11-75"><a href="#cb11-75" tabindex="-1"></a><span class="co">#&gt; locality 46 0.014641975 0.000000000 0.06012246    30</span></span>
-<span id="cb11-76"><a href="#cb11-76" tabindex="-1"></a><span class="co">#&gt; locality 47 0.011185167 0.000000000 0.03075025    30</span></span>
-<span id="cb11-77"><a href="#cb11-77" tabindex="-1"></a><span class="co">#&gt; locality 48 0.058981072 0.028492341 0.16596169    30</span></span>
-<span id="cb11-78"><a href="#cb11-78" tabindex="-1"></a><span class="co">#&gt; locality 49 0.129381866 0.040339791 0.24608240    30</span></span>
-<span id="cb11-79"><a href="#cb11-79" tabindex="-1"></a><span class="co">#&gt; locality 51 0.020859946 0.000000000 0.04299722    30</span></span>
-<span id="cb11-80"><a href="#cb11-80" tabindex="-1"></a><span class="co">#&gt; locality 52 0.020668834 0.000000000 0.06212842    30</span></span></code></pre></div>
+<span id="cb11-68"><a href="#cb11-68" tabindex="-1"></a><span class="co">#&gt; locality 39 0.019653602 0.000000000 0.03304251    30</span></span>
+<span id="cb11-69"><a href="#cb11-69" tabindex="-1"></a><span class="co">#&gt; locality 40 0.010139561 0.000000000 0.02534890    30</span></span>
+<span id="cb11-70"><a href="#cb11-70" tabindex="-1"></a><span class="co">#&gt; locality 41 0.015757132 0.000000000 0.02797862    30</span></span>
+<span id="cb11-71"><a href="#cb11-71" tabindex="-1"></a><span class="co">#&gt; locality 42 0.044796123 0.005703503 0.07009978    30</span></span>
+<span id="cb11-72"><a href="#cb11-72" tabindex="-1"></a><span class="co">#&gt; locality 43 0.040725918 0.000000000 0.09398211    30</span></span>
+<span id="cb11-73"><a href="#cb11-73" tabindex="-1"></a><span class="co">#&gt; locality 44 0.030325665 0.000000000 0.06876119    30</span></span>
+<span id="cb11-74"><a href="#cb11-74" tabindex="-1"></a><span class="co">#&gt; locality 45 0.050995812 0.000000000 0.10967717    30</span></span>
+<span id="cb11-75"><a href="#cb11-75" tabindex="-1"></a><span class="co">#&gt; locality 46 0.011762291 0.000000000 0.05728099    30</span></span>
+<span id="cb11-76"><a href="#cb11-76" tabindex="-1"></a><span class="co">#&gt; locality 47 0.033539873 0.000000000 0.13792476    30</span></span>
+<span id="cb11-77"><a href="#cb11-77" tabindex="-1"></a><span class="co">#&gt; locality 48 0.080823519 0.000000000 0.28984136    30</span></span>
+<span id="cb11-78"><a href="#cb11-78" tabindex="-1"></a><span class="co">#&gt; locality 49 0.120899176 0.006295190 0.26655556    30</span></span>
+<span id="cb11-79"><a href="#cb11-79" tabindex="-1"></a><span class="co">#&gt; locality 51 0.040335382 0.000000000 0.09641025    30</span></span>
+<span id="cb11-80"><a href="#cb11-80" tabindex="-1"></a><span class="co">#&gt; locality 52 0.032227138 0.005703503 0.06180984    30</span></span></code></pre></div>
 <p>To explore visually fidelity estimates produced by
 <em>FidelityEst</em> use <em>SJPlot</em> function. The default plot
 includes only non-adjusted (raw) fidelity estimates (unadjF=TRUE).</p>
@@ -919,7 +919,7 @@ suppresses confidence intervals). All estimates can be superimposed on a
 single plot by setting unadj=TRUE, adjf=TRUE, and ssF=TRUE.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">SJPlot</span>(out1, <span class="at">gpcol =</span> <span class="fu">c</span>(<span class="st">&#39;aquamarine3&#39;</span>, <span class="st">&#39;coral3&#39;</span>), <span class="at">bubble =</span> <span class="cn">TRUE</span>, <span class="at">unadj =</span> <span class="cn">FALSE</span>, <span class="at">adjF =</span> <span class="cn">TRUE</span>, <span class="at">cex.legend =</span> <span class="fl">0.8</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAAGACAMAAACz76XEAAAAe1BMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6Ojo6kNtmAABmADpmkJBmtrZmtv9mzap8tZWFq4yQOgCQZgCQkGaQtpCQ2/+pqamufWOx5dO2ZgC225C2/7a2///Gzb7NW0XR8OXbkDrb///wzcf/tmb/25D//7b//9v////KK98TAAAACXBIWXMAAA7DAAAOwwHHb6hkAAASF0lEQVR4nO3dDWOb2LVGYSWxM7WnNY3bJh7fm0pKkK3//wvLtwBxJDYvH1t4PZk6luycUHeVOTog2ByBFdksvQHAmAgaq0LQWBWCxqoQNFaFoLEqBI1VIWisyqhBbzDcj6U34KZNFPSYg300P5begFtG0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BC+xBH/74WX4abzafvl8ZFmYELTAH/fb4uQw6TmqOu4smaAFBC6xBJzvlMuj354fk4+vd5WFhRtACY9Dx5iEugz7cPyUf99UOu3tYmBG0wD6HPgX99Xv9YTbG+QFImBG0QAg6nz53T6IJWkDQAoL2h6AF4045zIOhA0ELlKB5UTgNghYIQbNsNxGCFghBc2BlIgQtGBj0+3O6Y95z6HsKBC3g5CR/CFpA0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BCwjaH4IWELQ/BC0gaH8IWkDQ/hC0gKD9IWgBQftD0AKC9oegBQTtD0ELCNofghYQtD8ELSBofwhaQND+ELSAoP0haAFB+0PQAoL2h6AFBO0PQQsI2h+CFhC0PwQtIGh/CFpA0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BCwjaH4IWELQ/BC0gaH8IWkDQ/hC0gKD9IWgBQftD0AKC9oegBQTtD0ELCNofghYQtD8ELSBofwhaQND+ELSAoP0haIE16Lh+e+/9ZrN5ujIszAhaYAw6TmqOy6L36YPuoglaQNACW9Dvzw/Jx9e74sHd6UFwWJgRtMAW9OE+3R/vP/9MHxD0RAhaYAz6azrbiPOgO6Ycm8qoG/nBELTAFnQ+fa4m0Y1XiIFhYUbQAiXo12RPfbh/uDwszAhaIEw5GhPq4LAwI2iB8KKwNf8IDAszghYIy3Z53TF76LERtEA5sMIcehoELbAe+t7nCxvFGvRms+nsmaAVBC3g5CR/CFpA0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BCwjaH4IWELQ/BC0gaH8IWkDQ/hC0gKD9IWgBQftD0AKC9oegBQTtD0ELCNofghYQtD8ELSBofwhaQND+ELSAoP0haAFB+0PQAoL2h6AFBO0PQQsI2h+CFhC0PwQtIGh/CFpA0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BCwjaH4IWELQ/BC0gaH8IWkDQ/hC0gKD9IWgBQftD0AKC9oegBQTtD0ELCNofghYQtD8ELSBofwhaQND+ELSAoP0haIE16Di/13fucL/Z3F0ZFmYELTAGHSc1x2XR8Zdfx7fHzqIJWkDQAlvQ788PycfXu9qD/eefF4eFGUELbEEf7p+OVcOHr9+D30jQAoIWGIPOGo7zoOPP//+42Tw0RquMupEfDEELbEHn0+diEr3fJGG/PzOHHhtBC5SgP9V218FhYUbQAmHKkU+l82l1eFiYEbRAeFGYd9390pCgBQQtEJbt3h7TuplyjI6gBcqBlf2XX0XiF4aFGUELrIe+9/mh73xxI960lu2Mg6ETQQs4OckfghYQtD8ELSBofzwEHS29AUMRtD8ELegIOj3LuXbSszgszAhacB50nC1c7DddBwAHDAszghacBV0uLKeLzGMMCzOCFpwFnR//Cx0BtA8LM4IWsIf2h6AFzKH9IWgBqxz+OAg6im61aNah/Vk+6GiX/Fp6I4YhaH8WDzra7dJ/lt6MQc6DfnvM3+bKKsdSlgk6umiRTRriPOjXL7/2d4F3Vg0YFmbsoQUd69AP2SWRWLZbzOJBr2oOnR5YOfzxM/vPGMPCbPmg17TKkR5YefvzO0Evx0HQt+t8Dp2+p/v1gSnHcgha0LFs93qXrnRIixwErSBowUTr0D+AZUwTNHtoAXtowfke+v2ZAyvLImhBx4EVbfbcHhZm8we9nf1vnEzngZUxh4UZQQuC71gZa1iYEbSg48BK932thg4LM4IWnM+hxdOS2sPCjKAFzaDLU0dZ5VgSQQs4wd+f2w564f9zELQ/BC3oOpfjy6/ird9jDAszghZ0vmPleAzd8tg+LMwIWsCVk/whaEH4ykkEvRSCFnSc4J9dM+lwL02iCVpA0AKunOQPQQtYtvOHoAUE7Q9BCwjan9sLun7NA4JGC0ELCNofghYQtD8ELbAGHbdW9F67r0dD0AKCFhiDjpOa41rR8YagR0fQAlvQ+XHx1+q8pbdHgh4fQQtsQedvzzqd5rH/8i+CHh1BC4xBf01nG9WJeMnD5hz69AauMbfxoyFogS3ofPpcTqLTCQgvCsdH0AIl6PSKuwQ9PoIWCFOO7AFBj4+gBcKLwn0xXe66jAdBCwhaoC3bsYeeAkELxAMrBD0BghZYD33v80Pf1RXwCHp8BC3g5CR/CFpA0P4QtICg/SFoAUH7Q9ACgvaHoAUE7Q9BCwjan5sLunGr+4Xvek/Q/txa0NEu+XV6pG6MhqD98R101N9k23sBQfszV9Dbjs+GYA+NizwEbUqcOTQuGTnoYGGjBd34KwgaLQQtIGh/Zg46Om4Juv+wMJs66PKJMujt7/OiCTo0LMzGCnqbi7Yt0cWHRtnfRNC4YO49tD7luPjXzYug/Zk26F0U7fLPqqDlF4UX/rq5EbQ/kwad5FwuG/cO2tQoQaNlyqCj3W6X/Cd7rjPo4rsJOjQszCYMelcGnc468mi3BG0aFmbjBt04RyjtOY/6SNDDhoXZqEGnU+bAGXLb4mPz+/PfCDo0LMzGDDqbXpwaC0w5ym8+EvTVYWE2MGjDicrlHjr9YwRtGxZm40856o/T/XN92W7koBc6r79C0P5M+KLweH5gZdygmyf7L4Cg/Zn3bDsh6K55zMvLsu/GImh/biborr/sv/98YQ+NhnnfgjU06MDZd+mLzfBpedMjaH9uI+jQoFxoBi03HTTLdmibKehiGtAMOiLoK8PCbJ6gt7+TX8d60Okx8nSNOnu2/q0ETdCKqYIOvOmqfBS9RPmBcoK+NCzMJt9D54e8sz10eYpS+6Sl+rO2RnlRiJbpg867zdbYegRtOy5C0GiZZw99tspRnGh6FOfQBI2WhYLOVziK94ATdGhYmC0VdPb8Nr3szJagg8PCbLGgs4e/sxeLBB0aFmbzBt18ybf9lgbdujYYQRO0Yuqgm2+bfUl+1Valv3WdcGQZ/caCjvN7fWfenzebzcOVYWE2adDN1bn0BObWmt23b0nU2RdPf8byF9xW0HFSc1wU/f6cfLLf3F0eFmbT7qHzo4HV6lwSdOMtJh/rReH7c7pDfs0bPtw/JR/3n39eHBZmEwTd9SaS+vGT2nd+qGW7jobjagbSPSzMJp5D5wdQquMnY1+X47aC/prWG9eDfmUPPbY5XhROF/TCbEHnu+P6TjluvCrcVEbbwA9ojmU7gs6cBR13vyZkD60YO+jWJKCcNRP0+ZQjDqzaEbRi3AvNtIOOyt/KoM++/3j8OEE3XxTuQz0TtGLSoE+nIvUOes7LasiEZbuk56frw8JsyqCj5qd9gl78YkgmwoGVw31o/0zQkvGCjtpBR80v1oM+X6TubbTtHYH10Pc+P/T9/nyXfppiHXpsMwVdfOlj76Htw8LMWdBrnkMPGBZmQ68P3fnUCEGveJVjwLAwI2gBQfujBx2dfu/9orD5HQQdGhZmEwY9ZNmOoMce7KOZMughB1YImqAl0wZdP/SdRt26ejNBXxkWZnLQ0anasylHVD85KaremrJtjbLwWc3DEbQ/YtBRtCtvfXX+ojB/89X2WAZdfW3bGGXpy5YPR9D+qEGfbk/fDrq4DWct6NMf39ZG2f6+2aIJ2h8t6Kh2N+8om36cnZdRXaWxXm3npXaXu1fKUATtjzHoq+cO1d4JW0w5or+SX+0VjuK6M/nn3rsNImh/RttDh86cK+9aHzWDrp89R9ChYWE21hw6ql2Ao/Fd1/fQBB0cFmb6Kkd2O+8q7LNsszn02UEVgu41LMyEoC/OofMHx9qyXeNF4WmUI0GHh4XZsKDPTlq+tIfOg45Cy3YEHR4WZoOCLo+lNJ/aFXOLk1rQyVdfAgdWCDo4LMyGBF0cMmk9mR807Aq6+CMvOw59G4eFWY+gr649h+fQUXlgJVVdGvr0DflfQNChYWE2aA/dMeXos4dOL3Be+wp76KvDwmxA0MUN2VpP5nPo4EHs9OL950/e5hHvCkH7Yw164JRjm51m2jrfjinHtWFhNmwPfX4afueRwtOUozzBv/6VauJC0KFhYTYw6K5no/YJ/o2g8/M5gjvyMwP+u8yOoP0ZLejj6VbHlcYe+tjeQ4cGuh0E7c+IQWdTCEvQN/X+wS4E7c+goLvnHLvAst32SNADh4WZPehswbn45Poqxza9dRtBDxwWZuag01B3HVcI3Wa31bz2nqrmcjNBXxkWZheDvrbo3LE00Z5ysIdWhoWZ/cDKX9k/HV84v9DM9pjfKra6v2Z15Jugew0Ls2tBX9snV+cbvUTGCcfp0Pcs/0WnQND+DDz0ffb0y8vpbDpr0OWU+uYQtD+2oNMFjr86ZhzFu7+7D6z0Dfr2miZofyxBZ++I3eWrHFFgMtJxclL6R7eNCySVnzOHvjIszAxBZzlXovbX5CnH7e2iCdqfsYIu3lHYuE5dFmj+eHtsXiCJVY5ew8LsUtCt3elLU2v3al/juO29c4qg/em/hy530MnvXUF/sJYzBO1P76CrCUfUPeko1Gccv9ODhNWU43bP4w8iaH8mDPrY2vUStHlYmPUNOnTuRtuFhAk6rt/cOw7c6ZugJfY9dGCdo0DQYXEScFxG3HgQGhZmBC2wBf3+/JB8fL07fxAcFmb2VY6LPV+q9qMHfbh/Sj7uP/88exAcFmYELTAG/TWdYMRF0PUHwWFhNtKRwsr6qr3AFnQ+Yy7mzY0HxRiVcbfyYyFowbhBmwZDgP1suzznWz8NYxRMOfwxnw9Nzie8KPRn0DtWJtmSG8SynT8DbxqEFAdW/CFogfXQ9z4/2v3+fHd6cHFYmBG0gJOT/CFoAUH7Q9ACgvaHoAUE7Q9BC6YKGsP9WHoDbto0QQdDn+MvMfG3RWxSH9e3iKC9YJN6IOgAf1vEJvVB0AH+tohN6oOgA/xtEZvUB0EH+NsiNqkPgg7wt0VsUh8EHeBvi9ikPgg6wN8WsUl9OAkamAtBY1UIGqtC0FgVgsaqEDRWhaCxKgSNVSForApBY1UIGqtC0FgVgsaqTB304Y/qurvh28HNqL4Rb4/pG+A7r6M6n553zJuTu5/R0dDRxEG/PVYXkr5w1dL5NDYiv3b7svpe2HVG7n5GR0tH0wad/J+p3JBL15WeTXMjum9DMKvel96ej7uf0dHU0aRBx5uH6gdy6cr/s2luxN7Bv0n73hxhoU3y8DOydTT1HPq0IRfuzTKb5ka8/i2ZHj4suT39b1+z0CZ5+Bllenc0W9CX7p41m8ZGvD1++ZX8L7bo/1q9bzC20CZ5+Bllenf0gYMunlp0h+g96OKp5SfS/oJ28e/Tjo3I52RLcT/lyJ9a9GeUWXrKsS9nXm5eFGZb1LERy65LuX9RmD+1/NqdvxeFLtakGhuR/2iW3SF6X7bz8DPK9O5otqB9HDVobET2U1n4BY/3Aysefkap3h3NEvS128HNqHGDutdkGrL07LDnHfMW2yQPP6OjoSNOTsKqEDRWhaCxKgSNVSForApBY1UIGqtC0FgVgsaqEDRWhaCxKgSNVSForApBY1UIGqtC0FgVgsaqEDRWhaCxKgSNVSForApBY1UIGqtC0FgVgsaqEDRWhaCxKgSNVSForApBY1UIeh6H++yytIev/7kv7m1Q3eSguGDt25//3nz+v/t/PGZ3GsivYVt+6TF91sFFbW8AQc8iuxJ+vHlKSn1Kf096/vQ9efYhv6R4+iC74dThPvlsn95lMr3pwulL6bMOrhx9Awh6FuUF6LOEj/svv94eH/Kn3/78nveePZN9vfjw1P4Su+geCHoW5b2qi3uWfPqe31ShiDRO5xNvj0/FE6cP9S9lH3ANQc/j/bmYQxd32UtCzTylc+lk6twZdONLBN0LQc/n9dP3U9DljLiq9zzo5pcIuheCnk+SZD6Hfk3n0EWe2ew67pxyNL9E0L0Q9CyyHXLyIVvFqFY5sn12tgfePAT20KcvEXQvBD2PdM6cLdT9vVhiztah011wdpeypOzuOfTpSwTdC0HPirW3qRH0rAh6agQ9K4Ke2v8AwJTWi0DxKZUAAAAASUVORK5CYII=" /><!-- --></p>
 </div>
 <div id="fidelitydiv-function" class="section level2">
 <h2>FidelityDiv Function</h2>
@@ -935,122 +935,122 @@ function measures offsets using approach described in Olszewski and
 Kidwell (2007).</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">FidelityDiv</span>(FidData<span class="sc">$</span>live, FidData<span class="sc">$</span>dead, <span class="at">iter=</span><span class="dv">1000</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>out3<span class="sc">$</span>x</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;             n.std         est         25%         75%     p</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; locality 1     32  1.37457693  1.17865500  1.46633707 0.001</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; locality 2     45  0.66448255  0.60613580  0.73396918 0.001</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; locality 3    102  0.54873385  0.51082562  0.60613580 0.001</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; locality 4    258  0.15893649  0.08961216  0.22314355 0.096</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; locality 5    412  0.59871020  0.59962112  0.59962112 0.001</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; locality 6     40  0.74755059  0.69314718  0.81093022 0.001</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; locality 7     37 -0.01479238 -0.06453852  0.06899287 0.592</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; locality 8    561  0.09310603  0.04255961  0.14165052 0.148</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; locality 9    240  0.54960263  0.50209194  0.60217540 0.001</span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; locality 16  1312  0.97356703  0.94000726  1.01523068 0.001</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; locality 17    26  0.33442146  0.20067070  0.45198512 0.012</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; locality 18   265  0.78815745  0.77318989  0.82320031 0.001</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; locality 19   234  0.09622437  0.05884050  0.14107860 0.184</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; locality 20    89  0.77198951  0.65677954  0.81093022 0.001</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; locality 23   156  0.39963352  0.34294475  0.46430561 0.001</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; locality 24    71  0.32608759  0.21130909  0.40546511 0.006</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt; locality 25    91  0.39138192  0.35667494  0.42121347 0.001</span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; locality 26    61  0.03592216 -0.06453852  0.11778304 0.588</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; locality 27    31 -0.14784814 -0.24116206  0.00000000 0.264</span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; locality 28    38 -0.08705110 -0.20763936  0.00000000 0.478</span></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; locality 29   175  1.10573919  1.02961942  1.17272026 0.001</span></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt; locality 30    62  0.40958405  0.35667494  0.49643689 0.001</span></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt; locality 31   103  0.18893890  0.10536052  0.24512246 0.064</span></span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#&gt; locality 32    98  0.31168008  0.25593337  0.37729423 0.001</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#&gt; locality 33   187  0.64242397  0.61090908  0.69314718 0.001</span></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#&gt; locality 34    26  0.55607981  0.51082562  0.63598877 0.001</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="co">#&gt; locality 35    19  0.47528313  0.44183275  0.55961579 0.001</span></span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="co">#&gt; locality 36    24  0.45467298  0.40546511  0.55961579 0.002</span></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="co">#&gt; locality 37    23  0.27988865  0.25131443  0.25131443 0.001</span></span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="co">#&gt; locality 38    44 -0.17266174 -0.26236426  0.00000000 0.264</span></span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="co">#&gt; locality 39    68  1.03858896  1.02165125  1.06087196 0.001</span></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="co">#&gt; locality 40    42  0.14666942  0.06453852  0.23638878 0.126</span></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="co">#&gt; locality 41   103  0.24243448  0.21357410  0.28768207 0.001</span></span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="co">#&gt; locality 42    97 -0.26641538 -0.36290549 -0.19105524 0.038</span></span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="co">#&gt; locality 43   166  0.62045069  0.58778666  0.66782937 0.001</span></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="co">#&gt; locality 44   320 -0.13810182 -0.22314355 -0.05884050 0.114</span></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="co">#&gt; locality 45   274  0.65787427  0.64185389  0.66782937 0.001</span></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="co">#&gt; locality 46   397  0.38758752  0.34294475  0.43531807 0.001</span></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="co">#&gt; locality 47   160  0.17908872  0.12783337  0.24116206 0.070</span></span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="co">#&gt; locality 48   189  0.72941014  0.66497630  0.78275934 0.001</span></span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="co">#&gt; locality 49   207  0.35873166  0.28768207  0.42121347 0.001</span></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="co">#&gt; locality 50    17  0.79012557  0.69314718  0.84729786 0.001</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a><span class="co">#&gt; locality 51   218 -0.01187392 -0.06669137  0.06252036 0.822</span></span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="co">#&gt; locality 52    42  0.23191909  0.15415068  0.34830669 0.068</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;             n.std          est         25%         75%     p</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; locality 1     32  1.374157912  1.17865500  1.46633707 0.001</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; locality 2     45  0.661930353  0.60613580  0.73396918 0.001</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; locality 3    102  0.546451917  0.47692407  0.60613580 0.001</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; locality 4    258  0.160206325  0.08961216  0.22314355 0.054</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; locality 5    412  0.598571583  0.59962112  0.59962112 0.001</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; locality 6     40  0.742963558  0.69314718  0.81093022 0.001</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; locality 7     37 -0.015964201 -0.06453852  0.06899287 0.554</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; locality 8    561  0.095566618  0.04255961  0.14165052 0.134</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; locality 9    240  0.550998492  0.50209194  0.60217540 0.001</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; locality 16  1312  0.974984438  0.94000726  1.01523068 0.001</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; locality 17    26  0.335703396  0.20067070  0.45198512 0.002</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; locality 18   265  0.789697158  0.77318989  0.82320031 0.001</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; locality 19   234  0.107100266  0.05884050  0.16705408 0.120</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; locality 20    89  0.778625320  0.65677954  0.83268306 0.001</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; locality 23   156  0.399212547  0.34294475  0.46430561 0.001</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; locality 24    71  0.320632089  0.21130909  0.40546511 0.001</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt; locality 25    91  0.391323096  0.35667494  0.42121347 0.001</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; locality 26    61  0.034755454 -0.06453852  0.11778304 0.620</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; locality 27    31 -0.135388031 -0.24116206  0.00000000 0.296</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; locality 28    38 -0.091578339 -0.20763936  0.00000000 0.454</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; locality 29   175  1.116247202  1.02961942  1.25276297 0.001</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt; locality 30    62  0.400642780  0.30538165  0.49643689 0.002</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt; locality 31   103  0.189465424  0.10536052  0.24512246 0.086</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#&gt; locality 32    98  0.307972155  0.25593337  0.34830669 0.001</span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#&gt; locality 33   187  0.647631262  0.61090908  0.69314718 0.001</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#&gt; locality 34    26  0.554899885  0.51082562  0.63598877 0.001</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="co">#&gt; locality 35    19  0.471749643  0.44183275  0.55961579 0.001</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="co">#&gt; locality 36    24  0.438662052  0.31845373  0.55961579 0.004</span></span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="co">#&gt; locality 37    23  0.273820428  0.25131443  0.25131443 0.001</span></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="co">#&gt; locality 38    44 -0.176934179 -0.26236426 -0.08004271 0.230</span></span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="co">#&gt; locality 39    68  1.040305874  1.02165125  1.06087196 0.001</span></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="co">#&gt; locality 40    42  0.148301435  0.06453852  0.23638878 0.136</span></span>
+<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="co">#&gt; locality 41   103  0.240993421  0.21357410  0.28768207 0.001</span></span>
+<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="co">#&gt; locality 42    97 -0.257183253 -0.36290549 -0.13976194 0.024</span></span>
+<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="co">#&gt; locality 43   166  0.624246672  0.58778666  0.66782937 0.001</span></span>
+<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="co">#&gt; locality 44   320 -0.136695823 -0.18805223 -0.05884050 0.082</span></span>
+<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="co">#&gt; locality 45   274  0.658251132  0.64185389  0.66782937 0.001</span></span>
+<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="co">#&gt; locality 46   397  0.396392158  0.34294475  0.46430561 0.001</span></span>
+<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="co">#&gt; locality 47   160  0.178838859  0.12783337  0.24116206 0.074</span></span>
+<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="co">#&gt; locality 48   189  0.731536314  0.66497630  0.78275934 0.001</span></span>
+<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="co">#&gt; locality 49   207  0.360855898  0.28768207  0.42121347 0.001</span></span>
+<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="co">#&gt; locality 50    17  0.781980611  0.69314718  0.84729786 0.001</span></span>
+<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a><span class="co">#&gt; locality 51   218 -0.007748921 -0.06669137  0.06252036 0.848</span></span>
+<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="co">#&gt; locality 52    42  0.233000364  0.15415068  0.34830669 0.050</span></span>
 <span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a>out3<span class="sc">$</span>y</span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a><span class="co">#&gt;             n.std           est          25%          75%     p</span></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="co">#&gt; locality 1     32  0.1754843750  0.133951823  0.206868490 0.060</span></span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="co">#&gt; locality 2     45  0.1666959363  0.156902357  0.180441452 0.001</span></span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="co">#&gt; locality 3    102  0.0166629802  0.007282997  0.028521656 0.296</span></span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="co">#&gt; locality 4    258  0.0007905886 -0.018471158  0.021020838 0.948</span></span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="co">#&gt; locality 5    412  0.1657911053  0.165296062  0.166654107 0.001</span></span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="co">#&gt; locality 6     40  0.0628603687  0.038517157  0.082892157 0.036</span></span>
-<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a><span class="co">#&gt; locality 7     37  0.0421098511  0.006920381  0.065741417 0.242</span></span>
-<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a><span class="co">#&gt; locality 8    561 -0.2677210306 -0.283371534 -0.251790713 0.001</span></span>
-<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a><span class="co">#&gt; locality 9    240  0.0048686124 -0.003841868  0.014162090 0.678</span></span>
-<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a><span class="co">#&gt; locality 16  1312  0.6006293490  0.593713461  0.607776646 0.001</span></span>
-<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a><span class="co">#&gt; locality 17    26  0.0816022734  0.050854701  0.105752794 0.004</span></span>
-<span id="cb14-61"><a href="#cb14-61" tabindex="-1"></a><span class="co">#&gt; locality 18   265  0.1374885385  0.132681897  0.142728206 0.001</span></span>
-<span id="cb14-62"><a href="#cb14-62" tabindex="-1"></a><span class="co">#&gt; locality 19   234  0.1242989253  0.109264434  0.140612520 0.001</span></span>
-<span id="cb14-63"><a href="#cb14-63" tabindex="-1"></a><span class="co">#&gt; locality 20    89  0.1948999005  0.171103105  0.218368805 0.001</span></span>
-<span id="cb14-64"><a href="#cb14-64" tabindex="-1"></a><span class="co">#&gt; locality 23   156  0.0373759531  0.024945068  0.050313844 0.058</span></span>
-<span id="cb14-65"><a href="#cb14-65" tabindex="-1"></a><span class="co">#&gt; locality 24    71 -0.0215715710 -0.035528665 -0.010108539 0.270</span></span>
-<span id="cb14-66"><a href="#cb14-66" tabindex="-1"></a><span class="co">#&gt; locality 25    91 -0.0108740416 -0.019893822 -0.001048873 0.442</span></span>
-<span id="cb14-67"><a href="#cb14-67" tabindex="-1"></a><span class="co">#&gt; locality 26    61 -0.1799048136 -0.218453821 -0.137390825 0.001</span></span>
-<span id="cb14-68"><a href="#cb14-68" tabindex="-1"></a><span class="co">#&gt; locality 27    31 -0.1714234334 -0.222012327 -0.116408046 0.001</span></span>
-<span id="cb14-69"><a href="#cb14-69" tabindex="-1"></a><span class="co">#&gt; locality 28    38 -0.1764561920 -0.220752539 -0.124295258 0.001</span></span>
-<span id="cb14-70"><a href="#cb14-70" tabindex="-1"></a><span class="co">#&gt; locality 29   175  0.6671508435  0.642029866  0.692483555 0.001</span></span>
-<span id="cb14-71"><a href="#cb14-71" tabindex="-1"></a><span class="co">#&gt; locality 30    62 -0.0012409396 -0.020212319  0.019181268 0.946</span></span>
-<span id="cb14-72"><a href="#cb14-72" tabindex="-1"></a><span class="co">#&gt; locality 31   103 -0.2154833318 -0.247560340 -0.182792075 0.001</span></span>
-<span id="cb14-73"><a href="#cb14-73" tabindex="-1"></a><span class="co">#&gt; locality 32    98  0.0350401115  0.021084997  0.050387676 0.122</span></span>
-<span id="cb14-74"><a href="#cb14-74" tabindex="-1"></a><span class="co">#&gt; locality 33   187  0.1951640092  0.188014636  0.202492052 0.001</span></span>
-<span id="cb14-75"><a href="#cb14-75" tabindex="-1"></a><span class="co">#&gt; locality 34    26  0.0522142819  0.027895182  0.073779586 0.060</span></span>
-<span id="cb14-76"><a href="#cb14-76" tabindex="-1"></a><span class="co">#&gt; locality 35    19  0.0549553971  0.037875559  0.062806307 0.001</span></span>
-<span id="cb14-77"><a href="#cb14-77" tabindex="-1"></a><span class="co">#&gt; locality 36    24 -0.0322554391 -0.061557540 -0.001221001 0.490</span></span>
-<span id="cb14-78"><a href="#cb14-78" tabindex="-1"></a><span class="co">#&gt; locality 37    23 -0.2107469439 -0.228402647 -0.188563327 0.001</span></span>
-<span id="cb14-79"><a href="#cb14-79" tabindex="-1"></a><span class="co">#&gt; locality 38    44 -0.3259726612 -0.390668044 -0.269729840 0.001</span></span>
-<span id="cb14-80"><a href="#cb14-80" tabindex="-1"></a><span class="co">#&gt; locality 39    68 -0.0732473767 -0.074578287 -0.058834343 0.001</span></span>
-<span id="cb14-81"><a href="#cb14-81" tabindex="-1"></a><span class="co">#&gt; locality 40    42 -0.0717109774 -0.104733560 -0.037715086 0.132</span></span>
-<span id="cb14-82"><a href="#cb14-82" tabindex="-1"></a><span class="co">#&gt; locality 41   103  0.1815886380  0.173701574  0.190008893 0.001</span></span>
-<span id="cb14-83"><a href="#cb14-83" tabindex="-1"></a><span class="co">#&gt; locality 42    97 -0.2577422162 -0.295214447 -0.219428851 0.001</span></span>
-<span id="cb14-84"><a href="#cb14-84" tabindex="-1"></a><span class="co">#&gt; locality 43   166  0.1334921256  0.121051536  0.147300302 0.001</span></span>
-<span id="cb14-85"><a href="#cb14-85" tabindex="-1"></a><span class="co">#&gt; locality 44   320 -0.0606634875 -0.080400177 -0.040625798 0.028</span></span>
-<span id="cb14-86"><a href="#cb14-86" tabindex="-1"></a><span class="co">#&gt; locality 45   274  0.1882798932  0.182319373  0.194157450 0.001</span></span>
-<span id="cb14-87"><a href="#cb14-87" tabindex="-1"></a><span class="co">#&gt; locality 46   397 -0.1212021843 -0.138866434 -0.102510690 0.001</span></span>
-<span id="cb14-88"><a href="#cb14-88" tabindex="-1"></a><span class="co">#&gt; locality 47   160 -0.2043929385 -0.232033910 -0.177529288 0.001</span></span>
-<span id="cb14-89"><a href="#cb14-89" tabindex="-1"></a><span class="co">#&gt; locality 48   189  0.2481523143  0.241663744  0.254332237 0.001</span></span>
-<span id="cb14-90"><a href="#cb14-90" tabindex="-1"></a><span class="co">#&gt; locality 49   207  0.1700112746  0.157195719  0.184581758 0.001</span></span>
-<span id="cb14-91"><a href="#cb14-91" tabindex="-1"></a><span class="co">#&gt; locality 50    17  0.1022694855  0.069417088  0.127548576 0.001</span></span>
-<span id="cb14-92"><a href="#cb14-92" tabindex="-1"></a><span class="co">#&gt; locality 51   218 -0.2410995992 -0.265319339 -0.216307896 0.001</span></span>
-<span id="cb14-93"><a href="#cb14-93" tabindex="-1"></a><span class="co">#&gt; locality 52    42 -0.0481326699 -0.076225945 -0.016422731 0.284</span></span></code></pre></div>
+<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a><span class="co">#&gt;             n.std          est          25%          75%     p</span></span>
+<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="co">#&gt; locality 1     32  0.317826609  0.317826609  0.317826609 0.001</span></span>
+<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="co">#&gt; locality 2     45  0.194443136  0.194443136  0.194443136 0.001</span></span>
+<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="co">#&gt; locality 3    102  0.037380967  0.037380967  0.037380967 0.001</span></span>
+<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="co">#&gt; locality 4    258  0.003391838  0.003391838  0.003391838 0.001</span></span>
+<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="co">#&gt; locality 5    412  0.174654613  0.174654613  0.174654613 0.001</span></span>
+<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="co">#&gt; locality 6     40  0.110231683  0.110231683  0.110231683 0.001</span></span>
+<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a><span class="co">#&gt; locality 7     37  0.041077616  0.041077616  0.041077616 0.001</span></span>
+<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a><span class="co">#&gt; locality 8    561 -0.260505219 -0.260505219 -0.260505219 0.001</span></span>
+<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a><span class="co">#&gt; locality 9    240  0.020370084  0.020370084  0.020370084 0.001</span></span>
+<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a><span class="co">#&gt; locality 16  1312  0.596811512  0.596811512  0.596811512 0.001</span></span>
+<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a><span class="co">#&gt; locality 17    26  0.111997301  0.111997301  0.111997301 0.001</span></span>
+<span id="cb14-61"><a href="#cb14-61" tabindex="-1"></a><span class="co">#&gt; locality 18   265  0.156946784  0.156946784  0.156946784 0.001</span></span>
+<span id="cb14-62"><a href="#cb14-62" tabindex="-1"></a><span class="co">#&gt; locality 19   234  0.123433732  0.123433732  0.123433732 0.001</span></span>
+<span id="cb14-63"><a href="#cb14-63" tabindex="-1"></a><span class="co">#&gt; locality 20    89  0.223400740  0.223400740  0.223400740 0.001</span></span>
+<span id="cb14-64"><a href="#cb14-64" tabindex="-1"></a><span class="co">#&gt; locality 23   156  0.049327976  0.049327976  0.049327976 0.001</span></span>
+<span id="cb14-65"><a href="#cb14-65" tabindex="-1"></a><span class="co">#&gt; locality 24    71 -0.004180091 -0.004180091 -0.004180091 0.001</span></span>
+<span id="cb14-66"><a href="#cb14-66" tabindex="-1"></a><span class="co">#&gt; locality 25    91  0.003897883  0.003897883  0.003897883 0.001</span></span>
+<span id="cb14-67"><a href="#cb14-67" tabindex="-1"></a><span class="co">#&gt; locality 26    61 -0.170309555 -0.170309555 -0.170309555 0.001</span></span>
+<span id="cb14-68"><a href="#cb14-68" tabindex="-1"></a><span class="co">#&gt; locality 27    31 -0.170870677 -0.170870677 -0.170870677 0.001</span></span>
+<span id="cb14-69"><a href="#cb14-69" tabindex="-1"></a><span class="co">#&gt; locality 28    38 -0.175191519 -0.175191519 -0.175191519 0.001</span></span>
+<span id="cb14-70"><a href="#cb14-70" tabindex="-1"></a><span class="co">#&gt; locality 29   175  0.669216505  0.669216505  0.669216505 0.001</span></span>
+<span id="cb14-71"><a href="#cb14-71" tabindex="-1"></a><span class="co">#&gt; locality 30    62  0.018214454  0.018214454  0.018214454 0.001</span></span>
+<span id="cb14-72"><a href="#cb14-72" tabindex="-1"></a><span class="co">#&gt; locality 31   103 -0.197729101 -0.197729101 -0.197729101 0.001</span></span>
+<span id="cb14-73"><a href="#cb14-73" tabindex="-1"></a><span class="co">#&gt; locality 32    98  0.044115334  0.044115334  0.044115334 0.001</span></span>
+<span id="cb14-74"><a href="#cb14-74" tabindex="-1"></a><span class="co">#&gt; locality 33   187  0.208030271  0.208030271  0.208030271 0.001</span></span>
+<span id="cb14-75"><a href="#cb14-75" tabindex="-1"></a><span class="co">#&gt; locality 34    26  0.092006033  0.092006033  0.092006033 0.001</span></span>
+<span id="cb14-76"><a href="#cb14-76" tabindex="-1"></a><span class="co">#&gt; locality 35    19  0.094736842  0.094736842  0.094736842 0.001</span></span>
+<span id="cb14-77"><a href="#cb14-77" tabindex="-1"></a><span class="co">#&gt; locality 36    24  0.009428815  0.009428815  0.009428815 0.001</span></span>
+<span id="cb14-78"><a href="#cb14-78" tabindex="-1"></a><span class="co">#&gt; locality 37    23 -0.161357161 -0.161357161 -0.161357161 0.001</span></span>
+<span id="cb14-79"><a href="#cb14-79" tabindex="-1"></a><span class="co">#&gt; locality 38    44 -0.319749854 -0.319749854 -0.319749854 0.001</span></span>
+<span id="cb14-80"><a href="#cb14-80" tabindex="-1"></a><span class="co">#&gt; locality 39    68 -0.013022756 -0.013022756 -0.013022756 0.001</span></span>
+<span id="cb14-81"><a href="#cb14-81" tabindex="-1"></a><span class="co">#&gt; locality 40    42 -0.060184603 -0.060184603 -0.060184603 0.001</span></span>
+<span id="cb14-82"><a href="#cb14-82" tabindex="-1"></a><span class="co">#&gt; locality 41   103  0.183369213  0.183369213  0.183369213 0.001</span></span>
+<span id="cb14-83"><a href="#cb14-83" tabindex="-1"></a><span class="co">#&gt; locality 42    97 -0.258256250 -0.258256250 -0.258256250 0.001</span></span>
+<span id="cb14-84"><a href="#cb14-84" tabindex="-1"></a><span class="co">#&gt; locality 43   166  0.147817979  0.147817979  0.147817979 0.001</span></span>
+<span id="cb14-85"><a href="#cb14-85" tabindex="-1"></a><span class="co">#&gt; locality 44   320 -0.063038334 -0.063038334 -0.063038334 0.001</span></span>
+<span id="cb14-86"><a href="#cb14-86" tabindex="-1"></a><span class="co">#&gt; locality 45   274  0.197907343  0.197907343  0.197907343 0.001</span></span>
+<span id="cb14-87"><a href="#cb14-87" tabindex="-1"></a><span class="co">#&gt; locality 46   397 -0.107005834 -0.107005834 -0.107005834 0.001</span></span>
+<span id="cb14-88"><a href="#cb14-88" tabindex="-1"></a><span class="co">#&gt; locality 47   160 -0.193526816 -0.193526816 -0.193526816 0.001</span></span>
+<span id="cb14-89"><a href="#cb14-89" tabindex="-1"></a><span class="co">#&gt; locality 48   189  0.263589414  0.263589414  0.263589414 0.001</span></span>
+<span id="cb14-90"><a href="#cb14-90" tabindex="-1"></a><span class="co">#&gt; locality 49   207  0.175437894  0.175437894  0.175437894 0.001</span></span>
+<span id="cb14-91"><a href="#cb14-91" tabindex="-1"></a><span class="co">#&gt; locality 50    17  0.183040111  0.183040111  0.183040111 0.001</span></span>
+<span id="cb14-92"><a href="#cb14-92" tabindex="-1"></a><span class="co">#&gt; locality 51   218 -0.233239355 -0.233239355 -0.233239355 0.001</span></span>
+<span id="cb14-93"><a href="#cb14-93" tabindex="-1"></a><span class="co">#&gt; locality 52    42 -0.030325508 -0.030325508 -0.030325508 0.001</span></span></code></pre></div>
 <p>The returned object also reports mean offsets across all samples and
 groups of samples (if the factor ‘gp’ is provided). Significance values
 are also reported for the null hypothesis: offset = 0.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">FidelityDiv</span>(FidData<span class="sc">$</span>live, FidData<span class="sc">$</span>dead, FidData<span class="sc">$</span>habitat, <span class="at">iter=</span><span class="dv">1000</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>out4<span class="sc">$</span>xmean</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt;                0.5%     99.5% </span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; 0.4055673 0.3651103 0.4489099</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; 0.4052871 0.3636848 0.4478932</span></span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>out4<span class="sc">$</span>ymean</span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;                  0.5%      99.5% </span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 0.02613331 0.01154861 0.03927965</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 0.04621841 0.04621841 0.04621841</span></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>out4<span class="sc">$</span>xgp</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;   n.sites       est     0.01%     0.99%     group measure</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 1      27 0.3845877 0.3425115 0.4338534 nearshore Delta S</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 2      17 0.4388878 0.3578470 0.5131843  offshore Delta S</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 1      27 0.3845861 0.3426741 0.4295267 nearshore Delta S</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 2      17 0.4381652 0.3566725 0.5213594  offshore Delta S</span></span>
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>out4<span class="sc">$</span>ygp</span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;   n.sites         est       0.01%      0.99%     group   measure</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 1      27 0.036595853  0.02261406 0.05025286 nearshore Delta PIE</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 2      17 0.009516333 -0.02226501 0.03734905  offshore Delta PIE</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;   n.sites        est      0.01%      0.99%     group   measure</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 1      27 0.04894179 0.04894179 0.04894179 nearshore Delta PIE</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 2      17 0.04189305 0.04189305 0.04189305  offshore Delta PIE</span></span>
 <span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>out4<span class="sc">$</span>p.values</span>
 <span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt;      Delta.S.p Delta.PIE.p</span></span>
 <span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; [1,]     0.001       0.001</span></span>
 <span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>out4<span class="sc">$</span>p.gps</span>
 <span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt;           p.Delta.S p.Delta.PIE</span></span>
 <span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; nearshore     0.001       0.001</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; offshore      0.001       0.398</span></span></code></pre></div>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; offshore      0.001       0.001</span></span></code></pre></div>
 </div>
 <div id="alphaplot-function" class="section level2">
 <h2>AlphaPlot Function</h2>
@@ -1061,7 +1061,7 @@ generate diversity-evenness offset plot (see Olszewski and Kidwell
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">FidelityDiv</span>(FidData<span class="sc">$</span>live, FidData<span class="sc">$</span>dead, FidData<span class="sc">$</span>habitat, <span class="at">CI =</span> <span class="fl">0.95</span>, <span class="at">iter =</span> <span class="dv">1000</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">AlphaPlot</span>(out3, <span class="at">col.gp =</span> <span class="fu">c</span>(<span class="st">&#39;aquamarine3&#39;</span>, <span class="st">&#39;coral3&#39;</span>), <span class="at">bgpt =</span> <span class="st">&#39;beige&#39;</span>, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">legend.cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="comments" class="section level2">
 <h2>Comments</h2>

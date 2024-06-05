@@ -109,10 +109,10 @@ FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=2, t.filter
   if (length(out) == 3) {live <- out$live;  dead <- out$dead; gp <- out$gp}
   if (min(apply(live, 1, sum)) < 2)
     stop("Hulbert's PIE cannot be computed for 'live' samples with n<2,
-         filter our small samples using n.filters argument")
+         filter out small samples using n.filters argument")
   if (min(apply(dead, 1, sum)) < 2)
     stop("Hulbert's PIE cannot be computed for 'dead' samples with n<2,
-         filter our small samples using n.filters argument")
+         filter out small samples using n.filters argument")
 
   # 2. Alpha Diversity/Evenness
   pie.f <- function(x) (sum(x) / (sum(x) - 1)) * (1 - sum((x / sum(x)) ^ 2))
@@ -120,7 +120,7 @@ FidelityDiv <- function(live, dead, gp=NULL, report=FALSE, n.filters=2, t.filter
     a <- suppressWarnings(vegan::rrarefy(x, sample=min))
     b <- suppressWarnings(vegan::rrarefy(y, sample=min))
     cbind(log(apply(b, 1, function(z) sum(z > 0))) - log(apply(a, 1, function(z) sum(z > 0))),
-    apply(y, 1, pie.f) - apply(x, 1, pie.f))
+    apply(b, 1, pie.f) - apply(a, 1, pie.f))
   }
   min.sam <- apply(cbind(rowSums(live), rowSums(dead)), 1, min)
   out1 <- array(NA, dim=c(nrow(live), 2, iter))

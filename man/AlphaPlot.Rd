@@ -7,6 +7,7 @@
 AlphaPlot(
   x,
   pch = 21,
+  pch.gp = 16,
   col = "black",
   bgpt = "white",
   transp = 1,
@@ -32,6 +33,8 @@ AlphaPlot(
 \item{x}{An object of the class 'FidelityDiv' returned by  \code{\link{FidelityDiv}} function}
 
 \item{pch}{An integer defining symbol type (default=21). Filled symbols (21-25) should be used.}
+
+\item{pch.gp}{An integer defining symbol type for means (default=16).}
 
 \item{col}{A character string or number defining color of symbols for individual sites
 (default = 'black'). This argument applies only if a grouping factor 'gp' is not provided.}
