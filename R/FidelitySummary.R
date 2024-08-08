@@ -22,7 +22,7 @@
 #' @param gp An optional univariate factor defining groups of sites. The length of gp must
 #'  equal number of rows of 'live' and 'dead' matrices.
 #'
-#' @param report Logical (default=FALSE), set report=TRUE to print notes,
+#' @param report Logical (default = FALSE), set report=TRUE to print notes,
 #' warnings, and data summary
 #'
 #' @param n.filters Integer (default = 0) to remove small samples with n < n.filters occurrences
