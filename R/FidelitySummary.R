@@ -32,7 +32,7 @@
 #' appropriate for certain applications such as simulations of null models or when measuring
 #' live-dead rank correlation when assessing compositional fidelity.
 #'
-#' @param output Logical (default=FALSE) determines if an output with filtered datasets should
+#' @param output Logical (default = FALSE) determines if an output with filtered datasets should
 #' be produced.
 #'
 #' @return A list (returned only if output=TRUE) including the following components:
