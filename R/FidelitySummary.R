@@ -35,7 +35,7 @@
 #' @param output Logical (default = FALSE) determines if an output with filtered datasets should
 #' be produced.
 #'
-#' @return A list (returned only if output=TRUE) including the following components:
+#' @return A list (returned only if output = TRUE) including the following components:
 #'   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
 #'   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
 #'   \item{gp}{The grouping factor associated with sites (if provided)}
