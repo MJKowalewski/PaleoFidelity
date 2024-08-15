@@ -18,6 +18,6 @@ URL: https://github.com/mjkowalewski/PaleoFidelity
 BugReports: https://github.com/mjkowalewski/PaleoFidelity
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

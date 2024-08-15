@@ -2,6 +2,7 @@
 % Please edit documentation in R/PaleoFidelity.R
 \docType{package}
 \name{PaleoFidelity}
+\alias{PaleoFidelity-package}
 \alias{PaleoFidelity}
 \title{PaleoFidelity: Measuring paleontological fidelity (live-dead community agreement)}
 \description{
@@ -55,6 +56,14 @@ my.fid$x
 # p values for means of groups
 my.fid$p.gps
 AlphaPlot(my.fid, col.gp=c('forestgreen', 'coral1'), bgpt='beige')
+
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/mjkowalewski/PaleoFidelity}
+  \item Report bugs at \url{https://github.com/mjkowalewski/PaleoFidelity}
+}
 
 }
 \author{

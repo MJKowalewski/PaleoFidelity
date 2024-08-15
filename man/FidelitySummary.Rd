@@ -24,7 +24,7 @@ Dimensions of 'live' and 'dead' matrices must match exactly.}
 \item{gp}{An optional univariate factor defining groups of sites. The length of gp must
 equal number of rows of 'live' and 'dead' matrices.}
 
-\item{report}{Logical (default=FALSE), set report=TRUE to print notes,
+\item{report}{Logical (default = FALSE), set report=TRUE to print notes,
 warnings, and data summary}
 
 \item{n.filters}{Integer (default = 0) to remove small samples with n < n.filters occurrences}
@@ -34,11 +34,11 @@ Note that the default value of 1 keeps all taxa, but removes empty columns. This
 appropriate for certain applications such as simulations of null models or when measuring
 live-dead rank correlation when assessing compositional fidelity.}
 
-\item{output}{Logical (default=FALSE) determines if an output with filtered datasets should
+\item{output}{Logical (default = FALSE) determines if an output with filtered datasets should
 be produced.}
 }
 \value{
-A list (returned only if output=TRUE) including the following components:
+A list (returned only if output = TRUE) including the following components:
   \item{live}{The filtered live dataset where rows=sites and columns=taxa}
   \item{dead}{The filtered dead dataset where rows=sites and columns=taxa}
   \item{gp}{The grouping factor associated with sites (if provided)}
