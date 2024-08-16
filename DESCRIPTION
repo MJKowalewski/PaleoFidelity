@@ -2,9 +2,9 @@ Package: PaleoFidelity
 Type: Package
 Title: Analyze and Visualize Agreement between Live and Dead Communities 
 Version: 1.0.0
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.0.0)
 Imports: vegan (>= 2.6-4)
-Date: 2023-09-03
+Date: 2024-08-15
 Author: Michal Kowalewski
 Maintainer: Michal Kowalewski <kowalewski@ufl.edu>
 Description: A set of tools designed for assessing live-dead agreement
