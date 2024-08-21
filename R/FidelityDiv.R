@@ -151,9 +151,9 @@ if (nrow(live) > 1) {
   meanDS <- c(mean(allS), stats::quantile(allS, prob=c((1-CImean)/2, 1 - (1-CImean)/2)))
   meanDP <- c(mean(allP), stats::quantile(allP, prob=c((1-CImean)/2, 1 - (1-CImean)/2)))
   allpS <- 2 * min(sum(allS > 0), sum(allS < 0))
-  ifelse(allpS == 0, Delta.S.p <- 1 / iter, Delta.S.p <- allpS)
+  ifelse(allpS == 0, Delta.S.p <- 1 / iter, Delta.S.p <- allpS / iter)
   allpP <- 2 * min(sum(allP > 0), sum(allP < 0))
-  ifelse(allpP == 0, Delta.PIE.p <- 1 / iter, Delta.PIE.p <- allpP)
+  ifelse(allpP == 0, Delta.PIE.p <- 1 / iter, Delta.PIE.p <- allpP / iter)
   # By groups
   if (length(gp) > 0) {
    outDS <- sapply(as.data.frame(out1[,1,]), function(x) tapply(x, gp, mean))
